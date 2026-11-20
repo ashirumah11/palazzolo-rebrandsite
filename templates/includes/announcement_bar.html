@@ -1,0 +1,26 @@
+{% load static %}
+<div class="ptvti-announcement-bar" role="region" aria-label="Institutional announcement">
+  <div class="container">
+    <div class="announcement-inner">
+      <div class="announcement-text d-flex align-items-center">
+        {% if ptvti_active_announcement %}
+          <span class="announcement-badge"><i class="fas fa-bullhorn me-1"></i> Notice</span>
+          <span>
+            <strong>{{ ptvti_active_announcement.title }}:</strong> {{ ptvti_active_announcement.message|truncatewords:24 }}
+            {% if ptvti_active_announcement.link %}
+              <a href="{{ ptvti_active_announcement.link }}" class="ms-1" target="_blank" rel="noopener">Learn more &rarr;</a>
+            {% endif %}
+          </span>
+        {% else %}
+          <span class="announcement-badge"><i class="fas fa-calendar-check me-1"></i> Admissions Open</span>
+          <span>Applications are ongoing for artisan, certificate & diploma intakes. <a href="/admissions/apply/" class="ms-1">Apply Online Now &rarr;</a></span>
+        {% endif %}
+      </div>
+      <div class="announcement-meta d-none d-md-flex">
+        <a href="tel:{{ ptvti_institution.phone|cut:' ' }}"><i class="fas fa-phone-alt"></i> {{ ptvti_institution.phone }}</a>
+        <a href="mailto:{{ ptvti_institution.email }}"><i class="fas fa-envelope"></i> {{ ptvti_institution.email }}</a>
+        <a href="{% url 'admin:index' %}"><i class="fas fa-lock"></i> Staff Portal</a>
+      </div>
+    </div>
+  </div>
+</div>

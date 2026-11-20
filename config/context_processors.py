@@ -105,3 +105,45 @@ def admin_dashboard(request):
         'recent_messages': ContactMessage.objects.all()[:5],
         'upcoming_events_list': EventItem.objects.filter(is_active=True).order_by('starts_at')[:5],
     }
+
+
+def ptvti_public_context(request):
+    """
+    Global context processor providing institutional identity, active announcements,
+    and department taxonomy across all public Django templates.
+    """
+    if request.path.startswith('/admin/'):
+        return {}
+
+    try:
+        active_announcement = Announcement.objects.filter(is_active=True).order_by('order', '-created_at').first()
+    except Exception:
+        active_announcement = None
+
+    try:
+        nav_departments = Department.objects.all().order_by('name')
+    except Exception:
+        nav_departments = []
+
+    return {
+        'ptvti_active_announcement': active_announcement,
+        'ptvti_nav_departments': nav_departments,
+        'ptvti_institution': {
+            'name': 'Palazzolo Technical & Vocational Training Institute',
+            'short_name': 'PTVTI',
+            'motto': 'With God at the Centre, we serve, train and transform',
+            'tagline': 'Learn. Innovate. Build Your Future.',
+            'phone': '+254 700 000 000',
+            'email': 'info@palazzolotechnical.co.ke',
+            'admissions_email': 'admissions@palazzolotechnical.co.ke',
+            'address': 'Off Kihara-Gachie-Karura Road, Kiambu County, Kenya',
+            'postal_address': 'P.O. Box 1234 - 00200 Nairobi, Kenya',
+            'accreditation': 'Accredited by TVETA Kenya | Affiliated with NITA & UNESCO',
+        },
+        'ptvti_verified_stats': [
+            {'value': 250, 'prefix': '', 'suffix': '+', 'label': 'Enrolled Students', 'icon': 'fas fa-user-graduate'},
+            {'value': 150, 'prefix': '', 'suffix': '+', 'label': 'Graduated Alumni', 'icon': 'fas fa-graduation-cap'},
+            {'value': 10, 'prefix': '', 'suffix': '+', 'label': 'Skills Awards Won', 'icon': 'fas fa-award'},
+            {'value': 86, 'prefix': '', 'suffix': '%', 'label': 'Graduation & Placement Rate', 'icon': 'fas fa-chart-line'},
+        ],
+    }

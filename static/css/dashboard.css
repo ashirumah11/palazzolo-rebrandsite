@@ -1,0 +1,126 @@
+/* ==========================================================================
+   PTVTI MANAGEMENT DASHBOARD STYLES
+   ========================================================================== */
+
+.dashboard-wrapper {
+  background-color: #F3F5F2;
+  min-height: 100vh;
+}
+
+.dashboard-topbar {
+  background-color: var(--ptvti-navy);
+  color: #FFFFFF;
+  padding: 0.85rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard-brand {
+  font-family: var(--ptvti-font-heading);
+  font-weight: 800;
+  color: #FFFFFF;
+  font-size: 1.15rem;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.dashboard-container {
+  padding: 2rem 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* KPI Summary Cards */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.kpi-card {
+  background-color: #FFFFFF;
+  border-radius: var(--ptvti-radius-md);
+  padding: 1.5rem;
+  border: 1px solid var(--ptvti-border);
+  box-shadow: var(--ptvti-shadow-xs);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.kpi-icon {
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: var(--ptvti-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.kpi-navy { background-color: var(--ptvti-navy-subtle); color: var(--ptvti-navy); }
+.kpi-gold { background-color: var(--ptvti-gold-subtle); color: var(--ptvti-gold-dark); }
+.kpi-green { background-color: var(--ptvti-success-bg); color: var(--ptvti-success); }
+.kpi-amber { background-color: var(--ptvti-warning-bg); color: var(--ptvti-warning); }
+
+.kpi-number {
+  font-family: var(--ptvti-font-heading);
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--ptvti-navy);
+  line-height: 1.1;
+}
+
+.kpi-label {
+  font-size: 0.8125rem;
+  color: var(--ptvti-text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Dashboard Table */
+.dashboard-table-card {
+  background-color: #FFFFFF;
+  border: 1px solid var(--ptvti-border);
+  border-radius: var(--ptvti-radius-lg);
+  box-shadow: var(--ptvti-shadow-card);
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.table-header-toolbar {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--ptvti-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.dashboard-table {
+  width: 100%;
+  margin-bottom: 0;
+  vertical-align: middle;
+}
+
+.dashboard-table th {
+  background-color: #FAFBF9;
+  font-family: var(--ptvti-font-heading);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ptvti-navy);
+  border-bottom: 2px solid var(--ptvti-border);
+  padding: 0.85rem 1.25rem;
+}
+
+.dashboard-table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--ptvti-border-light);
+  font-size: 0.875rem;
+}

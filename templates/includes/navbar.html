@@ -1,0 +1,74 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg ptvti-navbar" aria-label="Main navigation">
+  <div class="container">
+    <a class="brand-container" href="/">
+      <img src="{% static 'images/ptvti-logo.jpg' %}" alt="PTVTI Logo" class="brand-logo-img">
+      <div class="brand-text-block">
+        <span class="brand-title">PALAZZOLO</span>
+        <span class="brand-subtitle">Technical & Vocational Training Institute</span>
+      </div>
+    </a>
+
+    <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#ptvtiNavCollapse" aria-controls="ptvtiNavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fas fa-bars fa-lg text-dark"></i>
+    </button>
+
+    <div class="collapse navbar-collapse" id="ptvtiNavCollapse">
+      <ul class="navbar-nav ms-auto align-items-lg-center">
+        <li class="nav-item">
+          <a class="nav-link" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/about/">About Us</a>
+        </li>
+        
+        <!-- Courses Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="/courses/" id="coursesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Courses
+          </a>
+          <ul class="dropdown-menu ptvti-dropdown-menu" aria-labelledby="coursesDropdown">
+            <li><a class="dropdown-item fw-bold" href="/courses/"><i class="fas fa-th-large text-warning"></i> All Programmes</a></li>
+            <li><hr class="dropdown-divider my-1"></li>
+            {% for dept in ptvti_nav_departments %}
+              <li><a class="dropdown-item" href="/courses/?department={{ dept.id }}"><i class="fas fa-graduation-cap text-muted"></i> {{ dept.name }}</a></li>
+            {% empty %}
+              <li><a class="dropdown-item" href="/courses/">Engineering</a></li>
+              <li><a class="dropdown-item" href="/courses/">ICT & Computing</a></li>
+              <li><a class="dropdown-item" href="/courses/">Fashion & Design</a></li>
+              <li><a class="dropdown-item" href="/courses/">Cosmetology</a></li>
+              <li><a class="dropdown-item" href="/courses/">Hospitality</a></li>
+            {% endfor %}
+          </ul>
+        </li>
+
+        <!-- Admissions Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="/admissions/" id="admissionsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Admissions
+          </a>
+          <ul class="dropdown-menu ptvti-dropdown-menu" aria-labelledby="admissionsDropdown">
+            <li><a class="dropdown-item fw-bold text-success" href="/admissions/apply/"><i class="fas fa-paper-plane text-success"></i> Apply Online</a></li>
+            <li><a class="dropdown-item" href="/admissions/track/"><i class="fas fa-search-location text-primary"></i> Track Application</a></li>
+            <li><a class="dropdown-item" href="/admissions/"><i class="fas fa-list-check text-muted"></i> Requirements & Procedures</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/news/">News & Stories</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/events/">Events</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/contact/">Contact</a>
+        </li>
+        <li class="nav-item">
+          <a class="btn-ptvti-gold nav-cta-btn btn-sm" href="/admissions/apply/">
+            <i class="fas fa-pen-nib"></i> Apply Now
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

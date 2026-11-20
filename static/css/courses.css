@@ -1,0 +1,130 @@
+/* ==========================================================================
+   PTVTI COURSES & DEPARTMENTS STYLES
+   ========================================================================== */
+
+/* Filter Pills */
+.filter-pills-container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.filter-pill {
+  border: 1px solid var(--ptvti-border-strong);
+  background-color: #FFFFFF;
+  color: var(--ptvti-navy);
+  font-family: var(--ptvti-font-heading);
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.5rem 1.15rem;
+  border-radius: var(--ptvti-radius-pill);
+  cursor: pointer;
+  transition: all var(--ptvti-transition-fast);
+}
+
+.filter-pill:hover {
+  background-color: var(--ptvti-surface-hover);
+  border-color: var(--ptvti-navy);
+}
+
+.filter-pill.active {
+  background-color: var(--ptvti-navy);
+  border-color: var(--ptvti-navy);
+  color: #FFFFFF;
+}
+
+/* Course Search Bar */
+.course-search-box {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.course-search-input {
+  width: 100%;
+  padding: 0.85rem 1rem 0.85rem 3rem;
+  font-size: 1rem;
+  border: 1px solid var(--ptvti-border-strong);
+  border-radius: var(--ptvti-radius-md);
+  box-shadow: var(--ptvti-shadow-xs);
+}
+
+.course-search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ptvti-text-muted);
+  font-size: 1.15rem;
+}
+
+/* Course Detail Page */
+.course-detail-hero {
+  background: linear-gradient(135deg, var(--ptvti-navy) 0%, var(--ptvti-forest) 100%);
+  color: #FFFFFF;
+  padding: 4.5rem 0 3.5rem;
+}
+
+.course-detail-hero h1 {
+  color: #FFFFFF;
+  font-size: 2.75rem;
+  margin-bottom: 1rem;
+}
+
+.course-meta-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: 1.5rem;
+}
+
+.course-meta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--ptvti-radius-pill);
+}
+
+.course-sidebar-card {
+  background-color: #FFFFFF;
+  border: 1px solid var(--ptvti-border);
+  border-radius: var(--ptvti-radius-lg);
+  padding: 2rem;
+  box-shadow: var(--ptvti-shadow-card);
+  position: sticky;
+  top: 6rem;
+}
+
+.course-fact-list {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0;
+}
+
+.course-fact-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--ptvti-border-light);
+  font-size: 0.9375rem;
+}
+
+.course-fact-item:last-child {
+  border-bottom: none;
+}
+
+.fact-title {
+  color: var(--ptvti-text-muted);
+  font-weight: 500;
+}
+
+.fact-value {
+  color: var(--ptvti-navy);
+  font-weight: 700;
+}

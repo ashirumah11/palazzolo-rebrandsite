@@ -1,0 +1,163 @@
+/* ==========================================================================
+   PTVTI HOMEPAGE SPECIFIC STYLES
+   ========================================================================== */
+
+/* Hero Section */
+.hero-section {
+  position: relative;
+  background-color: var(--ptvti-navy);
+  color: #FFFFFF;
+  overflow: hidden;
+}
+
+.hero-carousel-item {
+  position: relative;
+  min-height: 580px;
+  display: flex;
+  align-items: center;
+}
+
+.hero-backdrop-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.32;
+  filter: saturate(1.1);
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(24, 29, 46, 0.95) 0%, rgba(24, 29, 46, 0.7) 60%, rgba(24, 29, 46, 0.4) 100%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 5rem 0;
+  max-width: 680px;
+}
+
+.hero-title {
+  font-size: 3.25rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1.15;
+  margin-bottom: 1.25rem;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Pillars Grid */
+.pillar-card {
+  background-color: #FFFFFF;
+  border-radius: var(--ptvti-radius-md);
+  padding: 2.25rem 1.75rem;
+  border: 1px solid var(--ptvti-border);
+  box-shadow: var(--ptvti-shadow-sm);
+  transition: all var(--ptvti-transition-normal);
+  height: 100%;
+}
+
+.pillar-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--ptvti-gold);
+  box-shadow: var(--ptvti-shadow-hover);
+}
+
+.pillar-icon-box {
+  width: 3.75rem;
+  height: 3.75rem;
+  border-radius: var(--ptvti-radius-md);
+  background: linear-gradient(135deg, var(--ptvti-navy) 0%, var(--ptvti-navy-light) 100%);
+  color: var(--ptvti-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.65rem;
+  margin-bottom: 1.25rem;
+}
+
+.pillar-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.65rem;
+}
+
+.pillar-desc {
+  color: var(--ptvti-text-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+/* Accreditation Bar */
+.accreditation-strip {
+  background-color: #FFFFFF;
+  border-top: 1px solid var(--ptvti-border);
+  border-bottom: 1px solid var(--ptvti-border);
+  padding: 2rem 0;
+}
+
+.accreditation-logos {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.accreditation-item img {
+  height: 48px;
+  width: auto;
+  filter: grayscale(100%);
+  opacity: 0.75;
+  transition: all var(--ptvti-transition-normal);
+}
+
+.accreditation-item:hover img {
+  filter: grayscale(0%);
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+/* CTA Banner */
+.ptvti-cta-banner {
+  background: linear-gradient(135deg, var(--ptvti-navy) 0%, var(--ptvti-forest) 100%);
+  border-radius: var(--ptvti-radius-xl);
+  padding: 4rem 3rem;
+  color: #FFFFFF;
+  box-shadow: var(--ptvti-shadow-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+.ptvti-cta-banner h2 {
+  color: #FFFFFF;
+  font-size: 2.25rem;
+  margin-bottom: 1rem;
+}
+
+.ptvti-cta-banner p {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1.15rem;
+  max-width: 600px;
+  margin-bottom: 2rem;
+}

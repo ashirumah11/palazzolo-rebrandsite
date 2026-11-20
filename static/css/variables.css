@@ -1,0 +1,90 @@
+/* ==========================================================================
+   PTVTI BRAND IDENTITY & DESIGN SYSTEM - CSS VARIABLES
+   Palazzolo Technical and Vocational Training Institute
+   ========================================================================== */
+
+:root {
+  /* Brand Primary Colors */
+  --ptvti-navy: #181D2E;
+  --ptvti-navy-dark: #0F1320;
+  --ptvti-navy-light: #232A40;
+  --ptvti-navy-subtle: #EDF1F7;
+
+  /* Brand Secondary Colors */
+  --ptvti-forest: #3C453E;
+  --ptvti-forest-dark: #2A312C;
+  --ptvti-forest-light: #4E5950;
+  --ptvti-forest-subtle: #E8ECE9;
+
+  /* Brand Accent Colors */
+  --ptvti-gold: #D6AE69;
+  --ptvti-gold-dark: #B88E45;
+  --ptvti-gold-light: #E7C88E;
+  --ptvti-gold-subtle: #FCF7ED;
+
+  /* Surface & Background Colors */
+  --ptvti-bg: #F7F8F6;
+  --ptvti-bg-alt: #FFFFFF;
+  --ptvti-bg-card: #FFFFFF;
+  --ptvti-surface-hover: #F1F3F0;
+  --ptvti-border: #E2E6E1;
+  --ptvti-border-light: #EDF0EC;
+  --ptvti-border-strong: #CBD2C9;
+
+  /* Typography Colors */
+  --ptvti-text-primary: #181D2E;
+  --ptvti-text-body: #343A40;
+  --ptvti-text-muted: #6B7280;
+  --ptvti-text-inverse: #FFFFFF;
+  --ptvti-text-link: #181D2E;
+
+  /* Status & Feedback Colors */
+  --ptvti-success: #16A34A;
+  --ptvti-success-bg: #DCFCE7;
+  --ptvti-success-text: #14532D;
+
+  --ptvti-warning: #D97706;
+  --ptvti-warning-bg: #FEF3C7;
+  --ptvti-warning-text: #78350F;
+
+  --ptvti-danger: #DC2626;
+  --ptvti-danger-bg: #FEE2E2;
+  --ptvti-danger-text: #7F1D1D;
+
+  --ptvti-info: #0284C7;
+  --ptvti-info-bg: #E0F2FE;
+  --ptvti-info-text: #0C4A6E;
+
+  /* Typography */
+  --ptvti-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --ptvti-font-heading: 'Poppins', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Spacing Scale */
+  --ptvti-space-xs: 0.25rem;
+  --ptvti-space-sm: 0.5rem;
+  --ptvti-space-md: 1rem;
+  --ptvti-space-lg: 1.5rem;
+  --ptvti-space-xl: 2.5rem;
+  --ptvti-space-2xl: 4rem;
+  --ptvti-space-3xl: 6rem;
+
+  /* Radius */
+  --ptvti-radius-sm: 6px;
+  --ptvti-radius-md: 10px;
+  --ptvti-radius-lg: 16px;
+  --ptvti-radius-xl: 24px;
+  --ptvti-radius-pill: 9999px;
+
+  /* Shadows */
+  --ptvti-shadow-xs: 0 1px 2px rgba(24, 29, 46, 0.04);
+  --ptvti-shadow-sm: 0 2px 6px rgba(24, 29, 46, 0.06);
+  --ptvti-shadow-md: 0 8px 24px rgba(24, 29, 46, 0.08);
+  --ptvti-shadow-lg: 0 16px 40px rgba(24, 29, 46, 0.12);
+  --ptvti-shadow-card: 0 4px 20px rgba(24, 29, 46, 0.06);
+  --ptvti-shadow-hover: 0 12px 32px rgba(24, 29, 46, 0.14);
+
+  /* Transitions */
+  --ptvti-transition-fast: 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  --ptvti-transition-normal: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  --ptvti-transition-slow: 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}

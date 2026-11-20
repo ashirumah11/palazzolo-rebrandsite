@@ -117,6 +117,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'config.context_processors.admin_dashboard',
+                'config.context_processors.ptvti_public_context',
             ],
         },
     },

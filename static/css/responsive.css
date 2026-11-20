@@ -1,0 +1,109 @@
+/* ==========================================================================
+   PTVTI RESPONSIVE BREAKPOINTS & MEDIA QUERIES
+   ========================================================================== */
+
+/* Large Tablets & Small Laptops (max-width: 991.98px) */
+@media (max-width: 991.98px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .hero-carousel-item {
+    min-height: 480px;
+  }
+
+  .admission-steps-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .course-sidebar-card {
+    position: static;
+    margin-top: 2rem;
+  }
+
+  .navbar-nav {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .nav-cta-btn {
+    margin-left: 0;
+    margin-top: 0.75rem;
+    display: inline-block;
+  }
+}
+
+/* Mobile Devices (max-width: 767.98px) */
+@media (max-width: 767.98px) {
+  html {
+    font-size: 15px;
+  }
+
+  .ptvti-section {
+    padding: 3.5rem 0;
+  }
+
+  .section-header h2 {
+    font-size: 1.85rem;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.05rem;
+  }
+
+  .announcement-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .announcement-meta {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .admission-steps-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .application-form-card {
+    padding: 1.75rem;
+  }
+
+  .tracking-timeline {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .tracking-timeline::before {
+    top: 0;
+    bottom: 0;
+    left: 1.25rem;
+    width: 3px;
+    height: auto;
+  }
+
+  .timeline-node {
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  .scroll-top-btn {
+    bottom: 1.25rem;
+    right: 1.25rem;
+    width: 2.6rem;
+    height: 2.6rem;
+  }
+}

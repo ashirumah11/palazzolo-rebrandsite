@@ -1,0 +1,189 @@
+/* ==========================================================================
+   PTVTI COMPONENTS (Cards, Stats, Modals, Forms)
+   ========================================================================== */
+
+/* Modern Cards */
+.ptvti-card {
+  background-color: #FFFFFF;
+  border: 1px solid var(--ptvti-border);
+  border-radius: var(--ptvti-radius-lg);
+  box-shadow: var(--ptvti-shadow-card);
+  transition: all var(--ptvti-transition-normal);
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.ptvti-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--ptvti-shadow-hover);
+  border-color: var(--ptvti-border-strong);
+}
+
+.ptvti-card-media {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--ptvti-navy-subtle);
+  aspect-ratio: 16 / 10;
+}
+
+.ptvti-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--ptvti-transition-slow);
+}
+
+.ptvti-card:hover .ptvti-card-media img {
+  transform: scale(1.05);
+}
+
+.card-badge-floating {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 2;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.ptvti-card-body {
+  padding: 1.5rem;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.ptvti-card-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.ptvti-card-title a {
+  color: var(--ptvti-navy);
+}
+
+.ptvti-card-title a:hover {
+  color: var(--ptvti-gold-dark);
+}
+
+.ptvti-card-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.8125rem;
+  color: var(--ptvti-text-muted);
+  margin-bottom: 0.85rem;
+}
+
+.meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.ptvti-card-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--ptvti-border-light);
+  background-color: #FAFBF9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Stats Counter Widget */
+.stat-widget {
+  background-color: #FFFFFF;
+  border: 1px solid var(--ptvti-border);
+  border-radius: var(--ptvti-radius-md);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  box-shadow: var(--ptvti-shadow-sm);
+  transition: all var(--ptvti-transition-normal);
+  height: 100%;
+}
+
+.stat-widget:hover {
+  transform: translateY(-3px);
+  border-color: var(--ptvti-gold);
+}
+
+.stat-icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background-color: var(--ptvti-gold-subtle);
+  color: var(--ptvti-gold-dark);
+  font-size: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.stat-number {
+  font-family: var(--ptvti-font-heading);
+  font-size: 2.75rem;
+  font-weight: 800;
+  color: var(--ptvti-navy);
+  line-height: 1;
+  margin-bottom: 0.35rem;
+}
+
+.stat-label {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--ptvti-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Forms */
+.ptvti-form-group {
+  margin-bottom: 1.25rem;
+}
+
+.ptvti-label {
+  font-family: var(--ptvti-font-heading);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ptvti-navy);
+  margin-bottom: 0.4rem;
+  display: block;
+}
+
+.ptvti-input,
+.form-control,
+.form-select {
+  border: 1px solid var(--ptvti-border-strong);
+  border-radius: var(--ptvti-radius-sm);
+  padding: 0.75rem 1rem;
+  font-size: 0.9375rem;
+  color: var(--ptvti-text-body);
+  transition: all var(--ptvti-transition-fast);
+}
+
+.ptvti-input:focus,
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--ptvti-navy);
+  outline: 0;
+  box-shadow: 0 0 0 3px rgba(24, 29, 46, 0.12);
+}
+
+/* Alerts */
+.ptvti-alert {
+  border-radius: var(--ptvti-radius-md);
+  padding: 1rem 1.25rem;
+  border-left: 4px solid;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.alert-success { background-color: var(--ptvti-success-bg); border-color: var(--ptvti-success); color: var(--ptvti-success-text); }
+.alert-warning { background-color: var(--ptvti-warning-bg); border-color: var(--ptvti-warning); color: var(--ptvti-warning-text); }
+.alert-danger { background-color: var(--ptvti-danger-bg); border-color: var(--ptvti-danger); color: var(--ptvti-danger-text); }
+.alert-info { background-color: var(--ptvti-info-bg); border-color: var(--ptvti-info); color: var(--ptvti-info-text); }

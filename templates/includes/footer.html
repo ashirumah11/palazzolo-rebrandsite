@@ -1,0 +1,89 @@
+{% load static %}
+<footer class="ptvti-footer" role="contentinfo">
+  <div class="container">
+    <div class="row g-4 justify-content-between">
+      <!-- Institutional Info -->
+      <div class="col-lg-4 col-md-6">
+        <h3 class="footer-brand-title">{{ ptvti_institution.name }}</h3>
+        <p class="footer-motto">"{{ ptvti_institution.motto }}"</p>
+        <p class="footer-desc">
+          Established in November 2021 by the Poverelle Sisters (Institute of the Sisters of the Poor - Palazzolo), PTVTI provides values-based, competency-centered technical and vocational education that transforms youth into skilled, self-reliant professionals.
+        </p>
+        <div class="d-flex align-items-center gap-3">
+          <span class="footer-badge-pill"><i class="fas fa-certificate text-warning me-1"></i> TVETA Accredited</span>
+          <span class="footer-badge-pill"><i class="fas fa-award text-warning me-1"></i> NITA & UNESCO Partner</span>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="col-lg-2 col-md-6 col-6">
+        <h4 class="footer-heading">Quick Links</h4>
+        <ul class="footer-links">
+          <li class="footer-link-item"><a href="/"><i class="fas fa-chevron-right fa-xs"></i> Home</a></li>
+          <li class="footer-link-item"><a href="/about/"><i class="fas fa-chevron-right fa-xs"></i> About PTVTI</a></li>
+          <li class="footer-link-item"><a href="/courses/"><i class="fas fa-chevron-right fa-xs"></i> Courses & Trade</a></li>
+          <li class="footer-link-item"><a href="/admissions/apply/"><i class="fas fa-chevron-right fa-xs"></i> Online Application</a></li>
+          <li class="footer-link-item"><a href="/admissions/track/"><i class="fas fa-chevron-right fa-xs"></i> Track Status</a></li>
+          <li class="footer-link-item"><a href="/news/"><i class="fas fa-chevron-right fa-xs"></i> News & Stories</a></li>
+          <li class="footer-link-item"><a href="/events/"><i class="fas fa-chevron-right fa-xs"></i> Upcoming Events</a></li>
+          <li class="footer-link-item"><a href="/contact/"><i class="fas fa-chevron-right fa-xs"></i> Contact & Support</a></li>
+        </ul>
+      </div>
+
+      <!-- Departments -->
+      <div class="col-lg-3 col-md-6 col-6">
+        <h4 class="footer-heading">Departments</h4>
+        <ul class="footer-links">
+          {% for dept in ptvti_nav_departments %}
+            <li class="footer-link-item"><a href="/courses/?department={{ dept.id }}"><i class="fas fa-graduation-cap fa-xs"></i> {{ dept.name }}</a></li>
+          {% empty %}
+            <li class="footer-link-item"><a href="/courses/"><i class="fas fa-wrench fa-xs"></i> Engineering Department</a></li>
+            <li class="footer-link-item"><a href="/courses/"><i class="fas fa-laptop-code fa-xs"></i> ICT & Computing</a></li>
+            <li class="footer-link-item"><a href="/courses/"><i class="fas fa-cut fa-xs"></i> Fashion & Design</a></li>
+            <li class="footer-link-item"><a href="/courses/"><i class="fas fa-spa fa-xs"></i> Cosmetology & Hair</a></li>
+            <li class="footer-link-item"><a href="/courses/"><i class="fas fa-utensils fa-xs"></i> Hospitality & Catering</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <!-- Contact Details -->
+      <div class="col-lg-3 col-md-6">
+        <h4 class="footer-heading">Contact & Location</h4>
+        <ul class="footer-contact-list">
+          <li class="footer-contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>{{ ptvti_institution.address }}</span>
+          </li>
+          <li class="footer-contact-item">
+            <i class="fas fa-phone-alt"></i>
+            <a href="tel:{{ ptvti_institution.phone|cut:' ' }}">{{ ptvti_institution.phone }}</a>
+          </li>
+          <li class="footer-contact-item">
+            <i class="fas fa-envelope"></i>
+            <a href="mailto:{{ ptvti_institution.email }}">{{ ptvti_institution.email }}</a>
+          </li>
+          <li class="footer-contact-item">
+            <i class="fas fa-paper-plane"></i>
+            <a href="mailto:{{ ptvti_institution.admissions_email }}">Admissions Office</a>
+          </li>
+          <li class="footer-contact-item">
+            <i class="fas fa-shield-alt"></i>
+            <a href="{% url 'admin:index' %}">Staff & Admin Portal</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="footer-bottom">
+      <div>
+        &copy; {% now "Y" %} Palazzolo Technical & Vocational Training Institute. All rights reserved.
+      </div>
+      <div class="footer-accreditation-badges">
+        <span class="text-white-50">Accredited by TVETA Kenya</span>
+        <span class="text-white-50">|</span>
+        <span class="text-white-50">Affiliated with NITA & UNESCO</span>
+      </div>
+    </div>
+  </div>
+</footer>
