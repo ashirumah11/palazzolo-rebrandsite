@@ -1,0 +1,262 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}About PTVTI | History, Mission & Values | Palazzolo Institute{% endblock %}
+
+{% block content %}
+<!-- ==========================================
+     ABOUT HERO BANNER
+     ========================================== -->
+<section class="course-detail-hero" aria-label="About Hero">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-8">
+        <span class="section-eyebrow text-warning">About Palazzolo Technical</span>
+        <h1>Born from Hope, Built for Transformation</h1>
+        <p class="lead text-white-50">
+          Founded in November 2021 by the Poverelle Sisters, PTVTI equips Kenyan youth with practical technical skills, dignified craft, and compassionate leadership.
+        </p>
+        <div class="course-meta-strip">
+          <span class="course-meta-pill"><i class="fas fa-calendar-alt text-warning"></i> Established Nov 2021</span>
+          <span class="course-meta-pill"><i class="fas fa-map-marker-alt text-danger"></i> Kiambu County, Kenya</span>
+          <span class="course-meta-pill"><i class="fas fa-shield-alt text-success"></i> TVETA Accredited</span>
+        </div>
+      </div>
+      <div class="col-lg-4 text-center d-none d-lg-block">
+        <img src="{% static 'images/about-poverelle.jpg' %}" alt="Poverelle Sisters" class="rounded-4 shadow-lg border border-3 border-warning" style="max-height: 280px; object-fit: cover;">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     OUR STORY & FOUNDING
+     ========================================== -->
+<section class="ptvti-section ptvti-section-alt" aria-labelledby="history-heading">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6">
+        <div class="position-relative">
+          <img src="{% static 'images/about-history.jpg' %}" alt="PTVTI Workshop History" class="rounded-4 shadow-lg w-100">
+          <div class="stat-widget position-absolute bottom-0 start-0 m-3 d-none d-sm-block p-3 bg-white shadow-lg border-warning" style="max-width: 220px;">
+            <span class="d-block fw-bold fs-3 text-dark">5+ Years</span>
+            <small class="text-muted text-uppercase fw-bold">Of Community Empowerment</small>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <span class="section-eyebrow">Institutional Roots</span>
+        <h2 id="history-heading" class="h1 mb-3">Our History &amp; Mission</h2>
+        <p>
+          Palazzolo Technical and Vocational Training Institute (PTVTI) was established in November 2021 by the <strong>Poverelle Sisters</strong> in the aftermath of the COVID-19 pandemic. Witnessing the severe disruptions experienced by young people and families in Kiambu and Nairobi metropolitan areas, the Sisters recognized the urgent need for accessible, practical technical education to restore hope and build self-reliance.
+        </p>
+        <p>
+          What began as an emergency mission to empower vulnerable youth has grown into an accredited center of vocational excellence. Today, the institute celebrates more than 150 graduates employed across technical industries or managing their own entrepreneurial enterprises.
+        </p>
+        <div class="d-flex align-items-center gap-3 mt-4">
+          <div class="p-3 bg-light rounded border-start border-4 border-warning">
+            <span class="d-block fw-bold text-dark">"I take them as sons and daughters."</span>
+            <small class="text-muted">— Motto of St. Luigi Palazzolo (1869)</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     VISION, MISSION & CORE VALUES
+     ========================================== -->
+<section class="ptvti-section" aria-labelledby="vision-mission-heading">
+  <div class="container">
+    <div class="section-header text-center mb-5">
+      <span class="section-eyebrow">Our Guiding Light</span>
+      <h2 id="vision-mission-heading">Vision, Mission &amp; Values</h2>
+      <p>Guiding every classroom, workshop bench, and interaction across our technical campus.</p>
+    </div>
+
+    <div class="row g-4 mb-5">
+      <div class="col-lg-6">
+        <div class="ptvti-card p-4 p-md-5 border-top border-4 border-primary">
+          <div class="stat-icon mb-3"><i class="fas fa-eye"></i></div>
+          <h3 class="h4 mb-3">Our Vision</h3>
+          <p class="fs-5 text-dark mb-0">
+            "To be a center of excellence transforming youth into skilled, responsible and values-driven professionals."
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="ptvti-card p-4 p-md-5 border-top border-4 border-success">
+          <div class="stat-icon mb-3" style="background-color: var(--ptvti-forest-subtle); color: var(--ptvti-forest);"><i class="fas fa-bullseye"></i></div>
+          <h3 class="h4 mb-3">Our Mission</h3>
+          <p class="fs-5 text-dark mb-0">
+            "To provide quality, inclusive and values-based technical and vocational training that equips youth with relevant skills and promotes holistic transformation."
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Core Values Grid -->
+    <h3 class="text-center h4 mb-4">Our Core Values</h3>
+    <div class="row g-4 justify-content-center">
+      <div class="col-lg-2 col-md-4 col-6">
+        <div class="stat-widget p-3">
+          <div class="fs-2 mb-2">🤝</div>
+          <h5 class="fs-6 mb-1">Respect</h5>
+          <small class="text-muted">Treating every person with dignity &amp; fairness</small>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-4 col-6">
+        <div class="stat-widget p-3">
+          <div class="fs-2 mb-2">🛡️</div>
+          <h5 class="fs-6 mb-1">Integrity</h5>
+          <small class="text-muted">Honesty, consistency, and accountability</small>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-4 col-6">
+        <div class="stat-widget p-3">
+          <div class="fs-2 mb-2">⚖️</div>
+          <h5 class="fs-6 mb-1">Dignity</h5>
+          <small class="text-muted">Affirming the worth and potential of each learner</small>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-4 col-6">
+        <div class="stat-widget p-3">
+          <div class="fs-2 mb-2">🏆</div>
+          <h5 class="fs-6 mb-1">Excellence</h5>
+          <small class="text-muted">Continuous improvement in technical craft</small>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-4 col-6">
+        <div class="stat-widget p-3">
+          <div class="fs-2 mb-2">🤲</div>
+          <h5 class="fs-6 mb-1">Collaboration</h5>
+          <small class="text-muted">Supporting peers and community partnerships</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     FACILITIES & INFRASTRUCTURE
+     ========================================== -->
+<section class="ptvti-section ptvti-section-alt" aria-labelledby="about-facilities-heading">
+  <div class="container">
+    <div class="section-header text-center">
+      <span class="section-eyebrow">Practical Learning Spaces</span>
+      <h2 id="about-facilities-heading">Campus Infrastructure</h2>
+      <p>Tour the five dedicated training spaces supporting our vocational departments.</p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6">
+        <div class="ptvti-card">
+          <div class="ptvti-card-media"><img src="{% static 'images/infra-workshop.jpg' %}" alt="Technical Workshop"></div>
+          <div class="ptvti-card-body">
+            <h4 class="h5">Technical Trades Workshops</h4>
+            <p class="text-muted small">Hands-on technical training spaces for electrical installation, domestic wiring, plumbing systems, and metal fabrication.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="ptvti-card">
+          <div class="ptvti-card-media"><img src="{% static 'images/infra-ictlab.jpg' %}" alt="Computer Lab"></div>
+          <div class="ptvti-card-body">
+            <h4 class="h5">ICT Computer Labs</h4>
+            <p class="text-muted small">Modern computers equipped with productivity suites, networking equipment, and internet access for technical digital training.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="ptvti-card">
+          <div class="ptvti-card-media"><img src="{% static 'images/infra-fashionstudio.JPG' %}" alt="Fashion Studio"></div>
+          <div class="ptvti-card-body">
+            <h4 class="h5">Fashion &amp; Garment Studio</h4>
+            <p class="text-muted small">Creative space with specialized sewing machines, pattern cutting boards, and garment finishing stations.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6">
+        <div class="ptvti-card">
+          <div class="ptvti-card-media"><img src="{% static 'images/infra-salon.jpg' %}" alt="Salon and Barber Studio"></div>
+          <div class="ptvti-card-body">
+            <h4 class="h5">Salon &amp; Barber Studio</h4>
+            <p class="text-muted small">A live salon setting where cosmetology learners master hair styling, barbering fades, facial care, and client communication.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6">
+        <div class="ptvti-card">
+          <div class="ptvti-card-media"><img src="{% static 'images/infra-kitchen.jpg' %}" alt="Training Kitchen"></div>
+          <div class="ptvti-card-body">
+            <h4 class="h5">Training Kitchen &amp; Bakery</h4>
+            <p class="text-muted small">Commercial cooking and baking facilities designed for hot kitchen preparation, baking, and professional food service.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     INSTITUTIONAL LEADERSHIP & FACULTY
+     ========================================== -->
+<section class="ptvti-section" aria-labelledby="leadership-heading">
+  <div class="container">
+    <div class="section-header text-center">
+      <span class="section-eyebrow">Our Educators</span>
+      <h2 id="leadership-heading">Institutional Leadership &amp; Faculty</h2>
+      <p>Dedicated administrators and technical trainers committed to vocational excellence and student mentoring.</p>
+    </div>
+
+    <div class="row g-4">
+      {% for staff in staff_members %}
+        <div class="col-lg-4 col-md-6">
+          <div class="ptvti-card text-center p-4">
+            <div class="mb-3 mx-auto" style="width: 110px; height: 110px; border-radius: 50%; overflow: hidden; border: 3px solid var(--ptvti-gold);">
+              {% if staff.image %}
+                <img src="{{ staff.image.url }}" alt="{{ staff.name }}" style="width: 100%; height: 100%; object-fit: cover;">
+              {% else %}
+                <img src="{% static 'images/about-institute.jpg' %}" alt="{{ staff.name }}" style="width: 100%; height: 100%; object-fit: cover;">
+              {% endif %}
+            </div>
+            <h4 class="h5 mb-1">{{ staff.name }}</h4>
+            <span class="badge-ptvti badge-ptvti-navy mb-2">{{ staff.role }}</span>
+            <small class="text-muted d-block mb-3">{{ staff.department }}</small>
+            <p class="text-muted small mb-0">{{ staff.bio }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     CAMPUS PHOTO GALLERY
+     ========================================== -->
+<section class="ptvti-section ptvti-section-alt" aria-labelledby="gallery-heading">
+  <div class="container">
+    <div class="section-header text-center">
+      <span class="section-eyebrow">Life at Palazzolo</span>
+      <h2 id="gallery-heading">Campus Moments &amp; Practical Training</h2>
+      <p>Authentic moments of student craft, teamwork, and vocational discovery.</p>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-lg-3 col-md-6 col-6">
+        <img src="{% static 'images/student-life.jpg' %}" alt="Student Life 1" class="rounded-3 shadow-sm w-100" style="aspect-ratio: 4/3; object-fit: cover;">
+      </div>
+      <div class="col-lg-3 col-md-6 col-6">
+        <img src="{% static 'images/student-life2.jpg' %}" alt="Student Life 2" class="rounded-3 shadow-sm w-100" style="aspect-ratio: 4/3; object-fit: cover;">
+      </div>
+      <div class="col-lg-3 col-md-6 col-6">
+        <img src="{% static 'images/student-life3.jpg' %}" alt="Student Life 3" class="rounded-3 shadow-sm w-100" style="aspect-ratio: 4/3; object-fit: cover;">
+      </div>
+      <div class="col-lg-3 col-md-6 col-6">
+        <img src="{% static 'images/student-life4.jpg' %}" alt="Student Life 4" class="rounded-3 shadow-sm w-100" style="aspect-ratio: 4/3; object-fit: cover;">
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

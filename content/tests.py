@@ -96,3 +96,52 @@ class ContentApiTests(TestCase):
         response = self.client.post(url, payload, format='multipart')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(HeroCarouselItem.objects.count(), 2)
+
+
+class PublicPagesViewTests(TestCase):
+    def setUp(self):
+        from courses.models import Department, Course
+        self.dept = Department.objects.create(name='Engineering Department', description='Practical trades')
+        self.course = Course.objects.create(
+            title='Electrical Installation',
+            slug='electrical-installation',
+            department=self.dept,
+            duration_months=12,
+            is_active=True
+        )
+
+    def test_homepage_renders_successfully(self):
+        response = self.client.get('/')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'PALAZZOLO')
+        self.assertContains(response, 'Electrical Installation')
+        self.assertContains(response, 'TVETA Accredited')
+
+    def test_about_page_renders_successfully(self):
+        response = self.client.get('/about/')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Poverelle Sisters')
+        self.assertContains(response, 'Born from Hope, Built for Transformation')
+        self.assertContains(response, 'Respect')
+        self.assertContains(response, 'Integrity')
+
+    def test_contact_page_get(self):
+        response = self.client.get('/contact/')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Send Us a Message')
+        self.assertContains(response, 'Campus Contact Info')
+
+    def test_contact_form_submission(self):
+        from contacts.models import ContactMessage
+        payload = {
+            'name': 'Francis Kariuki',
+            'email': 'francis@example.com',
+            'phone': '+254722123456',
+            'enquiry_category': 'admissions',
+            'subject': 'Intake dates for Electrical Engineering',
+            'message': 'When does the May intake start for certificate classes?',
+        }
+        response = self.client.post('/contact/', payload, follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(ContactMessage.objects.filter(email='francis@example.com').exists())
+        self.assertContains(response, 'PTVTI-MSG-')

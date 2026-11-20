@@ -1,0 +1,450 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}PTVTI | Palazzolo Technical & Vocational Training Institute | Kiambu, Kenya{% endblock %}
+
+{% block content %}
+<!-- ==========================================
+     HERO SECTION (CAROUSEL)
+     ========================================== -->
+<section class="hero-section" aria-label="Hero Showcase">
+  <div id="ptvtiHeroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="6000">
+    <div class="carousel-indicators">
+      {% for slide in hero_slides %}
+        <button type="button" data-bs-target="#ptvtiHeroCarousel" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}" aria-current="{% if forloop.first %}true{% endif %}" aria-label="Slide {{ forloop.counter }}"></button>
+      {% empty %}
+        <button type="button" data-bs-target="#ptvtiHeroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      {% endfor %}
+    </div>
+
+    <div class="carousel-inner">
+      {% for slide in hero_slides %}
+        <div class="carousel-item hero-carousel-item {% if forloop.first %}active{% endif %}">
+          {% if slide.image %}
+            <img src="{{ slide.image.url }}" class="hero-backdrop-img" alt="{{ slide.title }}">
+          {% else %}
+            <img src="{% static 'images/hero-workshop.jpg' %}" class="hero-backdrop-img" alt="{{ slide.title }}">
+          {% endif %}
+          <div class="hero-overlay"></div>
+          <div class="container">
+            <div class="hero-content">
+              <span class="section-eyebrow text-warning">{{ ptvti_institution.short_name }} KENYA</span>
+              <h1 class="hero-title">{{ slide.title }}</h1>
+              <p class="hero-subtitle">{{ slide.subtitle }}</p>
+              <div class="hero-actions">
+                <a href="{{ slide.button_link|default:'/courses/' }}" class="btn-ptvti-gold">
+                  <i class="fas fa-graduation-cap"></i> {{ slide.button_text|default:'Explore Courses' }}
+                </a>
+                <a href="/admissions/apply/" class="btn-ptvti-outline-white">
+                  <i class="fas fa-paper-plane"></i> Apply Online
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <div class="carousel-item hero-carousel-item active">
+          <img src="{% static 'images/hero-workshop.jpg' %}" class="hero-backdrop-img" alt="PTVTI Workshops">
+          <div class="hero-overlay"></div>
+          <div class="container">
+            <div class="hero-content">
+              <span class="section-eyebrow text-warning">PALAZZOLO TECHNICAL</span>
+              <h1 class="hero-title">Learn. Innovate. Build Your Future.</h1>
+              <p class="hero-subtitle">Equipping youth with practical technical skills, industry mentorship, and values-based vocational training for self-reliance and career success.</p>
+              <div class="hero-actions">
+                <a href="/courses/" class="btn-ptvti-gold"><i class="fas fa-graduation-cap"></i> Explore Courses</a>
+                <a href="/admissions/apply/" class="btn-ptvti-outline-white"><i class="fas fa-paper-plane"></i> Apply Online</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#ptvtiHeroCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#ptvtiHeroCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</section>
+
+<!-- ==========================================
+     ACCREDITATION & PARTNERS STRIP
+     ========================================== -->
+<div class="accreditation-strip" aria-label="Accreditations">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-3 col-md-4 text-center text-md-start mb-3 mb-md-0">
+        <span class="fw-bold text-dark text-uppercase small letter-spacing-1 d-block">Accredited &amp; Affiliated With:</span>
+        <small class="text-muted">TVETA Approved Technical College</small>
+      </div>
+      <div class="col-lg-9 col-md-8">
+        <div class="accreditation-logos">
+          <div class="accreditation-item text-center">
+            <img src="{% static 'images/tveta-logo.png' %}" alt="TVETA Kenya Logo">
+            <span class="d-block small fw-bold text-muted mt-1">TVETA Kenya</span>
+          </div>
+          <div class="accreditation-item text-center">
+            <img src="{% static 'images/nita-logo.png' %}" alt="NITA Kenya Logo">
+            <span class="d-block small fw-bold text-muted mt-1">NITA Certified</span>
+          </div>
+          <div class="accreditation-item text-center">
+            <img src="{% static 'images/unesco-logo.png' %}" alt="UNESCO Logo">
+            <span class="d-block small fw-bold text-muted mt-1">UNESCO Partner</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================
+     WHY CHOOSE PALAZZOLO (VALUE PILLARS)
+     ========================================== -->
+<section class="ptvti-section ptvti-section-alt" aria-labelledby="why-ptvti-heading">
+  <div class="container">
+    <div class="section-header text-center">
+      <span class="section-eyebrow">The Palazzolo Advantage</span>
+      <h2 id="why-ptvti-heading">Why Choose Palazzolo Institute</h2>
+      <p>We combine hands-on workshop excellence with holistic character formation, nurturing youth who are both skilled technicians and values-driven leaders.</p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-3 col-md-6">
+        <div class="pillar-card">
+          <div class="pillar-icon-box">
+            <i class="fas fa-tools"></i>
+          </div>
+          <h3 class="pillar-title">Practical Competency</h3>
+          <p class="pillar-desc">Over 70% of curriculum time is dedicated to practical workshop training, real fabrication, and industry-standard trade projects.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="pillar-card">
+          <div class="pillar-icon-box">
+            <i class="fas fa-chalkboard-teacher"></i>
+          </div>
+          <h3 class="pillar-title">Industry Mentorship</h3>
+          <p class="pillar-desc">Train under experienced master artisans and engineers who provide personal guidance, craft discipline, and career mentorship.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="pillar-card">
+          <div class="pillar-icon-box">
+            <i class="fas fa-briefcase"></i>
+          </div>
+          <h3 class="pillar-title">Industrial Attachment</h3>
+          <p class="pillar-desc">Direct placement support and partnerships with businesses for field attachments, internship exposure, and self-employment readiness.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="pillar-card">
+          <div class="pillar-icon-box">
+            <i class="fas fa-heart"></i>
+          </div>
+          <h3 class="pillar-title">Values &amp; Dignity</h3>
+          <p class="pillar-desc">Founded on the compassionate ethos of St. Luigi Palazzolo: affirming the dignity, purpose, and potential of every young person.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     FEATURED DEPARTMENTS & PROGRAMMES
+     ========================================== -->
+<section class="ptvti-section" aria-labelledby="programmes-heading">
+  <div class="container">
+    <div class="d-flex flex-wrap justify-content-between align-items-end mb-4">
+      <div>
+        <span class="section-eyebrow">Academic Catalog</span>
+        <h2 id="programmes-heading" class="mb-1">Featured Vocational Programmes</h2>
+        <p class="text-muted mb-0">Certified artisan, certificate, and diploma pathways designed for the contemporary job market.</p>
+      </div>
+      <a href="/courses/" class="btn-ptvti-outline btn-sm mt-3 mt-md-0">
+        View All Courses <i class="fas fa-arrow-right ms-1"></i>
+      </a>
+    </div>
+
+    <!-- Department Cards -->
+    <div class="row g-4">
+      {% for course in featured_courses %}
+        <div class="col-lg-4 col-md-6">
+          <div class="ptvti-card">
+            <div class="ptvti-card-media">
+              {% if course.department.name == "Engineering Department" %}
+                <img src="{% static 'images/course-engineering1.jpg' %}" alt="{{ course.title }}">
+              {% elif course.department.name == "ICT & Computing Department" %}
+                <img src="{% static 'images/course-ict.jpg' %}" alt="{{ course.title }}">
+              {% elif course.department.name == "Fashion & Design Department" %}
+                <img src="{% static 'images/course-fashion1.JPG' %}" alt="{{ course.title }}">
+              {% elif course.department.name == "Cosmetology & Hairdressing Department" %}
+                <img src="{% static 'images/course-cosmetology.jpg' %}" alt="{{ course.title }}">
+              {% elif course.department.name == "Hospitality & Catering Department" %}
+                <img src="{% static 'images/course-hospitality1.jpg' %}" alt="{{ course.title }}">
+              {% else %}
+                <img src="{% static 'images/about-institute.jpg' %}" alt="{{ course.title }}">
+              {% endif %}
+              <span class="badge-ptvti badge-ptvti-gold card-badge-floating">
+                {{ course.department.name|default:"Vocational" }}
+              </span>
+            </div>
+            <div class="ptvti-card-body">
+              <h3 class="ptvti-card-title">
+                <a href="/courses/{{ course.slug }}/">{{ course.title }}</a>
+              </h3>
+              <div class="ptvti-card-meta">
+                <span class="meta-item"><i class="far fa-clock text-warning"></i> {{ course.duration_months }} Months</span>
+                <span class="meta-item"><i class="fas fa-certificate text-success"></i> TVETA Accredited</span>
+              </div>
+              <p class="text-muted small flex-grow-1">{{ course.description|truncatewords:20 }}</p>
+            </div>
+            <div class="ptvti-card-footer">
+              <a href="/courses/{{ course.slug }}/" class="text-dark fw-bold small">Course Details &rarr;</a>
+              <a href="/admissions/apply/?course={{ course.id }}" class="btn-ptvti-primary btn-sm py-1 px-3">Apply</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     INSTITUTIONAL IMPACT & STATISTICS
+     ========================================== -->
+<section class="ptvti-section ptvti-section-dark" aria-label="Institutional Impact">
+  <div class="container">
+    <div class="section-header text-center mb-5">
+      <span class="section-eyebrow text-warning">Our Impact In Numbers</span>
+      <h2>Transforming Lives Through Practical Skills</h2>
+      <p>Measurable achievements from our campus in Kiambu, empowering hundreds of youth since 2021.</p>
+    </div>
+
+    <div class="row g-4">
+      {% for stat in ptvti_verified_stats %}
+        <div class="col-lg-3 col-md-6">
+          <div class="stat-widget">
+            <div class="stat-icon">
+              <i class="{{ stat.icon }}"></i>
+            </div>
+            <div class="stat-number" data-counter="{{ stat.value }}" data-prefix="{{ stat.prefix }}" data-suffix="{{ stat.suffix }}">
+              0
+            </div>
+            <div class="stat-label">{{ stat.label }}</div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     CAMPUS FACILITIES & INFRASTRUCTURE
+     ========================================== -->
+<section class="ptvti-section ptvti-section-alt" aria-labelledby="facilities-heading">
+  <div class="container">
+    <div class="section-header text-center">
+      <span class="section-eyebrow">Modern Facilities</span>
+      <h2 id="facilities-heading">Equipped for Real-World Learning</h2>
+      <p>Our dedicated workshops and studios simulate authentic workplace environments to prepare students for professional practice.</p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6">
+        <div class="ptvti-card">
+          <div class="ptvti-card-media">
+            <img src="{% static 'images/infra-workshop.jpg' %}" alt="Technical Workshop">
+          </div>
+          <div class="ptvti-card-body">
+            <h4 class="ptvti-card-title">Technical Trades Workshops</h4>
+            <p class="text-muted small">Specialized bench spaces, welding bays, and electrical panels for domestic and industrial installation trade practice.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="ptvti-card">
+          <div class="ptvti-card-media">
+            <img src="{% static 'images/infra-ictlab.jpg' %}" alt="Computer Lab">
+          </div>
+          <div class="ptvti-card-body">
+            <h4 class="ptvti-card-title">Modern ICT Laboratory</h4>
+            <p class="text-muted small">High-speed networked computer workstations, internet connectivity, and modern diagnostic software tools.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="ptvti-card">
+          <div class="ptvti-card-media">
+            <img src="{% static 'images/infra-fashionstudio.JPG' %}" alt="Fashion Studio">
+          </div>
+          <div class="ptvti-card-body">
+            <h4 class="ptvti-card-title">Fashion &amp; Garment Studio</h4>
+            <p class="text-muted small">Industrial sewing machines, cutting tables, dressmaker mannequins, and pattern drafting facilities.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6">
+        <div class="ptvti-card">
+          <div class="ptvti-card-media" style="aspect-ratio: 21 / 10;">
+            <img src="{% static 'images/infra-salon.jpg' %}" alt="Salon & Barber Studio">
+          </div>
+          <div class="ptvti-card-body">
+            <h4 class="ptvti-card-title">Beauty &amp; Barber Studio</h4>
+            <p class="text-muted small">A fully equipped salon, styling stations, barbering chairs, and beauty therapy treatment areas for client-care practice.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6">
+        <div class="ptvti-card">
+          <div class="ptvti-card-media" style="aspect-ratio: 21 / 10;">
+            <img src="{% static 'images/infra-kitchen.jpg' %}" alt="Training Kitchen">
+          </div>
+          <div class="ptvti-card-body">
+            <h4 class="ptvti-card-title">Training Kitchen &amp; Bakery</h4>
+            <p class="text-muted small">Professional commercial stoves, baking ovens, prep stations, and culinary tools for commercial food and beverage mastery.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     LATEST NEWS & UPCOMING EVENTS
+     ========================================== -->
+<section class="ptvti-section" aria-labelledby="news-events-heading">
+  <div class="container">
+    <div class="row g-5">
+      <!-- Latest News -->
+      <div class="col-lg-7">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <div>
+            <span class="section-eyebrow">Campus Updates</span>
+            <h3 id="news-events-heading" class="h2 mb-0">Latest News &amp; Stories</h3>
+          </div>
+          <a href="/news/" class="text-dark fw-bold small">All News &rarr;</a>
+        </div>
+
+        {% for article in latest_news %}
+          <article class="ptvti-card mb-4 flex-md-row overflow-hidden">
+            <div class="ptvti-card-media col-md-4 col-12" style="aspect-ratio: auto; min-height: 180px;">
+              {% if article.image %}
+                <img src="{{ article.image.url }}" alt="{{ article.title }}">
+              {% else %}
+                <img src="{% static 'images/about-institute.jpg' %}" alt="{{ article.title }}">
+              {% endif %}
+            </div>
+            <div class="ptvti-card-body col-md-8 col-12">
+              <small class="text-muted mb-1 d-block"><i class="far fa-calendar-alt text-warning me-1"></i> {{ article.published_at|date:"F d, Y" }}</small>
+              <h4 class="ptvti-card-title h5 mb-2"><a href="/news/{{ article.slug }}/">{{ article.title }}</a></h4>
+              <p class="text-muted small mb-3">{{ article.summary|truncatewords:18 }}</p>
+              <a href="/news/{{ article.slug }}/" class="fw-bold small text-dark">Read Full Story &rarr;</a>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+
+      <!-- Upcoming Events -->
+      <div class="col-lg-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <div>
+            <span class="section-eyebrow">Mark Your Calendar</span>
+            <h3 class="h2 mb-0">Upcoming Events</h3>
+          </div>
+          <a href="/events/" class="text-dark fw-bold small">All Events &rarr;</a>
+        </div>
+
+        {% for event in upcoming_events %}
+          <div class="ptvti-card mb-3 p-3">
+            <div class="d-flex gap-3 align-items-center">
+              <div class="text-center p-2 rounded bg-light border" style="min-width: 65px;">
+                <span class="d-block text-danger fw-bold text-uppercase small">{{ event.starts_at|date:"M" }}</span>
+                <span class="d-block text-dark fw-bold fs-4">{{ event.starts_at|date:"d" }}</span>
+              </div>
+              <div>
+                <h5 class="mb-1"><a href="/events/" class="text-dark">{{ event.title }}</a></h5>
+                <small class="text-muted d-block"><i class="fas fa-map-marker-alt text-danger me-1"></i> {{ event.location|default:"PTVTI Main Campus" }}</small>
+                <small class="text-muted d-block"><i class="far fa-clock text-warning me-1"></i> {{ event.starts_at|date:"h:i A" }}</small>
+              </div>
+            </div>
+          </div>
+        {% empty %}
+          <div class="ptvti-card p-4 text-center">
+            <i class="far fa-calendar-check fa-2x text-muted mb-2"></i>
+            <p class="text-muted mb-0">No upcoming events are currently scheduled. Check back soon!</p>
+          </div>
+        {% endfor %}
+
+        <!-- Quick Contact Card in Sidebar -->
+        <div class="stat-widget mt-4 text-start bg-light border-0 shadow-sm p-4">
+          <h5 class="fw-bold text-dark mb-2"><i class="fas fa-headset text-warning me-2"></i> Need Guidance?</h5>
+          <p class="small text-muted mb-3">Our admissions officers are here to help you choose the right vocational pathway.</p>
+          <a href="/contact/" class="btn-ptvti-primary btn-sm w-100">Contact Admissions Office</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     STUDENT TESTIMONIALS
+     ========================================== -->
+<section class="ptvti-section ptvti-section-alt" aria-labelledby="testimonials-heading">
+  <div class="container">
+    <div class="section-header text-center">
+      <span class="section-eyebrow">Voices of Transformation</span>
+      <h2 id="testimonials-heading">What Our Students &amp; Alumni Say</h2>
+      <p>Hear from young men and women whose career journeys began in Palazzolo workshops.</p>
+    </div>
+
+    <div class="row g-4">
+      {% for testimonial in testimonials %}
+        <div class="col-lg-4 col-md-6">
+          <div class="ptvti-card p-4">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <div class="stat-icon m-0" style="width: 2.8rem; height: 2.8rem; font-size: 1.15rem;">
+                <i class="fas fa-quote-left"></i>
+              </div>
+              <div>
+                <h5 class="mb-0 fw-bold fs-6">{{ testimonial.author }}</h5>
+                <small class="text-muted">{{ testimonial.role }}</small>
+              </div>
+            </div>
+            <p class="text-secondary small fst-italic mb-0">"{{ testimonial.quote }}"</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     ADMISSIONS CALL TO ACTION BANNER
+     ========================================== -->
+<section class="ptvti-section pb-0" aria-label="Admissions Banner">
+  <div class="container">
+    <div class="ptvti-cta-banner">
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+          <span class="badge-ptvti badge-ptvti-gold mb-3">Next Intake Enrolling</span>
+          <h2>Ready to Build Practical Skills That Matter?</h2>
+          <p>Join Palazzolo Technical and Vocational Training Institute. Gain industry-standard craft, personal mentorship, and a direct path to employment.</p>
+        </div>
+        <div class="col-lg-4 text-lg-end">
+          <a href="/admissions/apply/" class="btn-ptvti-gold btn-lg me-2 mb-2 mb-md-0">
+            <i class="fas fa-paper-plane"></i> Apply Online Now
+          </a>
+          <a href="/contact/" class="btn-ptvti-outline-white btn-lg">
+            <i class="fas fa-question-circle"></i> Inquire
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

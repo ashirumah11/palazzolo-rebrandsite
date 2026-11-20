@@ -1,7 +1,43 @@
+import random
+from django.contrib import messages
+from django.shortcuts import redirect, render
 from rest_framework import generics
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
+
+from .forms import ContactForm
 from .models import ContactMessage, DepartmentContact
 from .serializers import ContactMessageSerializer, DepartmentContactSerializer
+
+
+def contact_view(request):
+    """
+    Public Contact & Support page with enquiry submission, unique reference code,
+    and direct department contact directory.
+    """
+    department_contacts = DepartmentContact.objects.all().order_by('department')
+
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            msg = form.save(commit=False)
+            ref_code = f"PTVTI-MSG-{random.randint(1000, 9999)}"
+            msg.subject = f"[{ref_code}] {msg.subject}"
+            msg.save()
+
+            messages.success(
+                request,
+                f"Thank you, {msg.name}! Your enquiry has been received. Your reference number is {ref_code}. Our team will contact you shortly."
+            )
+            return redirect('contact')
+    else:
+        form = ContactForm()
+
+    context = {
+        'form': form,
+        'department_contacts': department_contacts,
+    }
+    return render(request, 'pages/contact.html', context)
+
 
 
 class ContactMessageListCreateAPIView(generics.ListCreateAPIView):

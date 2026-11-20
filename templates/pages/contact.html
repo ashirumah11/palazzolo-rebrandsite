@@ -1,0 +1,249 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Contact &amp; Location | Palazzolo Technical &amp; Vocational Training Institute{% endblock %}
+
+{% block content %}
+<!-- ==========================================
+     CONTACT HERO
+     ========================================== -->
+<section class="course-detail-hero" aria-label="Contact Hero">
+  <div class="container">
+    <span class="section-eyebrow text-warning">Get In Touch</span>
+    <h1>Contact &amp; Location</h1>
+    <p class="lead text-white-50">
+      Have questions regarding course requirements, admission intakes, or campus visits? Our administrative and departmental teams are here to help.
+    </p>
+  </div>
+</section>
+
+<!-- ==========================================
+     CONTACT FORM & MAIN DETAILS
+     ========================================== -->
+<section class="ptvti-section ptvti-section-alt" aria-labelledby="contact-form-heading">
+  <div class="container">
+    <div class="row g-5">
+      <!-- Contact Form Column -->
+      <div class="col-lg-7">
+        <div class="application-form-card ms-0 p-4 p-md-5">
+          <h2 id="contact-form-heading" class="h3 mb-2">Send Us a Message</h2>
+          <p class="text-muted small mb-4">Fill out the form below. A confirmation reference number will be generated automatically for your inquiry.</p>
+
+          <form method="post" action="{% url 'contact' %}" data-prevent-duplicate>
+            {% csrf_token %}
+
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="ptvti-form-group">
+                  <label for="{{ form.name.id_for_label }}" class="ptvti-label">Full Name <span class="text-danger">*</span></label>
+                  {{ form.name }}
+                  {% if form.name.errors %}<div class="text-danger small mt-1">{{ form.name.errors|first }}</div>{% endif %}
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="ptvti-form-group">
+                  <label for="{{ form.email.id_for_label }}" class="ptvti-label">Email Address <span class="text-danger">*</span></label>
+                  {{ form.email }}
+                  {% if form.email.errors %}<div class="text-danger small mt-1">{{ form.email.errors|first }}</div>{% endif %}
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="ptvti-form-group">
+                  <label for="{{ form.phone.id_for_label }}" class="ptvti-label">Phone Number</label>
+                  {{ form.phone }}
+                  {% if form.phone.errors %}<div class="text-danger small mt-1">{{ form.phone.errors|first }}</div>{% endif %}
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="ptvti-form-group">
+                  <label for="{{ form.enquiry_category.id_for_label }}" class="ptvti-label">Enquiry Category</label>
+                  {{ form.enquiry_category }}
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="ptvti-form-group">
+                  <label for="{{ form.subject.id_for_label }}" class="ptvti-label">Subject <span class="text-danger">*</span></label>
+                  {{ form.subject }}
+                  {% if form.subject.errors %}<div class="text-danger small mt-1">{{ form.subject.errors|first }}</div>{% endif %}
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="ptvti-form-group">
+                  <label for="{{ form.message.id_for_label }}" class="ptvti-label">Your Message <span class="text-danger">*</span></label>
+                  {{ form.message }}
+                  {% if form.message.errors %}<div class="text-danger small mt-1">{{ form.message.errors|first }}</div>{% endif %}
+                </div>
+              </div>
+
+              <div class="col-12">
+                <button type="submit" class="btn-ptvti-primary w-100 py-3">
+                  <i class="fas fa-paper-plane me-2"></i> Submit Inquiry
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Institutional Contact Details Column -->
+      <div class="col-lg-5">
+        <div class="ptvti-card p-4 p-md-5 mb-4 border-top border-4 border-warning">
+          <h3 class="h4 mb-3">Campus Contact Info</h3>
+          <ul class="footer-contact-list">
+            <li class="footer-contact-item mb-3">
+              <i class="fas fa-map-marker-alt text-danger fa-lg mt-1"></i>
+              <div>
+                <strong class="d-block text-dark">Physical Address</strong>
+                <span>{{ ptvti_institution.address }}</span>
+              </div>
+            </li>
+            <li class="footer-contact-item mb-3">
+              <i class="fas fa-phone-alt text-success fa-lg mt-1"></i>
+              <div>
+                <strong class="d-block text-dark">General Telephone</strong>
+                <a href="tel:{{ ptvti_institution.phone|cut:' ' }}" class="text-dark">{{ ptvti_institution.phone }}</a>
+              </div>
+            </li>
+            <li class="footer-contact-item mb-3">
+              <i class="fas fa-envelope text-primary fa-lg mt-1"></i>
+              <div>
+                <strong class="d-block text-dark">Official Email</strong>
+                <a href="mailto:{{ ptvti_institution.email }}" class="text-dark">{{ ptvti_institution.email }}</a>
+              </div>
+            </li>
+            <li class="footer-contact-item mb-3">
+              <i class="fas fa-clock text-warning fa-lg mt-1"></i>
+              <div>
+                <strong class="d-block text-dark">Office &amp; Workshop Hours</strong>
+                <span>Monday – Friday: 8:00 AM – 5:00 PM</span><br>
+                <span>Saturday: 8:30 AM – 1:00 PM (Admissions Desk)</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Location Map Card -->
+        <div class="ptvti-card p-4">
+          <h4 class="h5 mb-2"><i class="fas fa-compass text-warning me-2"></i> How to Reach Us</h4>
+          <p class="text-muted small mb-3">
+            Located in Kiambu County along the Kihara-Gachie-Karura road (Nairobi metropolitan area), accessible via public matatus from Nairobi CBD (Route 108/118) or Kiambu town.
+          </p>
+          <div class="ratio ratio-16x9 rounded overflow-hidden shadow-sm">
+            <iframe 
+              src="https://maps.google.com/maps?q=Gachie,Kiambu,Kenya&t=&z=14&ie=UTF8&iwloc=&output=embed" 
+              style="border:0;" 
+              allowfullscreen="" 
+              loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade"
+              title="PTVTI Campus Location Map">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     DEPARTMENTAL DIRECTORY
+     ========================================== -->
+<section class="ptvti-section" aria-labelledby="dept-contacts-heading">
+  <div class="container">
+    <div class="section-header text-center">
+      <span class="section-eyebrow">Direct Inquiries</span>
+      <h2 id="dept-contacts-heading">Departmental Contact Directory</h2>
+      <p>Connect directly with instructors and academic administrators in each vocational field.</p>
+    </div>
+
+    <div class="row g-4">
+      {% for dc in department_contacts %}
+        <div class="col-lg-4 col-md-6">
+          <div class="ptvti-card p-4">
+            <h4 class="h5 text-dark mb-2"><i class="fas fa-building text-warning me-2"></i> {{ dc.department }}</h4>
+            {% if dc.address %}<p class="text-muted small mb-2"><i class="fas fa-map-pin me-1 text-muted"></i> {{ dc.address }}</p>{% endif %}
+            {% if dc.phone %}<p class="small mb-1"><i class="fas fa-phone-alt me-1 text-success"></i> <a href="tel:{{ dc.phone|cut:' ' }}" class="text-dark">{{ dc.phone }}</a></p>{% endif %}
+            {% if dc.email %}<p class="small mb-0"><i class="fas fa-envelope me-1 text-primary"></i> <a href="mailto:{{ dc.email }}" class="text-dark">{{ dc.email }}</a></p>{% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     FREQUENTLY ASKED QUESTIONS (ACCORDION)
+     ========================================== -->
+<section class="ptvti-section ptvti-section-alt" aria-labelledby="faq-heading">
+  <div class="container" style="max-width: 860px;">
+    <div class="section-header text-center">
+      <span class="section-eyebrow">Clear Answers</span>
+      <h2 id="faq-heading">Frequently Asked Questions</h2>
+      <p>Answers to common questions from prospective students and guardians.</p>
+    </div>
+
+    <div class="accordion" id="ptvtiFaqAccordion">
+      <div class="accordion-item mb-3 border rounded shadow-sm overflow-hidden">
+        <h3 class="accordion-header" id="faqHeading1">
+          <button class="accordion-button fw-bold text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse1" aria-expanded="true" aria-controls="faqCollapse1">
+            What are the minimum entry requirements for PTVTI courses?
+          </button>
+        </h3>
+        <div id="faqCollapse1" class="accordion-collapse collapse show" aria-labelledby="faqHeading1" data-bs-parent="#ptvtiFaqAccordion">
+          <div class="accordion-body text-muted small">
+            Requirements depend on the level of certification:
+            <ul class="mt-2 mb-0">
+              <li><strong>Artisan Level:</strong> Open entry with KCPE or KCSE result slip.</li>
+              <li><strong>Certificate Level:</strong> Minimum KCSE mean grade D- or a relevant Artisan certificate.</li>
+              <li><strong>Short Professional Courses:</strong> Open to anyone wishing to acquire or upskill practical trades (e.g. computer packages, barbering).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item mb-3 border rounded shadow-sm overflow-hidden">
+        <h3 class="accordion-header" id="faqHeading2">
+          <button class="accordion-button collapsed fw-bold text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse2" aria-expanded="false" aria-controls="faqCollapse2">
+            Is PTVTI accredited by the Kenyan Government?
+          </button>
+        </h3>
+        <div id="faqCollapse2" class="accordion-collapse collapse" aria-labelledby="faqHeading2" data-bs-parent="#ptvtiFaqAccordion">
+          <div class="accordion-body text-muted small">
+            Yes. Palazzolo Technical and Vocational Training Institute is fully accredited by the Technical and Vocational Education and Training Authority (<strong>TVETA Kenya</strong>), and our curricula align with <strong>NITA</strong> and national competency standards.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item mb-3 border rounded shadow-sm overflow-hidden">
+        <h3 class="accordion-header" id="faqHeading3">
+          <button class="accordion-button collapsed fw-bold text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse3" aria-expanded="false" aria-controls="faqCollapse3">
+            When do new student intakes take place?
+          </button>
+        </h3>
+        <div id="faqCollapse3" class="accordion-collapse collapse" aria-labelledby="faqHeading3" data-bs-parent="#ptvtiFaqAccordion">
+          <div class="accordion-body text-muted small">
+            We operate three primary academic intakes per year: <strong>January</strong>, <strong>May</strong>, and <strong>September</strong>. In addition, short modular courses (such as Computer Packages, Barbering, and Baking) enroll on an ongoing monthly basis.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item mb-3 border rounded shadow-sm overflow-hidden">
+        <h3 class="accordion-header" id="faqHeading4">
+          <button class="accordion-button collapsed fw-bold text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse4" aria-expanded="false" aria-controls="faqCollapse4">
+            Do you offer industrial attachment and internship placement?
+          </button>
+        </h3>
+        <div id="faqCollapse4" class="accordion-collapse collapse" aria-labelledby="faqHeading4" data-bs-parent="#ptvtiFaqAccordion">
+          <div class="accordion-body text-muted small">
+            Yes. PTVTI maintains an active industrial coordination office that assists students in securing attachments with verified electrical contractors, engineering firms, salons, hotels, and ICT organizations.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

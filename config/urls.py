@@ -8,14 +8,16 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path, re_path
-from django.views.generic import RedirectView
 from django.views.static import serve
 import os
 
-frontend_url = os.environ.get('FRONTEND_URL', 'http://localhost:5173')
+from content.views import home_view, about_view
+from contacts.views import contact_view
 
 urlpatterns = [
-    path('', RedirectView.as_view(url=frontend_url, permanent=False)),
+    path('', home_view, name='home'),
+    path('about/', about_view, name='about'),
+    path('contact/', contact_view, name='contact'),
     path('admin/', admin.site.urls),
     path('api/v1/', include('config.api_urls')),
     # Resilient media route ensuring uploaded institutional assets always resolve
