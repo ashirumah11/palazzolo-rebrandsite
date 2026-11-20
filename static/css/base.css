@@ -105,6 +105,58 @@ img {
   margin-right: auto;
 }
 
+/* Container Standardized Boundary (max-w-7xl, px-4 sm:px-6 lg:px-8) */
+.container {
+  width: 100%;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+    padding-right: 1.25rem;
+    padding-left: 1.25rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+    padding-right: 1.75rem;
+    padding-left: 1.75rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+    padding-right: 2rem;
+    padding-left: 2rem;
+  }
+}
+
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1280px; /* Clean max-w-7xl equivalent */
+  }
+}
+
+/* Flex and Column Containment Safety */
+.col, [class*="col-"] {
+  min-width: 0;
+}
+
 /* Sections */
 .ptvti-section {
   padding: 5rem 0;
@@ -302,24 +354,24 @@ img {
 .badge-ptvti-forest { background-color: var(--ptvti-forest-subtle); color: var(--ptvti-forest-dark); }
 .badge-ptvti-gold { background-color: var(--ptvti-gold-subtle); color: var(--ptvti-gold-dark); border: 1px solid var(--ptvti-gold-light); }
 
-/* Scroll to top */
+/* Scroll to top with safe viewport margins */
 .scroll-top-btn {
   position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  width: 3rem;
-  height: 3rem;
+  bottom: 1.5rem; /* Safe viewport margin (bottom-6) */
+  right: 1.5rem;  /* Safe viewport margin (right-6) */
+  width: 2.875rem;
+  height: 2.875rem;
   border-radius: 50%;
   background-color: var(--ptvti-navy);
   color: #FFFFFF;
-  border: none;
+  border: 2px solid rgba(255, 255, 255, 0.15);
   box-shadow: 0 4px 16px rgba(24, 29, 46, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   cursor: pointer;
-  z-index: 99;
+  z-index: 1040;
   opacity: 0;
   visibility: hidden;
   transition: all var(--ptvti-transition-normal);

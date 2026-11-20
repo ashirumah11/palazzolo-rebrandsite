@@ -33,7 +33,7 @@
 
 .footer-heading {
   font-family: var(--ptvti-font-heading);
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -41,6 +41,8 @@
   margin-bottom: 1.25rem;
   position: relative;
   padding-bottom: 0.5rem;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .footer-heading::after {
@@ -60,15 +62,23 @@
 }
 
 .footer-link-item {
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.65rem;
 }
 
 .footer-link-item a {
   color: rgba(255, 255, 255, 0.75);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  line-height: 1.45;
+  word-break: break-word;
+  overflow-wrap: break-word;
   transition: all var(--ptvti-transition-fast);
+}
+
+.footer-link-item a i {
+  margin-top: 0.3rem;
+  flex-shrink: 0;
 }
 
 .footer-link-item a:hover {

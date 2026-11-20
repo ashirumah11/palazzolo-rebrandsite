@@ -138,26 +138,112 @@
   transform: scale(1.05);
 }
 
+/* Event Cards & Badges */
+.event-card {
+  border: 1px solid var(--ptvti-border);
+  transition: all var(--ptvti-transition-normal);
+}
+
+.event-card:hover {
+  border-color: var(--ptvti-gold);
+  transform: translateY(-2px);
+  box-shadow: var(--ptvti-shadow-md);
+}
+
+.event-card-inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.event-date-badge {
+  flex-shrink: 0;
+  width: 68px;
+  min-width: 68px;
+  background-color: #F8F9FA;
+  border: 1px solid var(--ptvti-border);
+  border-radius: var(--ptvti-radius-sm);
+  padding: 0.5rem 0.25rem;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.event-date-month {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--ptvti-danger);
+  letter-spacing: 0.05em;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+
+.event-date-day {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--ptvti-navy);
+  line-height: 1;
+}
+
+.event-details {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.event-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  line-height: 1.35;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
 /* CTA Banner */
 .ptvti-cta-banner {
   background: linear-gradient(135deg, var(--ptvti-navy) 0%, var(--ptvti-forest) 100%);
   border-radius: var(--ptvti-radius-xl);
-  padding: 4rem 3rem;
+  padding: 3rem 2rem;
   color: #FFFFFF;
   box-shadow: var(--ptvti-shadow-lg);
   position: relative;
   overflow: hidden;
 }
 
-.ptvti-cta-banner h2 {
+@media (min-width: 992px) {
+  .ptvti-cta-banner {
+    padding: 4rem 3.5rem;
+  }
+}
+
+.cta-banner-title {
   color: #FFFFFF;
   font-size: 2.25rem;
+  font-weight: 800;
+  line-height: 1.2;
   margin-bottom: 1rem;
 }
 
-.ptvti-cta-banner p {
-  color: rgba(255, 255, 255, 0.85);
-  font-size: 1.15rem;
-  max-width: 600px;
-  margin-bottom: 2rem;
+.cta-banner-desc {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  max-width: 640px;
+}
+
+.cta-banner-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+@media (min-width: 992px) {
+  .cta-banner-actions {
+    justify-content: flex-end;
+  }
 }

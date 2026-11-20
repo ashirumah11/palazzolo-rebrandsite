@@ -360,15 +360,15 @@
         </div>
 
         {% for event in upcoming_events %}
-          <div class="ptvti-card mb-3 p-3">
-            <div class="d-flex gap-3 align-items-center">
-              <div class="text-center p-2 rounded bg-light border" style="min-width: 65px;">
-                <span class="d-block text-danger fw-bold text-uppercase small">{{ event.starts_at|date:"M" }}</span>
-                <span class="d-block text-dark fw-bold fs-4">{{ event.starts_at|date:"d" }}</span>
+          <div class="ptvti-card event-card mb-3 p-3">
+            <div class="event-card-inner">
+              <div class="event-date-badge">
+                <span class="event-date-month">{{ event.starts_at|date:"M" }}</span>
+                <span class="event-date-day">{{ event.starts_at|date:"d" }}</span>
               </div>
-              <div>
-                <h5 class="mb-1"><a href="/events/" class="text-dark">{{ event.title }}</a></h5>
-                <small class="text-muted d-block"><i class="fas fa-map-marker-alt text-danger me-1"></i> {{ event.location|default:"PTVTI Main Campus" }}</small>
+              <div class="event-details">
+                <h5 class="event-title mb-1"><a href="/events/" class="text-dark">{{ event.title }}</a></h5>
+                <small class="text-muted d-block text-truncate"><i class="fas fa-map-marker-alt text-danger me-1"></i> {{ event.location|default:"PTVTI Main Campus" }}</small>
                 <small class="text-muted d-block"><i class="far fa-clock text-warning me-1"></i> {{ event.starts_at|date:"h:i A" }}</small>
               </div>
             </div>
@@ -426,22 +426,24 @@
 <!-- ==========================================
      ADMISSIONS CALL TO ACTION BANNER
      ========================================== -->
-<section class="ptvti-section pb-0" aria-label="Admissions Banner">
+<section class="ptvti-section" aria-label="Admissions Banner">
   <div class="container">
     <div class="ptvti-cta-banner">
-      <div class="row align-items-center">
-        <div class="col-lg-8">
+      <div class="row align-items-center g-4">
+        <div class="col-xl-7 col-lg-7">
           <span class="badge-ptvti badge-ptvti-gold mb-3">Next Intake Enrolling</span>
-          <h2>Ready to Build Practical Skills That Matter?</h2>
-          <p>Join Palazzolo Technical and Vocational Training Institute. Gain industry-standard craft, personal mentorship, and a direct path to employment.</p>
+          <h2 class="cta-banner-title">Ready to Build Practical Skills That Matter?</h2>
+          <p class="cta-banner-desc mb-0">Join Palazzolo Technical and Vocational Training Institute. Gain industry-standard craft, personal mentorship, and a direct path to employment.</p>
         </div>
-        <div class="col-lg-4 text-lg-end">
-          <a href="/admissions/apply/" class="btn-ptvti-gold btn-lg me-2 mb-2 mb-md-0">
-            <i class="fas fa-paper-plane"></i> Apply Online Now
-          </a>
-          <a href="/contact/" class="btn-ptvti-outline-white btn-lg">
-            <i class="fas fa-question-circle"></i> Inquire
-          </a>
+        <div class="col-xl-5 col-lg-5">
+          <div class="cta-banner-actions">
+            <a href="/admissions/apply/" class="btn-ptvti-gold btn-lg">
+              <i class="fas fa-paper-plane"></i> Apply Online Now
+            </a>
+            <a href="/contact/" class="btn-ptvti-white btn-lg">
+              <i class="fas fa-question-circle"></i> Inquire
+            </a>
+          </div>
         </div>
       </div>
     </div>

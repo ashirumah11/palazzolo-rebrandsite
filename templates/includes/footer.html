@@ -1,22 +1,22 @@
 {% load static %}
 <footer class="ptvti-footer" role="contentinfo">
   <div class="container">
-    <div class="row g-4 justify-content-between">
+    <div class="row g-4 g-lg-5">
       <!-- Institutional Info -->
-      <div class="col-lg-4 col-md-6">
+      <div class="col-12 col-md-6 col-lg-4">
         <h3 class="footer-brand-title">{{ ptvti_institution.name }}</h3>
         <p class="footer-motto">"{{ ptvti_institution.motto }}"</p>
         <p class="footer-desc">
           Established in November 2021 by the Poverelle Sisters (Institute of the Sisters of the Poor - Palazzolo), PTVTI provides values-based, competency-centered technical and vocational education that transforms youth into skilled, self-reliant professionals.
         </p>
-        <div class="d-flex align-items-center gap-3">
+        <div class="d-flex align-items-center flex-wrap gap-2">
           <span class="footer-badge-pill"><i class="fas fa-certificate text-warning me-1"></i> TVETA Accredited</span>
           <span class="footer-badge-pill"><i class="fas fa-award text-warning me-1"></i> NITA & UNESCO Partner</span>
         </div>
       </div>
 
       <!-- Quick Links -->
-      <div class="col-lg-2 col-md-6 col-6">
+      <div class="col-6 col-md-6 col-lg-2">
         <h4 class="footer-heading">Quick Links</h4>
         <ul class="footer-links">
           <li class="footer-link-item"><a href="/"><i class="fas fa-chevron-right fa-xs"></i> Home</a></li>
@@ -31,7 +31,7 @@
       </div>
 
       <!-- Departments -->
-      <div class="col-lg-3 col-md-6 col-6">
+      <div class="col-12 col-sm-6 col-md-6 col-lg-3">
         <h4 class="footer-heading">Departments</h4>
         <ul class="footer-links">
           {% for dept in ptvti_nav_departments %}
@@ -47,7 +47,7 @@
       </div>
 
       <!-- Contact Details -->
-      <div class="col-lg-3 col-md-6">
+      <div class="col-12 col-md-6 col-lg-3">
         <h4 class="footer-heading">Contact & Location</h4>
         <ul class="footer-contact-list">
           <li class="footer-contact-item">
