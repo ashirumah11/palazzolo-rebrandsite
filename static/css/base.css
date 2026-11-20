@@ -227,6 +227,65 @@ img {
   transform: translateY(-2px);
 }
 
+/* High-contrast solid white button with dark text & dark icon before hover */
+.btn-ptvti-white {
+  background-color: #FFFFFF;
+  border: 2px solid #FFFFFF;
+  color: var(--ptvti-navy) !important;
+  font-family: var(--ptvti-font-heading);
+  font-weight: 700;
+  padding: 0.75rem 1.625rem;
+  border-radius: var(--ptvti-radius-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  transition: all var(--ptvti-transition-normal);
+  text-decoration: none;
+}
+
+.btn-ptvti-white i {
+  color: var(--ptvti-navy) !important;
+  transition: transform var(--ptvti-transition-fast), color var(--ptvti-transition-fast);
+}
+
+.btn-ptvti-white:hover {
+  background-color: var(--ptvti-navy);
+  border-color: var(--ptvti-navy);
+  color: #FFFFFF !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.btn-ptvti-white:hover i {
+  color: var(--ptvti-gold) !important;
+  transform: translateX(3px);
+}
+
+/* Ensure any outline-white inside hero actions is also dark before hover */
+.hero-actions .btn-ptvti-outline-white {
+  background-color: #FFFFFF;
+  border-color: #FFFFFF;
+  color: var(--ptvti-navy) !important;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.hero-actions .btn-ptvti-outline-white i {
+  color: var(--ptvti-navy) !important;
+}
+
+.hero-actions .btn-ptvti-outline-white:hover {
+  background-color: var(--ptvti-navy);
+  border-color: var(--ptvti-navy);
+  color: #FFFFFF !important;
+}
+
+.hero-actions .btn-ptvti-outline-white:hover i {
+  color: var(--ptvti-gold) !important;
+}
+
 /* Badges */
 .badge-ptvti {
   font-family: var(--ptvti-font-heading);
