@@ -2,6 +2,17 @@
    PTVTI FOOTER STYLES
    ========================================================================== */
 
+/* Prevent right-edge clipping of column content inside the footer container */
+.ptvti-footer .container,
+.ptvti-footer .row {
+  overflow: visible;
+}
+
+.ptvti-footer .footer-links,
+.ptvti-footer .footer-contact-list {
+  overflow: visible;
+}
+
 .ptvti-footer {
   background-color: var(--ptvti-navy);
   color: rgba(255, 255, 255, 0.85);

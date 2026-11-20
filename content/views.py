@@ -1,8 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, redirect, render
+from django.contrib import messages
+from django.utils import timezone
+from django.db import IntegrityError, transaction
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
-from .models import Announcement, StaffMember, EventItem, Testimonial, GalleryItem, HeroCarouselItem
+from .models import Announcement, StaffMember, EventItem, Testimonial, GalleryItem, HeroCarouselItem, EventRegistration
+from .forms import EventRegistrationForm
 from courses.models import Department, Course
 from news.models import NewsArticle
 from .serializers import (
@@ -12,6 +16,7 @@ from .serializers import (
     TestimonialSerializer,
     GalleryItemSerializer,
     HeroCarouselItemSerializer,
+    EventRegistrationSerializer,
 )
 
 
@@ -55,6 +60,65 @@ def about_view(request):
         'gallery_items': gallery_items,
     }
     return render(request, 'pages/about.html', context)
+
+
+def event_list_view(request):
+    """
+    Public Events Hub with upcoming vs. past filtering.
+    """
+    now = timezone.now()
+    upcoming = request.GET.get('filter', 'upcoming') == 'upcoming'
+    queryset = EventItem.objects.filter(is_active=True).select_related()
+    if upcoming:
+        queryset = queryset.filter(starts_at__gte=now).order_by('starts_at')
+    else:
+        queryset = queryset.filter(starts_at__lt=now).order_by('-starts_at')
+
+    context = {
+        'events': queryset,
+        'is_upcoming': upcoming,
+        'now': now,
+    }
+    return render(request, 'content/event_list.html', context)
+
+
+def event_detail_view(request, pk):
+    """
+    Public event detail page with registration form and attendee count.
+    """
+    event = get_object_or_404(EventItem, pk=pk, is_active=True)
+    now = timezone.now()
+    registrations = EventRegistration.objects.filter(event=event).select_related()
+
+    if request.method == 'POST':
+        form = EventRegistrationForm(request.POST)
+        if form.is_valid():
+            registration = form.save(commit=False)
+            registration.event = event
+            try:
+                with transaction.atomic():
+                    registration.save()
+                messages.success(
+                    request,
+                    f"Thank you, {registration.name}! You are registered for '{event.title}'."
+                )
+                return redirect('event_detail', pk=pk)
+            except IntegrityError:
+                messages.error(
+                    request,
+                    "You are already registered for this event with this email address."
+                )
+    else:
+        form = EventRegistrationForm()
+
+    context = {
+        'event': event,
+        'form': form,
+        'registrations': registrations,
+        'now': now,
+        'registration_count': registrations.count(),
+    }
+    return render(request, 'content/event_detail.html', context)
 
 
 class AnnouncementViewSet(viewsets.ModelViewSet):
@@ -110,4 +174,16 @@ class HeroCarouselItemViewSet(viewsets.ModelViewSet):
         queryset = HeroCarouselItem.objects.all()
         if self.action == 'list':
             return queryset.filter(is_active=True)
+        return queryset
+
+
+class EventRegistrationViewSet(viewsets.ModelViewSet):
+    queryset = EventRegistration.objects.all().select_related('event')
+    serializer_class = EventRegistrationSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        queryset = EventRegistration.objects.all().select_related('event')
+        if self.action == 'list':
+            return queryset
         return queryset

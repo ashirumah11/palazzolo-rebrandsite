@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Announcement, StaffMember, EventItem, Testimonial, GalleryItem, HeroCarouselItem
+from .models import Announcement, StaffMember, EventItem, Testimonial, GalleryItem, HeroCarouselItem, EventRegistration
 
 
 class AnnouncementSerializer(serializers.ModelSerializer):
@@ -107,3 +107,10 @@ class HeroCarouselItemSerializer(serializers.ModelSerializer):
             return None
         except Exception:
             return None
+
+
+class EventRegistrationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EventRegistration
+        fields = '__all__'
+        read_only_fields = ['id', 'registered_at']

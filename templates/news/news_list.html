@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}News & Stories | PTVTI Palazzolo Technical & Vocational Training Institute{% endblock %}
+
+{% block content %}
+<section class="news-hero" aria-label="News Hero">
+  <div class="container">
+    <span class="section-eyebrow text-warning">News & Stories</span>
+    <h1>Latest Updates from PTVTI</h1>
+    <p class="lead text-white-50">Stay informed about institutional developments, student achievements, and community events.</p>
+  </div>
+</section>
+
+<section class="ptvti-section ptvti-section-alt">
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col-md-8">
+        <form method="get" class="d-flex gap-2">
+          <input type="text" name="q" value="{{ query }}" placeholder="Search news articles..." class="form-control">
+          <button class="btn btn-ptvti-primary">Search</button>
+        </form>
+      </div>
+      <div class="col-md-4 text-md-end mt-2 mt-md-0">
+        <div class="btn-group" role="group">
+          <a class="btn btn-ptvti-outline {% if not category %}active{% endif %}" href="{% url 'news_list' %}">All</a>
+          <a class="btn btn-ptvti-outline {% if category == 'Announcements' %}active{% endif %}" href="?category=Announcements">Announcements</a>
+          <a class="btn btn-ptvti-outline {% if category == 'Events' %}active{% endif %}" href="?category=Events">Events</a>
+          <a class="btn btn-ptvti-outline {% if category == 'Achievements' %}active{% endif %}" href="?category=Achievements">Achievements</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      {% for article in articles %}
+        <div class="col-lg-4 col-md-6">
+          <div class="ptvti-card h-100">
+            {% if article.image %}
+              <div class="ptvti-card-media">
+                <img src="{{ article.image.url }}" alt="{{ article.title }}">
+              </div>
+            {% else %}
+              <div class="ptvti-card-media">
+                <img src="{% static 'images/about-institute.jpg' %}" alt="{{ article.title }}">
+              </div>
+            {% endif %}
+            <div class="ptvti-card-body">
+              <div class="ptvti-card-meta mb-2">
+                <span class="meta-item"><i class="far fa-calendar-alt text-warning"></i> {{ article.published_at|date:"F j, Y" }}</span>
+                {% if article.author %}
+                  <span class="meta-item"><i class="fas fa-user text-primary"></i> {{ article.author }}</span>
+                {% endif %}
+              </div>
+              <h3 class="ptvti-card-title"><a href="{% url 'news_detail' article.slug %}">{{ article.title }}</a></h3>
+              <p class="text-muted small">{{ article.summary|truncatewords:25 }}</p>
+            </div>
+            <div class="ptvti-card-footer">
+              <a href="{% url 'news_detail' article.slug %}" class="text-dark fw-bold small">Read More &rarr;</a>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <div class="col-12"><p class="text-muted text-center py-5">No news articles found.</p></div>
+      {% endfor %}
+    </div>
+
+    {% if page_obj.has_other_pages %}
+    <nav aria-label="News pagination" class="mt-4">
+      <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if category %}&category={{ category }}{% endif %}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+        {% else %}
+          <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+          {% if page_obj.number == num %}
+            <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+          {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ num }}{% if query %}&q={{ query }}{% endif %}{% if category %}&category={{ category }}{% endif %}">{{ num }}</a>
+            </li>
+          {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if category %}&category={{ category }}{% endif %}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        {% else %}
+          <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+        {% endif %}
+      </ul>
+    </nav>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

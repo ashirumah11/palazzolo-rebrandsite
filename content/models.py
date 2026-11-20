@@ -114,3 +114,28 @@ class HeroCarouselItem(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class EventRegistration(models.Model):
+    """
+    Public registration for an institutional event.
+    A unique email may register only once per event to prevent duplicates.
+    """
+    event = models.ForeignKey(
+        EventItem,
+        related_name='registrations',
+        on_delete=models.CASCADE,
+    )
+    name = models.CharField(max_length=160)
+    email = models.EmailField()
+    phone = models.CharField(max_length=30, blank=True)
+    registered_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-registered_at']
+        unique_together = ('event', 'email')
+        verbose_name = 'Event Registration'
+        verbose_name_plural = 'Event Registrations'
+
+    def __str__(self):
+        return f'{self.name} - {self.event.title}'

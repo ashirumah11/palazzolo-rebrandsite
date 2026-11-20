@@ -367,7 +367,7 @@
                 <span class="event-date-day">{{ event.starts_at|date:"d" }}</span>
               </div>
               <div class="event-details">
-                <h5 class="event-title mb-1"><a href="/events/" class="text-dark">{{ event.title }}</a></h5>
+                <h5 class="event-title mb-1"><a href="{% url 'event_detail' event.pk %}" class="text-dark">{{ event.title }}</a></h5>
                 <small class="text-muted d-block text-truncate"><i class="fas fa-map-marker-alt text-danger me-1"></i> {{ event.location|default:"PTVTI Main Campus" }}</small>
                 <small class="text-muted d-block"><i class="far fa-clock text-warning me-1"></i> {{ event.starts_at|date:"h:i A" }}</small>
               </div>
@@ -381,9 +381,9 @@
         {% endfor %}
 
         <!-- Quick Contact Card in Sidebar -->
-        <div class="sidebar-guidance-card mt-4 p-4">
-          <h5 class="fw-bold text-dark mb-2"><i class="fas fa-headset text-warning me-2"></i> Need Guidance?</h5>
-          <p class="small text-muted mb-3">Our admissions officers are here to help you choose the right vocational pathway.</p>
+        <div class="sidebar-guidance-card">
+          <h5 class="mb-2"><i class="fas fa-headset text-warning me-2"></i> Need Guidance?</h5>
+          <p class="small mb-3">Our admissions officers are here to help you choose the right vocational pathway.</p>
           <a href="/contact/" class="btn-ptvti-primary btn-sm w-100">Contact Admissions Office</a>
         </div>
       </div>

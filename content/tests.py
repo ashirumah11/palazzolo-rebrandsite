@@ -15,7 +15,9 @@ from .models import (
     EventItem,
     Testimonial,
     GalleryItem,
+    EventRegistration,
 )
+from news.models import NewsArticle
 
 
 class ContentApiTests(TestCase):
@@ -145,3 +147,79 @@ class PublicPagesViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTrue(ContactMessage.objects.filter(email='francis@example.com').exists())
         self.assertContains(response, 'PTVTI-MSG-')
+
+    def test_news_list_page_renders(self):
+        NewsArticle.objects.create(
+            title='Test News',
+            slug='test-news',
+            summary='Test summary',
+            content='Test content',
+            is_published=True,
+        )
+        response = self.client.get('/news/')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Test News')
+
+    def test_news_detail_page_renders(self):
+        article = NewsArticle.objects.create(
+            title='Detail News',
+            slug='detail-news',
+            summary='Detail summary',
+            content='Detail content',
+            is_published=True,
+        )
+        response = self.client.get(f'/news/{article.slug}/')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Detail News')
+
+    def test_event_list_page_renders(self):
+        EventItem.objects.create(
+            title='Future Event',
+            starts_at='2030-01-01T10:00:00Z',
+            is_active=True,
+        )
+        response = self.client.get('/events/')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Future Event')
+
+    def test_event_detail_page_renders(self):
+        event = EventItem.objects.create(
+            title='Detail Event',
+            starts_at='2030-01-01T10:00:00Z',
+            is_active=True,
+        )
+        response = self.client.get(f'/events/{event.pk}/')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Detail Event')
+
+    def test_event_registration_success(self):
+        event = EventItem.objects.create(
+            title='Registerable Event',
+            starts_at='2030-01-01T10:00:00Z',
+            is_active=True,
+        )
+        payload = {
+            'name': 'Test User',
+            'email': 'test@example.com',
+            'phone': '+254700000000',
+        }
+        response = self.client.post(f'/events/{event.pk}/', payload, follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(EventRegistration.objects.filter(email='test@example.com', event=event).exists())
+        self.assertContains(response, 'Thank you')
+
+    def test_event_registration_duplicate_prevented(self):
+        event = EventItem.objects.create(
+            title='Duplicate Event',
+            starts_at='2030-01-01T10:00:00Z',
+            is_active=True,
+        )
+        EventRegistration.objects.create(event=event, name='Existing', email='existing@example.com')
+        payload = {
+            'name': 'New User',
+            'email': 'existing@example.com',
+            'phone': '+254700000001',
+        }
+        response = self.client.post(f'/events/{event.pk}/', payload, follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'already registered')

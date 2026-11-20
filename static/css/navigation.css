@@ -126,6 +126,19 @@
     align-items: center;
     gap: 0.25rem;
   }
+
+  /* Keep every nav item (including dropdowns and the CTA) on a single line
+     between the xl collapse threshold (1200px) and the wide layout (1400px). */
+  .navbar-nav .nav-link {
+    padding: 0.4rem 0.5rem !important;
+    font-size: 0.85rem;
+  }
+
+  .nav-cta-btn {
+    margin-left: 0.35rem;
+    padding: 0.42rem 0.8rem !important;
+    font-size: 0.85rem;
+  }
 }
 
 .navbar-nav .nav-link {

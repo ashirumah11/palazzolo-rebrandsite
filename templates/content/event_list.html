@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Events | PTVTI Palazzolo Technical & Vocational Training Institute{% endblock %}
+
+{% block content %}
+<section class="event-hero" aria-label="Events Hub">
+  <div class="container">
+    <span class="section-eyebrow text-warning">Events Hub</span>
+    <h1>Community Events & Activities</h1>
+    <p class="lead text-white-50">Discover upcoming workshops, seminars, and community gatherings at PTVTI.</p>
+  </div>
+</section>
+
+<section class="ptvti-section ptvti-section-alt">
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col-md-8">
+        <div class="btn-group" role="group" aria-label="Event filter">
+          <a href="{% url 'event_list' %}?filter=upcoming" class="btn btn-ptvti-outline {% if is_upcoming %}active{% endif %}">Upcoming Events</a>
+          <a href="{% url 'event_list' %}?filter=past" class="btn btn-ptvti-outline {% if not is_upcoming %}active{% endif %}">Past Events</a>
+        </div>
+      </div>
+      <div class="col-md-4 text-md-end">
+        <small class="text-muted">{{ events|length }} event{{ events|length|pluralize }} found</small>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      {% for event in events %}
+        <div class="col-lg-4 col-md-6">
+          <div class="ptvti-card h-100">
+            {% if event.image %}
+              <div class="ptvti-card-media">
+                <img src="{{ event.image.url }}" alt="{{ event.title }}">
+                <span class="badge-ptvti badge-ptvti-gold card-badge-floating">{% if is_upcoming %}Upcoming{% else %}Completed{% endif %}</span>
+              </div>
+            {% else %}
+              <div class="ptvti-card-media">
+                <img src="{% static 'images/about-institute.jpg' %}" alt="{{ event.title }}">
+                <span class="badge-ptvti badge-ptvti-gold card-badge-floating">{% if is_upcoming %}Upcoming{% else %}Completed{% endif %}</span>
+              </div>
+            {% endif %}
+            <div class="ptvti-card-body">
+              <div class="ptvti-card-meta mb-2">
+                <span class="meta-item"><i class="far fa-calendar-alt text-warning"></i> {{ event.starts_at|date:"F j, Y" }}</span>
+                <span class="meta-item"><i class="far fa-clock text-primary"></i> {{ event.starts_at|date:"g:i A" }}{% if event.ends_at %} - {{ event.ends_at|date:"g:i A" }}{% endif %}</span>
+              </div>
+              {% if event.location %}
+                <div class="ptvti-card-meta mb-2">
+                  <span class="meta-item"><i class="fas fa-map-marker-alt text-danger"></i> {{ event.location }}</span>
+                </div>
+              {% endif %}
+              <h3 class="ptvti-card-title"><a href="{% url 'event_detail' event.pk %}">{{ event.title }}</a></h3>
+              <p class="text-muted small">{{ event.description|truncatewords:20 }}</p>
+            </div>
+            <div class="ptvti-card-footer">
+              <a href="{% url 'event_detail' event.pk %}" class="btn btn-ptvti-primary btn-sm w-100">{% if is_upcoming %}View & Register{% else %}View Details{% endif %}</a>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <div class="col-12"><p class="text-muted text-center py-5">{% if is_upcoming %}No upcoming events scheduled.{% else %}No past events found.{% endif %}</p></div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

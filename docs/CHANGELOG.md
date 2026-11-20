@@ -1,5 +1,49 @@
 # PTVTI REBRANDING & MODERNIZATION CHANGELOG
 
+## [Phase 5: News, Community & Events] - 2026-11-20
+
+### Added
+- **News & Stories Feed** (`news/views.py`, `templates/news/news_list.html`, `templates/news/news_detail.html`):
+  - Public news listing with full-text search across title, summary, and content.
+  - Category filtering (Announcements, Events, Achievements).
+  - Pagination (9 articles per page) with accessible navigation.
+  - Article detail pages with related articles sidebar (4 most recent).
+  - Social sharing links (Facebook, Twitter, LinkedIn, Email).
+  - Responsive card grid using PTVTI design system (`ptvti-card`, `ptvti-section`).
+- **Events Hub** (`content/views.py`, `templates/content/event_list.html`, `templates/content/event_detail.html`):
+  - Upcoming vs. Past filter with clean toggle UI.
+  - Event cards showing date, time, location, and registration count.
+  - Event detail pages with full description and metadata.
+  - Public registration form (`EventRegistrationForm`) with name, email, phone fields.
+  - Duplicate prevention via unique constraint on (event, email) with user-friendly error message.
+  - Flash messages for registration success and duplicate detection.
+  - Social sharing and "Back to Events" navigation.
+- **Models & Admin**:
+  - `EventRegistration` model with unique_together constraint on (event, email).
+  - `EventRegistrationAdmin` with list display, search, and date hierarchy.
+  - `EventRegistrationSerializer` for DRF API access.
+  - `EventRegistrationViewSet` for API CRUD operations.
+- **Tests** (`content/tests.py`):
+  - 6 new test cases covering news list, news detail, event list, event detail, registration success, and duplicate prevention.
+  - All 27 tests passing.
+
+### Fixed
+- **Clean Events CSS Architecture:** Extracted event-specific styles into a dedicated `static/css/events.css` (`event-hero`, `event-meta-strip`, `event-meta-pill`, `event-sidebar-card`, `event-card`, `event-date-badge`, `event-title`, `sidebar-guidance-card`). Event templates now use event-specific classes instead of borrowing course classes (`course-detail-hero`, `course-meta-strip`, `course-meta-pill`), eliminating the layout overlay coupling smell.
+- **Home "Need Guidance?" Card Visibility:** Replaced low-contrast `text-muted` body copy with `var(--ptvti-text-body)` and gave the card a white surface, strong border, gold left accent bar, and forced navy heading for legibility.
+- **Home Event Card Navigation:** Event cards now link to their individual detail page (`{% url 'event_detail' event.pk %}`) instead of the hub.
+- **News CSS Architecture:** Created dedicated `static/css/news.css` with `news-hero`, `news-meta-strip`, `news-meta-pill`, `news-content`, `related-articles-card`, and `news-social-share` classes. Refactored `news_list.html` and `news_detail.html` to use news-specific hero and meta classes instead of course borrowings.
+- **Static Files Collection:** Verified `events.css` and `news.css` are collected into `staticfiles/` via `python manage.py collectstatic --noinput`.
+- **Cache-Busting:** All 12 local CSS links in `base.html` include `?v=5` query parameter to prevent stale browser cache.
+
+## [Phase 4: Courses & Admissions Improvements] - 2026-11-20
+
+### Added
+- Courses directory (`templates/courses/course_list.html`) with department tabs and search filter.
+- Course detail page (`templates/courses/course_detail.html`) with entry requirements, career outcomes and Apply CTA.
+- Public admission form (`templates/admissions/apply.html`) with unique tracking reference generation.
+- Application tracking portal (`templates/admissions/track.html`).
+- Tests for courses and admissions views.
+
 ## [Phase 3: Public Core Pages & Dynamic Seed Data] - 2026-11-20
 
 ### Added

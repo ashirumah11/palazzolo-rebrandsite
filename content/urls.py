@@ -6,6 +6,9 @@ from .views import (
     TestimonialViewSet,
     GalleryItemViewSet,
     HeroCarouselItemViewSet,
+    EventRegistrationViewSet,
+    event_list_view,
+    event_detail_view,
 )
 
 urlpatterns = [
@@ -79,5 +82,17 @@ urlpatterns = [
         'hero-carousel/<int:pk>/',
         HeroCarouselItemViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'}),
         name='herocarouselitem-detail'
+    ),
+
+    # Event registrations
+    path(
+        'event-registrations/',
+        EventRegistrationViewSet.as_view({'get': 'list', 'post': 'create'}),
+        name='eventregistration-list-create'
+    ),
+    path(
+        'event-registrations/<int:pk>/',
+        EventRegistrationViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'}),
+        name='eventregistration-detail'
     ),
 ]

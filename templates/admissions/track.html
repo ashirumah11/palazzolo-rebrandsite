@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Track Application | PTVTI{% endblock %}
+{% block content %}
+<section class="course-detail-hero"><div class="container"><h1>Track Application</h1></div></section>
+<section class="ptvti-section ptvti-section-alt"><div class="container" style="max-width:720px">
+  <form method="get" class="mb-4">
+    <div class="row g-2">
+      <div class="col-md-6">{{ form.email }}</div>
+      <div class="col-md-4">{{ form.ref }}</div>
+      <div class="col-md-2"><button class="btn btn-ptvti-primary w-100">Track</button></div>
+    </div>
+  </form>
+  {% if admission %}
+    <div class="ptvti-card p-4">
+      <h4>{{ admission.first_name }} {{ admission.last_name }}</h4>
+      <p>Course: {{ admission.course.title }}</p>
+      <p>Status: <strong>{{ admission.get_status_display }}</strong></p>
+      <p>Applied: {{ admission.applied_at|date:"M d, Y" }}</p>
+    </div>
+  {% elif email %}
+    <p class="text-muted">No application found for {{ email }}.</p>
+  {% endif %}
+</div></section>
+{% endblock %}

@@ -2,7 +2,7 @@ from django import forms
 from django.contrib import admin
 from django.db import models
 from django.utils.html import format_html, mark_safe
-from .models import Announcement, StaffMember, EventItem, Testimonial, GalleryItem, HeroCarouselItem
+from .models import Announcement, StaffMember, EventItem, Testimonial, GalleryItem, HeroCarouselItem, EventRegistration
 
 
 class RichTextAdminMixin:
@@ -218,3 +218,13 @@ class HeroCarouselItemAdmin(admin.ModelAdmin):
             return mark_safe('<span style="color: red;">❌ No Image</span>')
         except Exception:
             return mark_safe('<span style="color: red;">❌ Error</span>')
+
+
+@admin.register(EventRegistration)
+class EventRegistrationAdmin(admin.ModelAdmin):
+    list_display = ('name', 'event', 'email', 'phone', 'registered_at')
+    list_filter = ('event',)
+    search_fields = ('name', 'email', 'event__title')
+    ordering = ('-registered_at',)
+    readonly_fields = ('registered_at',)
+    date_hierarchy = 'registered_at'

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Apply Online | PTVTI{% endblock %}
+{% block content %}
+<section class="course-detail-hero"><div class="container"><h1>Apply Online</h1></div></section>
+<section class="ptvti-section ptvti-section-alt"><div class="container" style="max-width:720px">
+  <div class="application-form-card p-4">
+    <form method="post">{% csrf_token %}
+      {{ form.as_p }}
+      <button class="btn-ptvti-primary w-100">Submit Application</button>
+    </form>
+  </div>
+</div></section>
+{% endblock %}

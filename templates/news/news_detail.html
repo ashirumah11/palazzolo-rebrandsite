@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ article.title }} | PTVTI News{% endblock %}
+
+{% block content %}
+<article>
+  <header class="news-hero" aria-label="Article Header">
+    <div class="container">
+      <div class="d-flex flex-wrap gap-2 mb-3">
+        <span class="section-eyebrow text-warning">News</span>
+        {% if article.author %}
+          <span class="badge bg-warning text-dark">{{ article.author }}</span>
+        {% endif %}
+      </div>
+      <h1>{{ article.title }}</h1>
+      <p class="lead text-white-50">{{ article.summary }}</p>
+      <div class="news-meta-strip">
+        <span class="news-meta-pill"><i class="far fa-calendar-alt text-warning"></i> {{ article.published_at|date:"F j, Y" }}</span>
+        {% if article.author %}
+          <span class="news-meta-pill"><i class="fas fa-user text-primary"></i> {{ article.author }}</span>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  <section class="ptvti-section ptvti-section-alt">
+    <div class="container">
+      <div class="row g-5">
+        <div class="col-lg-8">
+          {% if article.image %}
+            <div class="mb-4">
+              <img src="{{ article.image.url }}" alt="{{ article.title }}" class="img-fluid rounded shadow-sm w-100">
+            </div>
+          {% endif %}
+
+          <div class="news-content">
+            {{ article.content|safe }}
+          </div>
+
+          <hr class="my-5">
+
+          <div class="news-social-share">
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" rel="noopener" aria-label="Share on Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://twitter.com/intent/tweet?text={{ article.title|urlencode }}&url={{ request.build_absolute_uri }}" target="_blank" rel="noopener" aria-label="Share on Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="mailto:?subject={{ article.title|urlencode }}&body=Read this article: {{ request.build_absolute_uri }}" aria-label="Share via Email"><i class="fas fa-envelope"></i></a>
+          </div>
+
+          <div class="text-center">
+            <a href="{% url 'news_list' %}" class="btn btn-ptvti-outline"><i class="fas fa-arrow-left"></i> Back to News</a>
+          </div>
+        </div>
+
+        <aside class="col-lg-4">
+          <div class="related-articles-card">
+            <h5>Related Articles</h5>
+            <ul class="related-articles-list">
+              {% for related in related_articles %}
+                <li class="related-article-item">
+                  <span class="related-article-date">{{ related.published_at|date:"M j, Y" }}</span>
+                  <a href="{% url 'news_detail' related.slug %}">{{ related.title|truncatechars:60 }}</a>
+                </li>
+              {% empty %}
+                <li class="related-article-item">
+                  <span class="text-muted small">No related articles.</span>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</article>
+{% endblock %}

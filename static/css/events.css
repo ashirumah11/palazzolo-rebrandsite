@@ -1,0 +1,157 @@
+/* ==========================================================================
+   PTVTI EVENTS SPECIFIC STYLES
+   ========================================================================== */
+
+/* Event Hero Banner */
+.event-hero {
+  background: linear-gradient(135deg, var(--ptvti-navy) 0%, var(--ptvti-forest) 100%);
+  color: #FFFFFF;
+  padding: 4.5rem 0 3.5rem;
+}
+
+.event-hero h1 {
+  color: #FFFFFF;
+  font-size: 2.75rem;
+  margin-bottom: 1rem;
+}
+
+/* Event Meta Strip */
+.event-meta-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: 1.5rem;
+}
+
+.event-meta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--ptvti-radius-pill);
+}
+
+/* Event Sidebar Card */
+.event-sidebar-card {
+  background-color: #FFFFFF;
+  border: 1px solid var(--ptvti-border);
+  border-radius: var(--ptvti-radius-lg);
+  padding: 2rem;
+  box-shadow: var(--ptvti-shadow-card);
+  position: sticky;
+  top: 6rem;
+}
+
+/* Event Detail Page Content */
+.event-content {
+  color: var(--ptvti-text-body);
+  line-height: 1.7;
+}
+
+.event-content p {
+  margin-bottom: 1.25rem;
+}
+
+/* Event Cards & Badges (homepage + hub grid) */
+.event-card {
+  border: 1px solid var(--ptvti-border);
+  transition: all var(--ptvti-transition-normal);
+  height: auto !important;
+}
+
+.event-card:hover {
+  border-color: var(--ptvti-gold);
+  transform: translateY(-2px);
+  box-shadow: var(--ptvti-shadow-md);
+}
+
+.event-card-inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.event-date-badge {
+  flex-shrink: 0;
+  width: 68px;
+  min-width: 68px;
+  background-color: #F8F9FA;
+  border: 1px solid var(--ptvti-border);
+  border-radius: var(--ptvti-radius-sm);
+  padding: 0.5rem 0.25rem;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.event-date-month {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--ptvti-danger);
+  letter-spacing: 0.05em;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+
+.event-date-day {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--ptvti-navy);
+  line-height: 1;
+}
+
+.event-details {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.event-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  line-height: 1.35;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Sidebar Guidance Card (home page) */
+.sidebar-guidance-card {
+  background-color: #FFFFFF;
+  border: 1px solid var(--ptvti-border-strong);
+  border-radius: var(--ptvti-radius-lg);
+  padding: 1.5rem;
+  height: auto !important;
+  box-shadow: var(--ptvti-shadow-card);
+  position: relative;
+  overflow: hidden;
+}
+
+.sidebar-guidance-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--ptvti-gold) 0%, var(--ptvti-gold-dark) 100%);
+}
+
+.sidebar-guidance-card h5 {
+  color: var(--ptvti-navy) !important;
+  font-family: var(--ptvti-font-heading);
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+}
+
+.sidebar-guidance-card p {
+  color: var(--ptvti-text-body) !important;
+  font-size: 0.9rem;
+  line-height: 1.55;
+}

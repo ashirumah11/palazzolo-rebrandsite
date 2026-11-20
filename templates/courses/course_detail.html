@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ course.title }} | PTVTI Courses{% endblock %}
+
+{% block content %}
+<section class="course-detail-hero" aria-label="Course Detail">
+  <div class="container">
+    <span class="section-eyebrow text-warning">{{ course.department.name }}</span>
+    <h1>{{ course.title }}</h1>
+    <p class="lead text-white-50">{{ course.description|truncatewords:28 }}</p>
+    <div class="course-meta-strip">
+      <span class="course-meta-pill"><i class="far fa-clock text-warning"></i> {{ course.duration_months }} Months</span>
+      <span class="course-meta-pill"><i class="fas fa-certificate text-success"></i> TVETA Accredited</span>
+      {% if course.credits %}<span class="course-meta-pill"><i class="fas fa-award text-primary"></i> {{ course.credits }} Credits</span>{% endif %}
+    </div>
+  </div>
+</section>
+
+<section class="ptvti-section ptvti-section-alt">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-8">
+        <h2>Overview</h2>
+        <p class="text-muted">{{ course.description|default:"Comprehensive vocational training delivered in our dedicated workshops with hands-on practical instruction." }}</p>
+
+        <h3 class="mt-4">Entry Requirements</h3>
+        <ul>
+          <li>Artisan level: Open entry with KCPE/KCSE result slip</li>
+          <li>Certificate level: Minimum KCSE D- or relevant artisan certificate</li>
+        </ul>
+
+        <h3 class="mt-4">Career Outcomes</h3>
+        <p class="text-muted">Graduates are equipped for employment in industry, self-employment, and entrepreneurship across Kenya and the East African region.</p>
+
+        <div class="text-center mt-4">
+          <a href="{% url 'admission_apply' %}?course={{ course.id }}" class="btn-ptvti-gold btn-lg"><i class="fas fa-paper-plane"></i> Apply for this Course</a>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="ptvti-card p-4">
+          <h4>Related Courses</h4>
+          {% for rel in related_courses %}
+            <div class="mb-3">
+              <a href="{% url 'course_detail' rel.slug %}">{{ rel.title }}</a>
+              <div class="text-muted small">{{ rel.duration_months }} months</div>
+            </div>
+          {% empty %}
+            <p class="text-muted small">No related courses.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

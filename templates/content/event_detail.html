@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ event.title }} | PTVTI Events{% endblock %}
+
+{% block content %}
+<article>
+  <header class="event-hero" aria-label="Event Header">
+    <div class="container">
+      <div class="d-flex flex-wrap gap-2 mb-3">
+        <span class="section-eyebrow text-warning">Event</span>
+        {% if event.is_featured %}
+          <span class="badge bg-warning text-dark">Featured</span>
+        {% endif %}
+        {% if is_upcoming %}
+          <span class="badge bg-success">Upcoming</span>
+        {% else %}
+          <span class="badge bg-secondary">Completed</span>
+        {% endif %}
+      </div>
+      <h1>{{ event.title }}</h1>
+      <div class="event-meta-strip">
+        <span class="event-meta-pill"><i class="far fa-calendar-alt text-warning"></i> {{ event.starts_at|date:"F j, Y" }} at {{ event.starts_at|date:"g:i A" }}{% if event.ends_at %} - {{ event.ends_at|date:"g:i A" }}{% endif %}</span>
+        {% if event.location %}
+          <span class="event-meta-pill"><i class="fas fa-map-marker-alt text-danger"></i> {{ event.location }}</span>
+        {% endif %}
+        <span class="event-meta-pill"><i class="fas fa-users text-primary"></i> {{ registration_count }} registered</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="ptvti-section ptvti-section-alt">
+    <div class="container">
+      <div class="row g-5">
+        <div class="col-lg-8">
+          {% if event.image %}
+            <div class="mb-4">
+              <img src="{{ event.image.url }}" alt="{{ event.title }}" class="img-fluid rounded shadow-sm w-100">
+            </div>
+          {% endif %}
+
+          <div class="event-content">
+            {{ event.description|linebreaks }}
+          </div>
+
+          <hr class="my-5">
+
+          <div class="d-flex flex-wrap gap-3 justify-content-between align-items-center">
+            <div>
+              <strong>Share:</strong>
+              <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" rel="noopener" class="text-primary ms-2" aria-label="Share on Facebook"><i class="fab fa-facebook-f fa-lg"></i></a>
+              <a href="https://twitter.com/intent/tweet?text={{ event.title|urlencode }}&url={{ request.build_absolute_uri }}" target="_blank" rel="noopener" class="text-info ms-2" aria-label="Share on Twitter"><i class="fab fa-twitter fa-lg"></i></a>
+              <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}" target="_blank" rel="noopener" class="text-primary ms-2" aria-label="Share on LinkedIn"><i class="fab fa-linkedin-in fa-lg"></i></a>
+              <a href="mailto:?subject={{ event.title|urlencode }}&body=Join me at this event: {{ request.build_absolute_uri }}" class="text-secondary ms-2" aria-label="Share via Email"><i class="fas fa-envelope fa-lg"></i></a>
+            </div>
+            <a href="{% url 'event_list' %}" class="btn btn-ptvti-outline"><i class="fas fa-arrow-left"></i> Back to Events</a>
+          </div>
+        </div>
+
+        <aside class="col-lg-4">
+          {% if is_upcoming %}
+            <div class="event-sidebar-card mb-4">
+              <h4 class="mb-3">Register for this Event</h4>
+              <p class="text-muted small mb-4">Fill out the form below to secure your spot. Registration is free and open to all.</p>
+
+              {% if messages %}
+                {% for message in messages %}
+                  <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                {% endfor %}
+              {% endif %}
+
+              <form method="post" novalidate>
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label for="{{ form.name.id_for_label }}" class="form-label fw-bold">{{ form.name.label }}</label>
+                  {{ form.name }}
+                  {% if form.name.errors %}
+                    <div class="text-danger small mt-1">{{ form.name.errors }}</div>
+                  {% endif %}
+                </div>
+                <div class="mb-3">
+                  <label for="{{ form.email.id_for_label }}" class="form-label fw-bold">{{ form.email.label }}</label>
+                  {{ form.email }}
+                  {% if form.email.errors %}
+                    <div class="text-danger small mt-1">{{ form.email.errors }}</div>
+                  {% endif %}
+                </div>
+                <div class="mb-3">
+                  <label for="{{ form.phone.id_for_label }}" class="form-label fw-bold">{{ form.phone.label }}</label>
+                  {{ form.phone }}
+                  {% if form.phone.errors %}
+                    <div class="text-danger small mt-1">{{ form.phone.errors }}</div>
+                  {% endif %}
+                </div>
+                <div class="d-grid">
+                  <button type="submit" class="btn btn-ptvti-gold btn-lg"><i class="fas fa-user-check me-2"></i> Register Now</button>
+                </div>
+                <p class="text-muted small text-center mt-3">By registering, you agree to receive event updates via email.</p>
+              </form>
+            </div>
+          {% else %}
+            <div class="event-sidebar-card mb-4">
+              <h4 class="mb-3">Event Completed</h4>
+              <p class="text-muted">This event has already taken place. Registration is no longer available.</p>
+              <a href="{% url 'event_list' %}?filter=upcoming" class="btn btn-ptvti-primary w-100">View Upcoming Events</a>
+            </div>
+          {% endif %}
+
+          <div class="event-sidebar-card">
+            <h4 class="mb-3">Event Details</h4>
+            <dl class="row mb-0">
+              <dt class="col-sm-4 text-muted small">Date & Time</dt>
+              <dd class="col-sm-8">{{ event.starts_at|date:"F j, Y" }} at {{ event.starts_at|date:"g:i A" }}{% if event.ends_at %} - {{ event.ends_at|date:"g:i A" }}{% endif %}</dd>
+              {% if event.location %}
+                <dt class="col-sm-4 text-muted small">Location</dt>
+                <dd class="col-sm-8">{{ event.location }}</dd>
+              {% endif %}
+              <dt class="col-sm-4 text-muted small">Status</dt>
+              <dd class="col-sm-8">{% if is_upcoming %}Upcoming{% else %}Completed{% endif %}</dd>
+              <dt class="col-sm-4 text-muted small">Registrations</dt>
+              <dd class="col-sm-8">{{ registration_count }}</dd>
+            </dl>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</article>
+{% endblock %}
