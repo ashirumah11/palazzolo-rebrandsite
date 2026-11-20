@@ -142,12 +142,22 @@
 .event-card {
   border: 1px solid var(--ptvti-border);
   transition: all var(--ptvti-transition-normal);
+  height: auto !important;
 }
 
 .event-card:hover {
   border-color: var(--ptvti-gold);
   transform: translateY(-2px);
   box-shadow: var(--ptvti-shadow-md);
+}
+
+.sidebar-guidance-card {
+  background-color: #F8F9FA;
+  border: 1px solid var(--ptvti-border);
+  border-radius: var(--ptvti-radius-md);
+  padding: 1.5rem;
+  height: auto !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .event-card-inner {
@@ -205,10 +215,10 @@
 
 /* CTA Banner */
 .ptvti-cta-banner {
-  background: linear-gradient(135deg, var(--ptvti-navy) 0%, var(--ptvti-forest) 100%);
+  background: linear-gradient(135deg, var(--ptvti-navy) 0%, var(--ptvti-forest) 100%) !important;
   border-radius: var(--ptvti-radius-xl);
   padding: 3rem 2rem;
-  color: #FFFFFF;
+  color: #FFFFFF !important;
   box-shadow: var(--ptvti-shadow-lg);
   position: relative;
   overflow: hidden;
@@ -221,7 +231,7 @@
 }
 
 .cta-banner-title {
-  color: #FFFFFF;
+  color: #FFFFFF !important;
   font-size: 2.25rem;
   font-weight: 800;
   line-height: 1.2;
@@ -229,7 +239,7 @@
 }
 
 .cta-banner-desc {
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.9) !important;
   font-size: 1.125rem;
   line-height: 1.6;
   max-width: 640px;
