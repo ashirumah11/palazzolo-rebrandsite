@@ -200,4 +200,15 @@ class Command(BaseCommand):
         for dc in dept_contacts:
             DepartmentContact.objects.get_or_create(department=dc['department'], defaults=dc)
 
+        # 9. Default Administrator / Staff Account
+        from django.contrib.auth import get_user_model
+        User = get_user_model()
+        if not User.objects.filter(is_superuser=True).exists():
+            admin_user = User.objects.create_superuser(
+                username='admin',
+                email='admin@palazzolotechnical.co.ke',
+                password='Palazzolo2026!'
+            )
+            self.stdout.write(self.style.SUCCESS(f'Created default staff superuser: {admin_user.username}'))
+
         self.stdout.write(self.style.SUCCESS('Successfully seeded verified PTVTI institutional data!'))
