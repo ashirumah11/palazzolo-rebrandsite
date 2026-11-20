@@ -1,5 +1,43 @@
 # PTVTI REBRANDING & MODERNIZATION CHANGELOG
 
+## [Phase 3: Public Core Pages & Dynamic Seed Data] - 2026-11-20
+
+### Added
+- **Institutional Management Command:**
+  - `content/management/commands/seed_ptvti_data.py`: Idempotent data seeder populating authentic PTVTI records without altering existing primary keys:
+    - 5 Official TVET Departments (Engineering, ICT, Fashion & Design, Cosmetology & Hairdressing, Hospitality).
+    - 12 Verified Artisan, Certificate, and Diploma Courses with authentic durations, exam bodies (CDACC, KNEC, NITA), and entry criteria.
+    - 3 Hero Carousel Slides with verified institutional imagery and actionable CTAs.
+    - Active Admissions Announcement Banner.
+    - 6 Leadership & Academic Staff Profiles.
+    - Authentic Student and Alumnus Testimonials.
+    - Upcoming Institutional Events and News Items.
+    - Official Departmental Contact directory.
+- **Dynamic Public Views & Templates:**
+  - `templates/pages/home.html` & `content/views.py:home_view`:
+    - Dynamic Hero Banner with slide transitions.
+    - "Why Choose Palazzolo" institutional value propositions.
+    - Verified Interactive Stats Counter grid (1,200+ Trained, 85% Employment, 15+ Accredited Courses).
+    - Department & Featured Programme Cards with category pills and direct links.
+    - Campus Experience & Workshop Facilities showcase.
+    - Student Innovation & Testimonial Carousel.
+    - Latest Institutional News & Upcoming Events grid.
+    - Accreditation logo band (TVETA, NITA, CDACC, UNESCO-UNEVOC).
+    - Prominent Application CTA.
+  - `templates/pages/about.html` & `content/views.py:about_view`:
+    - Full institutional history (founded November 2021 by the Poverelle Sisters in Kiambu County in response to COVID-19 youth empowerment needs).
+    - Institutional Motto (*"With God at the Centre, we serve, train and transform"*), Mission, Vision, and Core Values.
+    - Leadership & Department Heads directory.
+    - Practical campus workshop and facility highlights.
+  - `templates/pages/contact.html`, `contacts/forms.py:ContactForm`, & `contacts/views.py:contact_view`:
+    - Interactive inquiry form with anti-duplicate submission safeguards.
+    - Auto-generation of unique tracking inquiry reference codes (`PTVTI-MSG-XXXX`).
+    - Departmental phone, email, and campus location directory.
+    - Google Maps interactive campus location embed (Kihara-Gachie-Karura Road, Kiambu).
+- **Automated Test Coverage:**
+  - Added `content/tests.py:PublicPagesViewTests` covering `/`, `/about/`, and `/contact/` (GET and POST inquiry submissions).
+  - All 17 automated tests passing (`Ran 17 tests in 18.673s OK`).
+
 ## [Phase 2: Brand Design System & Reusable Django Templates] - 2026-11-20
 
 ### Added
