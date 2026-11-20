@@ -1,0 +1,288 @@
+from datetime import timedelta
+from pathlib import Path
+import os
+
+import dj_database_url
+from dotenv import load_dotenv
+
+# Base directory (backend folder)
+BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / '.env')
+
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-dev-key')
+# Robust debug flag parsing (defaults to True unless explicitly disabled)
+DEBUG = os.environ.get('DEBUG', 'True').lower() in ('true', '1', 'yes', 't')
+
+configured_hosts = [host.strip() for host in os.environ.get('ALLOWED_HOSTS', '').split(',') if host.strip()]
+ALLOWED_HOSTS = configured_hosts or [
+    'localhost',
+    '127.0.0.1',
+    'testserver',
+    'palazzolotechnical.co.ke',
+    'www.palazzolotechnical.co.ke',
+    'wrongness-prude-calzone.ngrok-free.dev',
+    '[::1]',
+]
+if 'testserver' not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append('testserver')
+
+INSTALLED_APPS = [
+    'jazzmin',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'corsheaders',
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'accounts',
+    'admissions',
+    'contacts',
+    'content',
+    'courses',
+    'news',
+]
+
+MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'config.middleware.PermissionsPolicyMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+ROOT_URLCONF = 'config.urls'
+WSGI_APPLICATION = 'config.wsgi.application'
+ASGI_APPLICATION = 'config.asgi.application'
+
+database_url = os.environ.get('DATABASE_URL') or f'sqlite:///{BASE_DIR / "db.sqlite3"}'
+DATABASES = {
+    'default': dj_database_url.parse(database_url, conn_max_age=600)
+}
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
+
+LANGUAGE_CODE = 'en-us'
+TIME_ZONE = 'UTC'
+USE_I18N = True
+USE_TZ = True
+
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+STORAGES = {
+    'default': {
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+    },
+    'staticfiles': {
+        'BACKEND': 'whitenoise.storage.CompressedStaticFilesStorage',
+    },
+}
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / 'templates'],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                'config.context_processors.admin_dashboard',
+            ],
+        },
+    },
+]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+}
+
+CORS_ALLOWED_ORIGINS = [
+    origin.strip()
+    for origin in os.environ.get(
+        'CORS_ALLOWED_ORIGINS',
+        'http://localhost:5173,http://127.0.0.1:5173,https://wrongness-prude-calzone.ngrok-free.dev',
+    ).split(',')
+    if origin.strip()
+]
+CORS_ALLOWED_ORIGINS = list(dict.fromkeys(CORS_ALLOWED_ORIGINS))
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip()
+    for origin in os.environ.get('CSRF_TRUSTED_ORIGINS', '').split(',')
+    if origin.strip()
+]
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = False
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+ENABLE_SSL_REDIRECT = os.environ.get('ENABLE_SSL_REDIRECT', 'False').lower() in ('true', '1', 'yes')
+if not DEBUG and ENABLE_SSL_REDIRECT:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 31536000
+
+JAZZMIN_SETTINGS = {
+    # ==========================================
+    # Branding
+    # ==========================================
+    "site_title": "PTVTI Administration",
+    "site_header": "Palazzolo Technical & Vocational Training Institute",
+    "site_brand": "PTVTI CMS",
+    "site_logo": "content/ptvti-logo.jpg",
+    "login_logo": "content/ptvti-logo.jpg",
+    "custom_css": "content/admin_theme.css",
+    "welcome_sign": "Administration Portal",
+    "copyright": "© Palazzolo Technical & Vocational Training Institute",
+
+    # ==========================================
+    # Layout
+    # ==========================================
+    "navigation_expanded": True,
+    "show_sidebar": True,
+    "show_ui_builder": False,
+    "show_theme_chooser": True,
+    "hide_apps": [],
+    "hide_models": [],
+
+    # ==========================================
+    # Sidebar Order
+    # ==========================================
+    "order_with_respect_to": [
+        "auth",
+        "courses",
+        "admissions",
+        "content",
+        "contacts",
+        "news",
+    ],
+
+    # ==========================================
+    # Top Menu
+    # ==========================================
+    "topmenu_links": [
+        {"model": "auth.User"},
+        {"app": "courses"},
+        {"app": "content"},
+        {"app": "contacts"},
+        {"app": "news"},
+        {"name": "Website", "url": "/", "new_window": True},
+    ],
+
+    # ==========================================
+    # Icons
+    # ==========================================
+    "icons": {
+
+        # Apps
+        "auth": "fas fa-user-shield",
+        "courses": "fas fa-graduation-cap",
+        "content": "fas fa-layer-group",
+        "contacts": "fas fa-address-book",
+        "news": "fas fa-newspaper",
+        "admissions": "fas fa-user-graduate",
+
+        # Authentication
+        "auth.user": "fas fa-users",
+        "auth.group": "fas fa-user-lock",
+
+        # Courses
+        "courses.course": "fas fa-book-open",
+        "courses.department": "fas fa-building",
+
+        # Contacts
+        "contacts.contactmessage": "fas fa-envelope-open-text",
+        "contacts.departmentcontact": "fas fa-phone-square-alt",
+
+        # Content
+        "content.announcement": "fas fa-bullhorn",
+        "content.eventitem": "fas fa-calendar-check",
+        "content.galleryitem": "fas fa-images",
+        "content.staffmember": "fas fa-user-tie",
+        "content.testimonial": "fas fa-comments",
+
+        # News
+        "news.newsarticle": "fas fa-newspaper",
+    },
+
+    # ==========================================
+    # Custom Links
+    # ==========================================
+    "custom_links": {
+        "courses": [{
+            "name": "Course Website",
+            "url": "/",
+            "icon": "fas fa-globe",
+        }],
+    },
+
+    # ==========================================
+    # Change Form
+    # ==========================================
+    "changeform_format": "horizontal_tabs",
+
+    # ==========================================
+    # Admin Index
+    # ==========================================
+    "show_sidebar": True,
+    "navigation_expanded": True,
+
+    # ==========================================
+    # Dashboard
+    # ==========================================
+    "default_icon_parents": "fas fa-folder",
+
+    "default_icon_children": "fas fa-circle",
+
+    # ==========================================
+    # Buttons
+    # ==========================================
+    "related_modal_active": True,
+
+    # ==========================================
+    # Language
+    # ==========================================
+    "language_chooser": False,
+}
+
+
