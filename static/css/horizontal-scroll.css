@@ -1,0 +1,302 @@
+/* ==========================================================================
+   PTVTI HORIZONTAL SCROLL COMPONENT
+   ========================================================================== */
+
+/* Horizontal Scroll Section Wrapper */
+.horizontal-scroll-section {
+  position: relative;
+  width: 100%;
+}
+
+/* Horizontal Scroll Container */
+.horizontal-scroll-container {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  gap: var(--ptvti-space-md, 1rem);
+  padding: var(--ptvti-space-sm, 0.5rem) 0;
+  scrollbar-width: none; /* Firefox - we'll use custom scrollbar */
+}
+
+.horizontal-scroll-container::-webkit-scrollbar {
+  display: none; /* Hide default scrollbar */
+}
+
+/* Scrollable Content Wrapper */
+.horizontal-scroll-content {
+  display: flex;
+  gap: var(--ptvti-space-md, 1rem);
+  padding: var(--ptvti-space-sm, 0.5rem) 0;
+}
+
+/* Scroll Items */
+.horizontal-scroll-item {
+  flex: 0 0 auto;
+  min-width: fit-content;
+  min-height: fit-content;
+}
+
+/* Scroll Track (visible scrollbar background) */
+.horizontal-scrollbar-track {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background-color: rgba(226, 230, 225, 0.5);
+  border-radius: 3px;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 4px;
+  visibility: hidden;
+}
+
+.horizontal-scroll-container:hover .horizontal-scrollbar-track,
+.horizontal-scroll-container:focus-within .horizontal-scrollbar-track {
+  visibility: visible;
+}
+
+/* Scrollbar Thumb */
+.horizontal-scrollbar-thumb {
+  height: 100%;
+  width: 40px;
+  background: linear-gradient(90deg, var(--ptvti-gold) 0%, var(--ptvti-gold-dark, #C59B55) 100%);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: width 0.2s ease, opacity 0.2s ease;
+  opacity: 0;
+}
+
+.horizontal-scroll-container:hover .horizontal-scrollbar-thumb {
+  opacity: 1;
+  width: calc(100% * (var(--scroll-thumb-ratio, 0.3)));
+}
+
+.horizontal-scrollbar-thumb:active {
+  opacity: 0.9;
+}
+
+/* Scroll Controls (Navigation Buttons) */
+.horizontal-scroll-controls {
+  position: absolute;
+  bottom: 0.75rem;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.horizontal-scroll-container:hover .horizontal-scroll-controls,
+.horizontal-scroll-container:focus-within .horizontal-scroll-controls {
+  visibility: visible;
+}
+
+.horizontal-scroll-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background-color: var(--ptvti-navy);
+  color: var(--ptvti-bg);
+  border: 1px solid var(--ptvti-border);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all var(--ptvti-transition-fast);
+  pointer-events: all;
+  opacity: 0.8;
+}
+
+.horizontal-scroll-button:hover {
+  background-color: var(--ptvti-gold);
+  border-color: var(--ptvti-gold);
+  color: var(--ptvti-navy);
+  transform: scale(1.1);
+}
+
+.horizontal-scroll-button:focus {
+  outline: 2px solid var(--ptvti-gold);
+  outline-offset: 2px;
+  opacity: 1;
+}
+
+.horizontal-scroll-button:active {
+  transform: scale(0.95);
+}
+
+.horizontal-scroll-button.disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.horizontal-scroll-button.disabled:hover {
+  background-color: var(--ptvti-navy);
+  border-color: var(--ptvti-border);
+  color: var(--ptvti-text-muted);
+  transform: none;
+}
+
+/* Section Title with Scroll Indicator */
+.scroll-section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.scroll-section-title h2 {
+  margin-bottom: 0;
+  flex: 1 1 auto;
+}
+
+/* Department Cards Horizontal Scroll */
+.department-scroll-container {
+  padding: 0.75rem 0;
+  gap: 1.25rem;
+}
+
+.department-scroll-item {
+  flex: 0 0 auto;
+  min-width: 220px;
+  max-width: 260px;
+}
+
+/* Course Cards Horizontal Scroll */
+.course-scroll-container {
+  padding: 0.75rem 0;
+  gap: 1.5rem;
+}
+
+.course-scroll-item {
+  flex: 0 0 auto;
+  min-width: 280px;
+  max-width: 320px;
+}
+
+/* Event Cards Horizontal Scroll */
+.event-scroll-container {
+  padding: 0.75rem 0;
+  gap: 1.25rem;
+}
+
+.event-scroll-item {
+  flex: 0 0 auto;
+  min-width: 300px;
+  max-width: 350px;
+}
+
+/* News Cards Horizontal Scroll */
+.news-scroll-container {
+  padding: 0.75rem 0;
+  gap: 1.5rem;
+}
+
+.news-scroll-item {
+  flex: 0 0 auto;
+  min-width: 320px;
+  max-width: 360px;
+}
+
+/* Testimonial Carousel Scroll */
+.testimonial-scroll-container {
+  padding: 0.75rem 0;
+  gap: 1.5rem;
+}
+
+.testimonial-scroll-item {
+  flex: 0 0 auto;
+  min-width: 300px;
+  max-width: 350px;
+}
+
+/* Accreditation Logos Horizontal Scroll */
+.accreditation-scroll-container {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+.accreditation-scroll-item {
+  flex: 0 0 auto;
+  min-width: fit-content;
+}
+
+.accreditation-scroll-item img {
+  height: 48px;
+  width: auto;
+  filter: grayscale(100%);
+  opacity: 0.75;
+  transition: all var(--ptvti-transition-normal);
+}
+
+.accreditation-scroll-item:hover img {
+  filter: grayscale(0%);
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 767.98px) {
+  .horizontal-scroll-container {
+    padding: 0.5rem 0;
+  }
+
+  .horizontal-scroll-item {
+    min-width: 200px;
+  }
+
+  .department-scroll-item {
+    min-width: 180px;
+    max-width: 200px;
+  }
+
+  .course-scroll-item {
+    min-width: 220px;
+    max-width: 260px;
+  }
+
+  .event-scroll-item {
+    min-width: 250px;
+    max-width: 280px;
+  }
+
+  .news-scroll-item {
+    min-width: 260px;
+    max-width: 300px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .horizontal-scroll-container {
+    padding: 1rem 0;
+  }
+
+  .department-scroll-item {
+    min-width: 240px;
+    max-width: 280px;
+  }
+
+  .course-scroll-item {
+    min-width: 300px;
+    max-width: 340px;
+  }
+
+  .event-scroll-item {
+    min-width: 320px;
+    max-width: 360px;
+  }
+
+  .news-scroll-item {
+    min-width: 340px;
+    max-width: 380px;
+  }
+}

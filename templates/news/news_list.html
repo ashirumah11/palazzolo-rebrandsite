@@ -12,22 +12,41 @@
   </div>
 </section>
 
-<section class="ptvti-section ptvti-section-alt">
+<!-- Category Filter Buttons - Horizontal Scroll -->
+<div class="horizontal-scroll-section" style="background: var(--ptvti-bg);">
   <div class="container">
-    <div class="row mb-4">
-      <div class="col-md-8">
-        <form method="get" class="d-flex gap-2">
-          <input type="text" name="q" value="{{ query }}" placeholder="Search news articles..." class="form-control">
-          <button class="btn btn-ptvti-primary">Search</button>
-        </form>
+    <div class="horizontal-scroll-container department-scroll-container" role="region" aria-label="News category filter buttons">
+      <div class="horizontal-scrollbar-track">
+        <div class="horizontal-scrollbar-thumb"></div>
       </div>
-      <div class="col-md-4 text-md-end mt-2 mt-md-0">
-        <div class="btn-group" role="group">
+      <div class="horizontal-scroll-controls">
+        <button class="horizontal-scroll-button prev" aria-label="Scroll left">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="horizontal-scroll-button next" aria-label="Scroll right">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+      <div class="horizontal-scroll-content">
+        <div class="btn-group" role="group" aria-label="News category filter buttons">
           <a class="btn btn-ptvti-outline {% if not category %}active{% endif %}" href="{% url 'news_list' %}">All</a>
           <a class="btn btn-ptvti-outline {% if category == 'Announcements' %}active{% endif %}" href="?category=Announcements">Announcements</a>
           <a class="btn btn-ptvti-outline {% if category == 'Events' %}active{% endif %}" href="?category=Events">Events</a>
           <a class="btn btn-ptvti-outline {% if category == 'Achievements' %}active{% endif %}" href="?category=Achievements">Achievements</a>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="ptvti-section ptvti-section-alt">
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col">
+        <form method="get" class="d-flex gap-2">
+          <input type="text" name="q" value="{{ query }}" placeholder="Search news articles..." class="form-control">
+          <button class="btn btn-ptvti-primary">Search</button>
+        </form>
       </div>
     </div>
 

@@ -119,9 +119,13 @@
 .accreditation-logos {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  gap: 3rem;
   flex-wrap: wrap;
-  gap: 2rem;
+}
+
+.accreditation-item {
+  text-align: center;
+  flex: 0 0 auto;
 }
 
 .accreditation-item img {
@@ -132,10 +136,30 @@
   transition: all var(--ptvti-transition-normal);
 }
 
+.accreditation-item small {
+  display: block;
+  margin-top: 0.5rem;
+}
+
 .accreditation-item:hover img {
   filter: grayscale(0%);
   opacity: 1;
   transform: scale(1.05);
+}
+
+@media (max-width: 767.98px) {
+  .accreditation-strip .accreditation-logos {
+    gap: 2rem;
+    justify-content: center;
+  }
+
+  .accreditation-item {
+    min-width: 120px;
+  }
+
+  .accreditation-item img {
+    height: 40px;
+  }
 }
 
 /* CTA Banner */

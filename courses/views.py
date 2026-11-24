@@ -61,3 +61,22 @@ def course_detail_view(request, slug):
         'related_courses': related,
     }
     return render(request, 'courses/course_detail.html', context)
+
+
+def department_detail_view(request, slug):
+    dept_name = slug.replace('-', ' ')
+    departments = list(Department.objects.all())
+    department = None
+    for dept in departments:
+        if dept.name.lower().replace(' ', '-') == slug.lower() or dept.name.lower() == dept_name.lower():
+            department = dept
+            break
+    if not department:
+        from django.http import Http404
+        raise Http404("Department not found")
+    courses = department.courses.filter(is_active=True)
+    context = {
+        'department': department,
+        'courses': courses,
+    }
+    return render(request, 'departments/department_detail.html', context)

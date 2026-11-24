@@ -32,8 +32,16 @@
 - **Home "Need Guidance?" Card Visibility:** Replaced low-contrast `text-muted` body copy with `var(--ptvti-text-body)` and gave the card a white surface, strong border, gold left accent bar, and forced navy heading for legibility.
 - **Home Event Card Navigation:** Event cards now link to their individual detail page (`{% url 'event_detail' event.pk %}`) instead of the hub.
 - **News CSS Architecture:** Created dedicated `static/css/news.css` with `news-hero`, `news-meta-strip`, `news-meta-pill`, `news-content`, `related-articles-card`, and `news-social-share` classes. Refactored `news_list.html` and `news_detail.html` to use news-specific hero and meta classes instead of course borrowings.
-- **Static Files Collection:** Verified `events.css` and `news.css` are collected into `staticfiles/` via `python manage.py collectstatic --noinput`.
-- **Cache-Busting:** All 12 local CSS links in `base.html` include `?v=5` query parameter to prevent stale browser cache.
+- **Horizontal Scrolling System:** Created reusable global horizontal scroll component (`static/css/horizontal-scroll.css`, `static/js/horizontal-scroll.js`) with accessible navigation controls, visible scrollbar thumb on hover, and keyboard/touch support. Applied consistently across:
+  - Homepage: accreditation logos, featured courses, news cards, and event cards
+  - Course list: department filter buttons
+  - Course detail: related courses
+  - News list: category filter buttons
+  - News detail: related articles
+  - Event list: event filter buttons and event grid
+  - Event detail: related events
+- **Static Files Collection:** Verified `events.css`, `news.css`, and `horizontal-scroll.css/js` are collected into `staticfiles/` via `python manage.py collectstatic --noinput`.
+- **Cache-Busting:** All 13 local CSS links in `base.html` include `?v=6` query parameter to prevent stale browser cache.
 
 ## [Phase 4: Courses & Admissions Improvements] - 2026-11-20
 

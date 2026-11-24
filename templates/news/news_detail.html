@@ -53,20 +53,39 @@
         </div>
 
         <aside class="col-lg-4">
-          <div class="related-articles-card">
-            <h5>Related Articles</h5>
-            <ul class="related-articles-list">
-              {% for related in related_articles %}
-                <li class="related-article-item">
-                  <span class="related-article-date">{{ related.published_at|date:"M j, Y" }}</span>
-                  <a href="{% url 'news_detail' related.slug %}">{{ related.title|truncatechars:60 }}</a>
-                </li>
-              {% empty %}
-                <li class="related-article-item">
-                  <span class="text-muted small">No related articles.</span>
-                </li>
-              {% endfor %}
-            </ul>
+          <div class="horizontal-scroll-section">
+            <h5 class="mb-3">Related Articles</h5>
+            <div class="horizontal-scroll-container news-scroll-container" role="region" aria-label="Related articles">
+              <div class="horizontal-scrollbar-track">
+                <div class="horizontal-scrollbar-thumb"></div>
+              </div>
+              <div class="horizontal-scroll-controls">
+                <button class="horizontal-scroll-button prev" aria-label="Scroll left">
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="horizontal-scroll-button next" aria-label="Scroll right">
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+              </div>
+              <div class="horizontal-scroll-content">
+                <div class="horizontal-scroll-item">
+                  <div class="ptvti-card p-3">
+                    <ul class="related-articles-list mb-0">
+                      {% for related in related_articles %}
+                        <li class="related-article-item mb-3 pb-3 border-bottom last:mb-0 last:pb-0">
+                          <span class="related-article-date text-muted small">{{ related.published_at|date:"M j, Y" }}</span>
+                          <a href="{% url 'news_detail' related.slug %}" class="fw-bold text-dark d-block">{{ related.title|truncatechars:55 }}</a>
+                        </li>
+                      {% empty %}
+                        <li class="related-article-item">
+                          <span class="text-muted small">No related articles.</span>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </aside>
       </div>

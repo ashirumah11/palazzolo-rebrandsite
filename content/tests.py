@@ -91,13 +91,36 @@ class ContentApiTests(TestCase):
             'subtitle': 'Practical learning with modern facilities.',
             'image': SimpleUploadedFile('hero.png', image_bytes.read(), content_type='image/png'),
             'button_text': 'Apply now',
-            'button_link': 'https://example.com/apply',
+            'button_link': '/courses/',
             'is_active': True,
             'order': 2,
         }
         response = self.client.post(url, payload, format='multipart')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(HeroCarouselItem.objects.count(), 2)
+
+    def test_hero_carousel_relative_and_absolute_links(self):
+        from django.core.exceptions import ValidationError
+
+        # Relative path like /courses/ must be valid
+        item_relative = HeroCarouselItem(title='Courses', button_link='/courses/')
+        item_relative.full_clean()
+        item_relative.save()
+
+        # Absolute URL must be valid
+        item_absolute = HeroCarouselItem(title='Portal', button_link='https://example.com/portal')
+        item_absolute.full_clean()
+        item_absolute.save()
+
+        # Anchor link must be valid
+        item_anchor = HeroCarouselItem(title='Contact', button_link='#contact')
+        item_anchor.full_clean()
+        item_anchor.save()
+
+        # Invalid URL must raise ValidationError
+        item_invalid = HeroCarouselItem(title='Broken', button_link='htp://broken url')
+        with self.assertRaises(ValidationError):
+            item_invalid.full_clean()
 
 
 class PublicPagesViewTests(TestCase):

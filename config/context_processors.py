@@ -139,6 +139,13 @@ def ptvti_public_context(request):
             'address': 'Off Kihara-Gachie-Karura Road, Kiambu County, Kenya',
             'postal_address': 'P.O. Box 1234 - 00200 Nairobi, Kenya',
             'accreditation': 'Accredited by TVETA Kenya | Affiliated with NITA & UNESCO',
+            'location': {
+                'latitude': -1.223992,
+                'longitude': 36.7720694,
+                'google_maps_url': 'https://www.google.com/maps?q=-1.223992,36.7720694&z=17&output=embed',
+                'directions_url': 'https://www.google.com/maps/dir/?api=1&destination=-1.223992%2C36.7720694',
+            },
+            'physical_location': 'Gachie, Kiambu County, Kenya',
         },
         'ptvti_verified_stats': [
             {'value': 250, 'prefix': '', 'suffix': '+', 'label': 'Enrolled Students', 'icon': 'fas fa-user-graduate'},

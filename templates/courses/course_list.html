@@ -12,21 +12,41 @@
   </div>
 </section>
 
+{% comment %}Category Filter Buttons with Horizontal Scroll{% endcomment %}
+<div class="horizontal-scroll-section" style="background: var(--ptvti-bg);">
+  <div class="container">
+    <div class="horizontal-scroll-container department-scroll-container" role="region" aria-label="Department filter buttons">
+      <div class="horizontal-scrollbar-track">
+        <div class="horizontal-scrollbar-thumb"></div>
+      </div>
+      <div class="horizontal-scroll-controls">
+        <button class="horizontal-scroll-button prev" aria-label="Scroll left">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="horizontal-scroll-button next" aria-label="Scroll right">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+      <div class="horizontal-scroll-content">
+        <div class="btn-group" role="group" aria-label="Department filter buttons">
+          <a class="btn btn-ptvti-outline {% if not request.GET.dept %}active{% endif %}" href="{% url 'course_list' %}">All Departments</a>
+          {% for dept in departments %}
+            <a class="btn btn-ptvti-outline {% if request.GET.dept|lower == dept.name|lower %}active{% endif %}" href="?dept={{ dept.name|urlencode }}">{{ dept.name|truncatechars:22 }}</a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <section class="ptvti-section ptvti-section-alt">
   <div class="container">
     <div class="row mb-4">
-      <div class="col-md-8">
+      <div class="col">
         <form method="get" class="d-flex gap-2">
           <input type="text" name="q" value="{{ query }}" placeholder="Search courses, departments..." class="form-control">
           <button class="btn btn-ptvti-primary">Search</button>
         </form>
-      </div>
-      <div class="col-md-4 text-md-end mt-2 mt-md-0">
-        <div class="btn-group" role="group">
-          {% for dept in departments %}
-            <a class="btn btn-ptvti-outline {% if request.GET.dept == dept.name %}active{% endif %}" href="?dept={{ dept.name }}">{{ dept.name|truncatechars:22 }}</a>
-          {% endfor %}
-        </div>
       </div>
     </div>
 

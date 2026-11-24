@@ -1,10 +1,32 @@
+from django.core.exceptions import ValidationError
+from django.core.validators import URLValidator
 from django.db import models
+
+
+def validate_web_link(value):
+    """
+    Validates that a URL is either:
+    1. A relative internal path, anchor, or protocol (e.g., '/courses/', '#contact', 'tel:+254...', 'mailto:info@...')
+    2. A valid absolute URL with scheme (e.g., 'https://...', 'http://...')
+    """
+    if not value:
+        return
+    trimmed = str(value).strip()
+    if trimmed.startswith(('/', '#', '?', 'tel:', 'mailto:')):
+        return
+    validator = URLValidator()
+    validator(trimmed)
 
 
 class Announcement(models.Model):
     title = models.CharField(max_length=220)
     message = models.TextField()
-    link = models.URLField(blank=True)
+    link = models.CharField(
+        max_length=500,
+        blank=True,
+        validators=[validate_web_link],
+        help_text="Internal path (e.g. /admissions/apply/) or full URL (e.g. https://...)."
+    )
     phone = models.CharField(max_length=50, blank=True)
     email = models.EmailField(blank=True)
     is_active = models.BooleanField(default=True)
@@ -101,7 +123,12 @@ class HeroCarouselItem(models.Model):
     subtitle = models.TextField(blank=True)
     image = models.ImageField(upload_to='hero-carousel/', blank=True, null=True)
     button_text = models.CharField(max_length=80, blank=True)
-    button_link = models.URLField(max_length=500, blank=True)
+    button_link = models.CharField(
+        max_length=500,
+        blank=True,
+        validators=[validate_web_link],
+        help_text="Internal path (e.g. /courses/) or full URL (e.g. https://...)."
+    )
     is_active = models.BooleanField(default=True)
     order = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)

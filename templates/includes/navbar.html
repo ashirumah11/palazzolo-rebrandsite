@@ -31,13 +31,13 @@
             <li><a class="dropdown-item fw-bold" href="/courses/"><i class="fas fa-th-large text-warning"></i> All Programmes</a></li>
             <li><hr class="dropdown-divider my-1"></li>
             {% for dept in ptvti_nav_departments %}
-              <li><a class="dropdown-item" href="/courses/?department={{ dept.id }}"><i class="fas fa-graduation-cap text-muted"></i> {{ dept.name }}</a></li>
+              <li><a class="dropdown-item" href="/departments/{{ dept.name|slugify }}/"><i class="fas fa-graduation-cap text-muted"></i> {{ dept.name }}</a></li>
             {% empty %}
-              <li><a class="dropdown-item" href="/courses/">Engineering</a></li>
-              <li><a class="dropdown-item" href="/courses/">ICT & Computing</a></li>
-              <li><a class="dropdown-item" href="/courses/">Fashion & Design</a></li>
-              <li><a class="dropdown-item" href="/courses/">Cosmetology</a></li>
-              <li><a class="dropdown-item" href="/courses/">Hospitality</a></li>
+              <li><a class="dropdown-item" href="/departments/engineering/"><i class="fas fa-graduation-cap text-muted"></i> Engineering</a></li>
+              <li><a class="dropdown-item" href="/departments/ict-computing/"><i class="fas fa-graduation-cap text-muted"></i> ICT & Computing</a></li>
+              <li><a class="dropdown-item" href="/departments/fashion-design/"><i class="fas fa-graduation-cap text-muted"></i> Fashion & Design</a></li>
+              <li><a class="dropdown-item" href="/departments/cosmetology-hairdressing/"><i class="fas fa-graduation-cap text-muted"></i> Cosmetology</a></li>
+              <li><a class="dropdown-item" href="/departments/hospitality-catering/"><i class="fas fa-graduation-cap text-muted"></i> Hospitality</a></li>
             {% endfor %}
           </ul>
         </li>

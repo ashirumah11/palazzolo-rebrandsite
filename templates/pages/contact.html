@@ -129,20 +129,39 @@
 
         <!-- Location Map Card -->
         <div class="ptvti-card p-4">
-          <h4 class="h5 mb-2"><i class="fas fa-compass text-warning me-2"></i> How to Reach Us</h4>
+          <h4 class="h5 mb-2"><i class="fas fa-compass text-warning me-2"></i> Campus Location</h4>
           <p class="text-muted small mb-3">
-            Located in Kiambu County along the Kihara-Gachie-Karura road (Nairobi metropolitan area), accessible via public matatus from Nairobi CBD (Route 108/118) or Kiambu town.
+            Palazzolo Technical and Vocational Training Institute is located in Gachie, Kiambu County, Kenya. Use the map below for exact positioning.
           </p>
-          <div class="ratio ratio-16x9 rounded overflow-hidden shadow-sm">
-            <iframe 
-              src="https://maps.google.com/maps?q=Gachie,Kiambu,Kenya&t=&z=14&ie=UTF8&iwloc=&output=embed" 
-              style="border:0;" 
-              allowfullscreen="" 
-              loading="lazy" 
+
+          <!-- Institution Location Information -->
+          <div class="location-details mb-3 p-3 bg-light rounded">
+            <h5 class="mb-2 text-dark">Exact Location</h5>
+            <ul class="mb-0 text-muted small">
+              <li><strong>Name:</strong> {{ ptvti_institution.name }}</li>
+              <li><strong>Location:</strong> {{ ptvti_institution.physical_location }}</li>
+              <li><strong>Coordinates:</strong> {{ ptvti_institution.location.latitude }}, {{ ptvti_institution.location.longitude }}</li>
+            </ul>
+          </div>
+
+          <!-- Google Maps Embed -->
+          <div class="ratio ratio-16x9 rounded overflow-hidden shadow-sm mb-3">
+            <iframe
+              src="{{ ptvti_institution.location.google_maps_url }}"
+              width="100%"
+              height="450"
+              style="border:0;"
+              allowfullscreen=""
+              loading="lazy"
               referrerpolicy="no-referrer-when-downgrade"
-              title="PTVTI Campus Location Map">
+              title="PTVTI Campus Location - Exact Coordinates">
             </iframe>
           </div>
+
+          <!-- Get Directions Button -->
+          <a href="{{ ptvti_institution.location.directions_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-ptvti-primary w-100">
+            <i class="fas fa-map-marked-alt me-2"></i> Get Directions
+          </a>
         </div>
       </div>
     </div>

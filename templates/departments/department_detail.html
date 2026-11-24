@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ department.name }} | PTVTI Courses{% endblock %}
+
+{% block content %}
+<!-- ==========================================
+     DEPARTMENT HERO
+     ========================================== -->
+<section class="course-detail-hero" aria-label="Department Hero">
+  <div class="container">
+    <span class="section-eyebrow text-warning">{{ department.name }}</span>
+    <h1>{{ department.name }}</h1>
+    <p class="lead text-white-50">{{ department.description|truncatewords:30 }}</p>
+    <div class="course-meta-strip">
+      <span class="course-meta-pill"><i class="far fa-clock text-warning"></i> {{ department.duration_months }} Months</span>
+      <span class="course-meta-pill"><i class="fas fa-certificate text-success"></i> TVETA Accredited</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     DEPARTMENT OVERVIEW & COURSES
+     ========================================== -->
+<section class="ptvti-section ptvti-section-alt" aria-labelledby="dept-overview-heading">
+  <div class="container">
+    <div class="row g-5">
+      <!-- Department Overview -->
+      <div class="col-lg-4">
+        {% if department.image %}
+          <div class="ptvti-card p-0 overflow-hidden">
+            <img src="{{ department.image.url }}" alt="{{ department.name }}" class="w-100" style="aspect-ratio: 4/3; object-fit: cover;">
+          </div>
+        {% else %}
+          <div class="ptvti-card p-0 overflow-hidden">
+            <img src="{% static 'images/about-institute.jpg' %}" alt="PTVTI Workshop" class="w-100" style="aspect-ratio: 4/3; object-fit: cover;">
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Department Info -->
+      <div class="col-lg-8">
+        <h2 id="dept-overview-heading" class="h3 mb-4">Department Overview</h2>
+
+        <p class="text-muted mb-4">{{ department.description|linebreaksbr }}</p>
+
+        {% if department.requirements %}
+          <h4 class="h5 mb-3">Entry Requirements</h4>
+          <ul class="mb-4">
+            {% for req in department.requirements.splitlines %}
+              {% if req %}
+                <li class="text-muted">{{ req }}</li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        {% endif %}
+
+        <div class="d-grid gap-2">
+          <a href="{% url 'admission_apply' %}?department={{ department.id }}" class="btn-ptvti-gold btn-lg">Apply to {{ department.name }} <i class="fas fa-paper-plane ms-2"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     COURSES OFFERED
+     ========================================== -->
+<section class="ptvti-section" aria-labelledby="courses-heading">
+  <div class="container">
+    <div class="section-header text-center mb-5">
+      <span class="section-eyebrow">Our Courses</span>
+      <h2 id="courses-heading">Courses Offered by {{ department.name }}</h2>
+      <p class="text-muted">Explore our practical, skills-oriented training programmes.</p>
+    </div>
+
+    <div class="row g-4">
+      {% for course in department.courses.all|default:"[]" %}
+        <div class="col-lg-4 col-md-6">
+          <div class="ptvti-card h-100">
+            <div class="ptvti-card-media">
+              {% if course.image %}
+                <img src="{{ course.image.url }}" alt="{{ course.title }}">
+              {% else %}
+                <img src="{% static 'images/about-institute.jpg' %}" alt="{{ course.title }}">
+              {% endif %}
+              <span class="badge-ptvti badge-ptvti-gold card-badge-floating">{{ course.department.name|default:"{{ department.name }}" }}</span>
+            </div>
+            <div class="ptvti-card-body">
+              <h3 class="ptvti-card-title"><a href="{% url 'course_detail' course.slug %}">{{ course.title }}</a></h3>
+              <div class="ptvti-card-meta mb-2">
+                <span class="meta-item"><i class="far fa-clock text-warning"></i> {{ course.duration_months }} months</span>
+              </div>
+              <p class="text-muted small">{{ course.description|truncatewords:15 }}</p>
+            </div>
+            <div class="ptvti-card-footer d-flex justify-content-between">
+              <a href="{% url 'course_detail' course.slug %}" class="text-dark fw-bold small">Details &rarr;</a>
+              <a href="{% url 'admission_apply' %}?course={{ course.id }}" class="btn-ptvti-primary btn-sm">Apply</a>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <div class="col-12 text-center py-5">
+          <p class="text-muted">No courses currently offered by this department.</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     ADMISSIONS CALL TO ACTION
+     ========================================== -->
+<section class="ptvti-section ptvti-section-alt" aria-labelledby="admissions-cta-heading">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 text-center">
+        <h2 id="admissions-cta-heading" class="h3 mb-4">Ready to Start Your Journey?</h2>
+        <p class="text-muted mb-4">Begin your application to join our next intake and turn your passion for technical skills into a rewarding career.</p>
+        <a href="{% url 'admission_apply' %}" class="btn-ptvti-primary btn-lg"><i class="fas fa-graduation-cap me-2"></i> Apply Now</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

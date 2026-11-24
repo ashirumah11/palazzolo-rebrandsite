@@ -346,6 +346,13 @@
               <a href="/news/{{ article.slug }}/" class="fw-bold small text-dark">Read Full Story &rarr;</a>
             </div>
           </article>
+        {% empty %}
+          <div class="col-12">
+            <div class="ptvti-card p-4 text-center">
+              <i class="far fa-newspaper fa-2x text-muted mb-2"></i>
+              <p class="text-muted mb-0">No news articles available at this time.</p>
+            </div>
+          </div>
         {% endfor %}
       </div>
 

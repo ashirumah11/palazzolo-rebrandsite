@@ -38,16 +38,35 @@
         </div>
       </div>
       <div class="col-lg-4">
-        <div class="ptvti-card p-4">
-          <h4>Related Courses</h4>
-          {% for rel in related_courses %}
-            <div class="mb-3">
-              <a href="{% url 'course_detail' rel.slug %}">{{ rel.title }}</a>
-              <div class="text-muted small">{{ rel.duration_months }} months</div>
+        <div class="horizontal-scroll-section">
+          <div class="horizontal-scroll-container course-scroll-container" role="region" aria-label="Related courses">
+            <div class="horizontal-scrollbar-track">
+              <div class="horizontal-scrollbar-thumb"></div>
             </div>
-          {% empty %}
-            <p class="text-muted small">No related courses.</p>
-          {% endfor %}
+            <div class="horizontal-scroll-controls">
+              <button class="horizontal-scroll-button prev" aria-label="Scroll left">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <button class="horizontal-scroll-button next" aria-label="Scroll right">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+            <div class="horizontal-scroll-content">
+              <div class="horizontal-scroll-item">
+                <div class="ptvti-card p-4">
+                  <h4>Related Courses</h4>
+                  {% for rel in related_courses %}
+                    <div class="mb-3">
+                      <a href="{% url 'course_detail' rel.slug %}">{{ rel.title }}</a>
+                      <div class="text-muted small">{{ rel.duration_months }} months</div>
+                    </div>
+                  {% empty %}
+                    <p class="text-muted small">No related courses.</p>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
