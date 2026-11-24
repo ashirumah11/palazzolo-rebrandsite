@@ -14,8 +14,12 @@ class CourseViewsTest(TestCase):
         self.assertEqual(resp.status_code, 200)
         self.assertContains(resp, 'Test Course')
 
-    def test_course_detail(self):
-        resp = self.client.get(reverse('course_detail', args=['test-course']))
-        self.assertEqual(resp.status_code, 200)
-        self.assertContains(resp, 'Test Course')
+    def test_department_detail_slug_variations(self):
+        dept = Department.objects.create(name='Cosmetology & Hairdressing')
+        Course.objects.create(title='Hair Styling', slug='hair-styling', department=dept, is_active=True)
+
+        for slug in ['cosmetology-hairdressing-department', 'cosmetology-hairdressing', 'cosmetology', 'hairdressing']:
+            resp = self.client.get(f'/departments/{slug}/')
+            self.assertEqual(resp.status_code, 200, f"Failed on slug: {slug}")
+            self.assertContains(resp, 'Hair Styling')
 

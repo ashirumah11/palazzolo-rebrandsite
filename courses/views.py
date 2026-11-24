@@ -64,16 +64,48 @@ def course_detail_view(request, slug):
 
 
 def department_detail_view(request, slug):
-    dept_name = slug.replace('-', ' ')
+    from django.utils.text import slugify as django_slugify
+    target = slug.lower().strip()
+    target_clean = target.replace('-department', '').replace('_department', '').replace(' ', '-').strip('-')
+    target_words = set(w for w in target.replace('-', ' ').replace('_', ' ').split() if w not in ('department', 'dept'))
+
     departments = list(Department.objects.all())
     department = None
+
+    # 1. Exact slugify match
     for dept in departments:
-        if dept.name.lower().replace(' ', '-') == slug.lower() or dept.name.lower() == dept_name.lower():
+        dept_slug = django_slugify(dept.name)
+        if dept_slug == target or dept_slug == target_clean:
             department = dept
             break
+
+    # 2. Match with '-department' stripped or appended
+    if not department:
+        for dept in departments:
+            dept_slug = django_slugify(dept.name)
+            dept_slug_clean = dept_slug.replace('-department', '').replace('_department', '').strip('-')
+            if dept_slug_clean == target_clean or f"{dept_slug_clean}-department" == target:
+                department = dept
+                break
+
+    # 3. Flexible substring or word overlap match (e.g. 'cosmetology' matches 'Cosmetology & Hairdressing')
+    if not department:
+        for dept in departments:
+            dept_slug = django_slugify(dept.name)
+            dept_slug_clean = dept_slug.replace('-department', '').replace('_department', '').strip('-')
+            dept_words = set(w for w in dept.name.lower().replace('&', ' ').replace('-', ' ').split() if w not in ('department', 'dept'))
+            if target_clean in dept_slug_clean or dept_slug_clean in target_clean or (target_words and target_words.intersection(dept_words)):
+                department = dept
+                break
+
+    # 4. Fallback: match by ID if numeric
+    if not department and target.isdigit():
+        department = next((d for d in departments if str(d.id) == target), None)
+
     if not department:
         from django.http import Http404
         raise Http404("Department not found")
+
     courses = department.courses.filter(is_active=True)
     context = {
         'department': department,
