@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static course_filters %}
 
 {% block title %}{{ department.name }} | PTVTI Courses{% endblock %}
 
@@ -66,18 +66,20 @@
 </section>
 
 <!-- ==========================================
-     COURSES OFFERED
+     FULL-LENGTH COURSES
      ========================================== -->
-<section class="ptvti-section" aria-labelledby="courses-heading">
+{% with full_courses=courses|course_type:"full" %}
+{% if full_courses %}
+<section class="ptvti-section" aria-labelledby="full-courses-heading">
   <div class="container">
     <div class="section-header text-center mb-5">
-      <span class="section-eyebrow">Our Courses</span>
-      <h2 id="courses-heading">Courses Offered by {{ department.name }}</h2>
-      <p class="text-muted">Explore our practical, skills-oriented training programmes.</p>
+      <span class="section-eyebrow">Full-Length Programmes</span>
+      <h2 id="full-courses-heading">Full-Length Courses</h2>
+      <p class="text-muted">Comprehensive programmes for in-depth skill mastery and professional certification.</p>
     </div>
 
     <div class="row g-4">
-      {% for course in courses %}
+      {% for course in full_courses %}
         <div class="col-lg-4 col-md-6">
           <div class="ptvti-card h-100">
             <div class="ptvti-card-media">
@@ -86,10 +88,13 @@
               {% else %}
                 <img src="{% static 'images/about-institute.jpg' %}" alt="{{ course.title }}">
               {% endif %}
-              <span class="badge-ptvti badge-ptvti-gold card-badge-floating">{{ department.name }}</span>
+              <span class="badge-ptvti badge-ptvti-gold card-badge-floating">{{ course.get_course_type_display }}</span>
             </div>
             <div class="ptvti-card-body">
               <h3 class="ptvti-card-title"><a href="{% url 'course_detail' course.slug %}">{{ course.title }}</a></h3>
+              {% if course.specialization %}
+                <span class="badge-ptvti badge-ptvti-outline mb-2">{{ course.specialization }}</span>
+              {% endif %}
               <div class="ptvti-card-meta mb-2">
                 <span class="meta-item"><i class="far fa-clock text-warning"></i> {{ course.duration_months }} months</span>
               </div>
@@ -103,12 +108,66 @@
         </div>
       {% empty %}
         <div class="col-12 text-center py-5">
-          <p class="text-muted">No courses currently offered by this department.</p>
+          <p class="text-muted">No full-length courses currently offered by this department.</p>
         </div>
       {% endfor %}
     </div>
   </div>
 </section>
+{% endif %}
+{% endwith %}
+
+<!-- ==========================================
+     SHORT / CUSTOMIZED COURSES
+     ========================================== -->
+{% with short_courses=courses|course_type:"short" %}
+{% if short_courses %}
+<section class="ptvti-section ptvti-section-alt" aria-labelledby="short-courses-heading">
+  <div class="container">
+    <div class="section-header text-center mb-5">
+      <span class="section-eyebrow">Short / Customized Courses</span>
+      <h2 id="short-courses-heading">Short & Customized Courses</h2>
+      <p class="text-muted">Focused 3-month programmes for rapid skill acquisition and specialization.</p>
+    </div>
+
+    <div class="row g-4">
+      {% for course in short_courses %}
+        <div class="col-lg-4 col-md-6">
+          <div class="ptvti-card h-100">
+            <div class="ptvti-card-media">
+              {% if course.image %}
+                <img src="{{ course.image.url }}" alt="{{ course.title }}">
+              {% else %}
+                <img src="{% static 'images/about-institute.jpg' %}" alt="{{ course.title }}">
+              {% endif %}
+              <span class="badge-ptvti badge-ptvti-gold card-badge-floating">{{ course.get_course_type_display }}</span>
+            </div>
+            <div class="ptvti-card-body">
+              <h3 class="ptvti-card-title"><a href="{% url 'course_detail' course.slug %}">{{ course.title }}</a></h3>
+              {% if course.specialization %}
+                <span class="badge-ptvti badge-ptvti-outline mb-2">{{ course.specialization }}</span>
+              {% endif %}
+              <div class="ptvti-card-meta mb-2">
+                <span class="meta-item"><i class="far fa-clock text-warning"></i> {{ course.duration_months }} months</span>
+              </div>
+              <p class="text-muted small">{{ course.description|truncatewords:15 }}</p>
+            </div>
+            <div class="ptvti-card-footer d-flex justify-content-between">
+              <a href="{% url 'course_detail' course.slug %}" class="text-dark fw-bold small">Details &rarr;</a>
+              <a href="{% url 'admission_apply' %}?course={{ course.id }}" class="btn-ptvti-primary btn-sm">Apply</a>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <div class="col-12 text-center py-5">
+          <p class="text-muted">No short courses currently offered by this department.</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+{% endwith %}
 
 <!-- ==========================================
      ADMISSIONS CALL TO ACTION

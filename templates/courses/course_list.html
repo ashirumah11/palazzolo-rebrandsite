@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static course_filters %}
 
 {% block title %}Courses | PTVTI Palazzolo Technical & Vocational Training Institute{% endblock %}
 
@@ -39,6 +39,32 @@
   </div>
 </div>
 
+{% comment %}Course Type Filter Buttons{% endcomment %}
+<div class="horizontal-scroll-section" style="background: var(--ptvti-bg);">
+  <div class="container">
+    <div class="horizontal-scroll-container course-type-scroll-container" role="region" aria-label="Course type filter buttons">
+      <div class="horizontal-scrollbar-track">
+        <div class="horizontal-scrollbar-thumb"></div>
+      </div>
+      <div class="horizontal-scroll-controls">
+        <button class="horizontal-scroll-button prev" aria-label="Scroll left">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="horizontal-scroll-button next" aria-label="Scroll right">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+      <div class="horizontal-scroll-content">
+        <div class="btn-group" role="group" aria-label="Course type filter buttons">
+          <a class="btn btn-ptvti-outline {% if not request.GET.type %}active{% endif %}" href="{% url 'course_list' %}{% if request.GET.dept %}?dept={{ request.GET.dept|urlencode }}{% endif %}">All Courses</a>
+          <a class="btn btn-ptvti-outline {% if request.GET.type == 'full' %}active{% endif %}" href="{% url 'course_list' %}?type=full{% if request.GET.dept %}&dept={{ request.GET.dept|urlencode }}{% endif %}">Full-Length</a>
+          <a class="btn btn-ptvti-outline {% if request.GET.type == 'short' %}active{% endif %}" href="{% url 'course_list' %}?type=short{% if request.GET.dept %}&dept={{ request.GET.dept|urlencode }}{% endif %}">Short / Customized</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <section class="ptvti-section ptvti-section-alt">
   <div class="container">
     <div class="row mb-4">
@@ -50,32 +76,88 @@
       </div>
     </div>
 
-    <div class="row g-4">
-      {% for course in courses %}
-        <div class="col-lg-4 col-md-6">
-          <div class="ptvti-card">
-            <div class="ptvti-card-media">
-              <img src="{% static 'images/about-institute.jpg' %}" alt="{{ course.title }}">
-              <span class="badge-ptvti badge-ptvti-gold card-badge-floating">{{ course.department.name|default:"Vocational" }}</span>
-            </div>
-            <div class="ptvti-card-body">
-              <h3 class="ptvti-card-title"><a href="{% url 'course_detail' course.slug %}">{{ course.title }}</a></h3>
-              <div class="ptvti-card-meta">
-                <span class="meta-item"><i class="far fa-clock text-warning"></i> {{ course.duration_months }} Months</span>
-                <span class="meta-item"><i class="fas fa-certificate text-success"></i> TVETA Accredited</span>
+    {% comment %}FULL-LENGTH COURSES{% endcomment %}
+    {% with full_courses=courses|course_type:"full" %}
+    {% if full_courses %}
+    <div class="mb-5">
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <h3 class="h4 mb-0">Full-Length Programmes</h3>
+        <span class="badge-ptvti badge-ptvti-gold">{{ full_courses|length }} course{{ full_courses|length|pluralize }}</span>
+      </div>
+      <div class="row g-4">
+        {% for course in full_courses %}
+          <div class="col-lg-4 col-md-6">
+            <div class="ptvti-card h-100">
+              <div class="ptvti-card-media">
+                <img src="{% static 'images/about-institute.jpg' %}" alt="{{ course.title }}">
+                <span class="badge-ptvti badge-ptvti-gold card-badge-floating">{{ course.get_course_type_display }}</span>
               </div>
-              <p class="text-muted small">{{ course.description|truncatewords:20 }}</p>
-            </div>
-            <div class="ptvti-card-footer d-flex justify-content-between">
-              <a href="{% url 'course_detail' course.slug %}" class="text-dark fw-bold small">Details &rarr;</a>
-              <a href="{% url 'admission_apply' %}?course={{ course.id }}" class="btn-ptvti-primary btn-sm">Apply</a>
+              <div class="ptvti-card-body">
+                <h3 class="ptvti-card-title"><a href="{% url 'course_detail' course.slug %}">{{ course.title }}</a></h3>
+                {% if course.specialization %}
+                  <span class="badge-ptvti badge-ptvti-outline mb-2">{{ course.specialization }}</span>
+                {% endif %}
+                <div class="ptvti-card-meta">
+                  <span class="meta-item"><i class="far fa-clock text-warning"></i> {{ course.duration_months }} Months</span>
+                  <span class="meta-item"><i class="fas fa-certificate text-success"></i> TVETA Accredited</span>
+                </div>
+                <p class="text-muted small">{{ course.description|truncatewords:20 }}</p>
+              </div>
+              <div class="ptvti-card-footer d-flex justify-content-between">
+                <a href="{% url 'course_detail' course.slug %}" class="text-dark fw-bold small">Details &rarr;</a>
+                <a href="{% url 'admission_apply' %}?course={{ course.id }}" class="btn-ptvti-primary btn-sm">Apply</a>
+              </div>
             </div>
           </div>
-        </div>
-      {% empty %}
-        <div class="col-12"><p class="text-muted">No courses found.</p></div>
-      {% endfor %}
+        {% endfor %}
+      </div>
     </div>
+    {% endif %}
+    {% endwith %}
+
+    {% comment %}SHORT / CUSTOMIZED COURSES{% endcomment %}
+    {% with short_courses=courses|course_type:"short" %}
+    {% if short_courses %}
+    <div class="ptvti-section-divider my-5"></div>
+    <div>
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <h3 class="h4 mb-0">Short & Customized Courses</h3>
+        <span class="badge-ptvti badge-ptvti-gold">{{ short_courses|length }} course{{ short_courses|length|pluralize }}</span>
+      </div>
+      <div class="row g-4">
+        {% for course in short_courses %}
+          <div class="col-lg-4 col-md-6">
+            <div class="ptvti-card h-100">
+              <div class="ptvti-card-media">
+                <img src="{% static 'images/about-institute.jpg' %}" alt="{{ course.title }}">
+                <span class="badge-ptvti badge-ptvti-gold card-badge-floating">{{ course.get_course_type_display }}</span>
+              </div>
+              <div class="ptvti-card-body">
+                <h3 class="ptvti-card-title"><a href="{% url 'course_detail' course.slug %}">{{ course.title }}</a></h3>
+                {% if course.specialization %}
+                  <span class="badge-ptvti badge-ptvti-outline mb-2">{{ course.specialization }}</span>
+                {% endif %}
+                <div class="ptvti-card-meta">
+                  <span class="meta-item"><i class="far fa-clock text-warning"></i> {{ course.duration_months }} Months</span>
+                  <span class="meta-item"><i class="fas fa-certificate text-success"></i> TVETA Accredited</span>
+                </div>
+                <p class="text-muted small">{{ course.description|truncatewords:20 }}</p>
+              </div>
+              <div class="ptvti-card-footer d-flex justify-content-between">
+                <a href="{% url 'course_detail' course.slug %}" class="text-dark fw-bold small">Details &rarr;</a>
+                <a href="{% url 'admission_apply' %}?course={{ course.id }}" class="btn-ptvti-primary btn-sm">Apply</a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    {% if not full_courses and not short_courses %}
+      <div class="col-12"><p class="text-muted text-center py-5">No courses found.</p></div>
+    {% endif %}
   </div>
 </section>
 {% endblock %}

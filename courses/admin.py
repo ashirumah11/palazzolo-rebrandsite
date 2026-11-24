@@ -23,14 +23,28 @@ class DepartmentAdmin(admin.ModelAdmin):
 
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ('title', 'department', 'duration_months', 'duration_weeks', 'credits', 'is_active', 'created_at')
-    list_filter = ('is_active', 'department')
+    list_display = ('title', 'department', 'course_type_badge', 'specialization', 'duration_months', 'is_active')
+    list_filter = ('is_active', 'department', 'course_type', 'specialization')
     search_fields = ('title', 'slug', 'description')
     prepopulated_fields = {'slug': ('title',)}
     autocomplete_fields = ('department',)
     readonly_fields = ('created_at',)
     fieldsets = (
-        (None, {'fields': ('title', 'slug', 'department', 'description')}),
-        ('Course details', {'fields': ('duration_months', 'duration_weeks', 'credits', 'is_active')}),
+        (None, {'fields': ('title', 'slug', 'department', 'course_type')}),
+        ('Course details', {'fields': ('specialization', 'duration_months', 'duration_weeks', 'credits', 'description', 'is_active')}),
         ('Timestamps', {'fields': ('created_at',)}),
     )
+
+    @admin.display(description='Type')
+    def course_type_badge(self, obj):
+        from django.utils.html import format_html
+        colors = {
+            'full': 'warning',
+            'short': 'success',
+        }
+        color = colors.get(obj.course_type, 'secondary')
+        return format_html(
+            '<span class="badge badge-{}">{}</span>',
+            color,
+            obj.get_course_type_display()
+        )

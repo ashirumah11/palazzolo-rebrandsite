@@ -1,13 +1,160 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}Apply Online | PTVTI{% endblock %}
 {% block content %}
 <section class="course-detail-hero"><div class="container"><h1>Apply Online</h1></div></section>
 <section class="ptvti-section ptvti-section-alt"><div class="container" style="max-width:720px">
   <div class="application-form-card p-4">
-    <form method="post">{% csrf_token %}
-      {{ form.as_p }}
-      <button class="btn-ptvti-primary w-100">Submit Application</button>
+    <form method="post" id="admission-form">{% csrf_token %}
+
+      <div class="row g-3">
+        <div class="col-md-6">
+          {{ form.first_name.label_tag }}
+          {{ form.first_name }}
+        </div>
+        <div class="col-md-6">
+          {{ form.last_name.label_tag }}
+          {{ form.last_name }}
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-md-6">
+          {{ form.email.label_tag }}
+          {{ form.email }}
+        </div>
+        <div class="col-md-6">
+          {{ form.phone.label_tag }}
+          {{ form.phone }}
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-md-6">
+          {{ form.course_type.label_tag }}
+          {{ form.course_type }}
+        </div>
+        <div class="col-md-6">
+          {{ form.department.label_tag }}
+          {{ form.department }}
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-12">
+          {{ form.course.label_tag }}
+          {{ form.course }}
+        </div>
+      </div>
+
+      <div class="mb-3">
+        {{ form.message.label_tag }}
+        {{ form.message }}
+      </div>
+
+      <button class="btn-ptvti-primary w-100" type="submit">Submit Application</button>
     </form>
   </div>
-</div></section>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const courseTypeSelect = document.getElementById('id_course_type');
+    const departmentSelect = document.getElementById('id_department');
+    const courseSelect = document.getElementById('id_course');
+
+    function fetchCourseOptions() {
+        const formData = new FormData();
+        formData.append('department', departmentSelect.value);
+        formData.append('course_type', courseTypeSelect.value);
+
+        fetch("{% url 'course-filter' %}", {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            courseSelect.innerHTML = '<option value="">Select Course</option>';
+            let currentSpecialized = '';
+            data.forEach(course => {
+                const opt = document.createElement('option');
+                opt.value = course.id;
+                opt.textContent = course.specialization ? `${course.title} (${course.specialization})` : course.title;
+                if (course.specialization) {
+                    if (course.specialization !== currentSpecialized) {
+                        const optGroupLabel = document.createElement('optgroup');
+                        optGroupLabel.label = course.specialization;
+                        currentSpecialized = course.specialization;
+                    }
+                }
+                courseSelect.appendChild(opt);
+            });
+
+            // Re-add optgroups
+            const coursesBySpecialization = {};
+            data.forEach(course => {
+                if (course.specialization) {
+                    if (!coursesBySpecialization[course.specialization]) {
+                        coursesBySpecialization[course.specialization] = [];
+                    }
+                    coursesBySpecialization[course.specialization].push(course);
+                }
+            });
+
+            if (Object.keys(coursesBySpecialization).length > 0) {
+                courseSelect.innerHTML = '<option value="">Select Course</option>';
+                Object.keys(coursesBySpecialization).forEach(spec => {
+                    const optGroup = document.createElement('optgroup');
+                    optGroup.label = spec;
+                    coursesBySpecialization[spec].forEach(course => {
+                        const opt = document.createElement('option');
+                        opt.value = course.id;
+                        opt.textContent = course.title;
+                        optGroup.appendChild(opt);
+                    });
+                    courseSelect.appendChild(optGroup);
+                });
+
+                // Add non-specialized courses at the end
+                const nonSpecialized = data.filter(c => !c.specialization);
+                if (nonSpecialized.length > 0) {
+                    nonSpecialized.forEach(course => {
+                        const opt = document.createElement('option');
+                        opt.value = course.id;
+                        opt.textContent = course.title;
+                        courseSelect.appendChild(opt);
+                    });
+                }
+            } else {
+                data.forEach(course => {
+                    const opt = document.createElement('option');
+                    opt.value = course.id;
+                    opt.textContent = course.title;
+                    courseSelect.appendChild(opt);
+                });
+            }
+
+            // Populate with initial value if exists
+            const initialCourseId = "{{ form.initial.course|default:'' }}";
+            if (initialCourseId) {
+                courseSelect.value = initialCourseId;
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching courses:', error);
+            courseSelect.innerHTML = '<option value="">Error loading courses</option>';
+        });
+    }
+
+    courseTypeSelect.addEventListener('change', fetchCourseOptions);
+    departmentSelect.addEventListener('change', fetchCourseOptions);
+
+    // Initial load of courses based on pre-selected values
+    if (courseSelect.options.length <= 1) {
+        fetchCourseOptions();
+    }
+});
+</script>
 {% endblock %}

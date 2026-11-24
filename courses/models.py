@@ -18,6 +18,11 @@ class Department(models.Model):
 
 
 class Course(models.Model):
+    COURSE_TYPE_CHOICES = [
+        ('full', 'Full-Length Course'),
+        ('short', 'Short/Customized Course'),
+    ]
+
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=220, unique=True)
     department = models.ForeignKey(
@@ -27,6 +32,17 @@ class Course(models.Model):
         null=True,
         blank=True,
     )
+    specialization = models.CharField(
+        max_length=100,
+        blank=True,
+        help_text='Specialization or category within the department (e.g., Electrical, Beauty, Hairdressing)'
+    )
+    course_type = models.CharField(
+        max_length=10,
+        choices=COURSE_TYPE_CHOICES,
+        default='full',
+        help_text='Type of course: Full-Length or Short/Customized'
+    )
     description = models.TextField(blank=True)
     duration_months = models.PositiveIntegerField(default=0, help_text='Course duration in months.')
     duration_weeks = models.PositiveIntegerField(default=0)
@@ -35,7 +51,7 @@ class Course(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ['title']
+        ordering = ['course_type', 'specialization', 'title']
 
     def __str__(self):
         return self.title

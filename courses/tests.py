@@ -15,8 +15,10 @@ class CourseViewsTest(TestCase):
         self.assertContains(resp, 'Test Course')
 
     def test_department_detail_slug_variations(self):
-        dept = Department.objects.create(name='Cosmetology & Hairdressing')
-        Course.objects.create(title='Hair Styling', slug='hair-styling', department=dept, is_active=True)
+        dept = Department.objects.filter(name='Cosmetology & Hairdressing').first()
+        if not dept:
+            dept = Department.objects.create(name='Cosmetology & Hairdressing')
+        Course.objects.update_or_create(slug='hair-styling', defaults={'title': 'Hair Styling', 'department': dept, 'is_active': True})
 
         for slug in ['cosmetology-hairdressing-department', 'cosmetology-hairdressing', 'cosmetology', 'hairdressing']:
             resp = self.client.get(f'/departments/{slug}/')

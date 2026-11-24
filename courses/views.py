@@ -29,6 +29,7 @@ class CourseDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 def course_list_view(request):
     query = request.GET.get('q', '').strip()
     dept_slug = request.GET.get('dept', '').strip()
+    course_type = request.GET.get('type', '').strip()
     courses = Course.objects.filter(is_active=True).select_related('department')
     departments = Department.objects.all().order_by('name')
 
@@ -42,10 +43,14 @@ def course_list_view(request):
     if dept_slug:
         courses = courses.filter(department__name__icontains=dept_slug)
 
+    if course_type in ('full', 'short'):
+        courses = courses.filter(course_type=course_type)
+
     context = {
         'courses': courses,
         'departments': departments,
         'query': query,
+        'selected_type': course_type,
     }
     return render(request, 'courses/course_list.html', context)
 

@@ -14,7 +14,7 @@ import os
 from content.views import home_view, about_view, event_list_view, event_detail_view
 from contacts.views import contact_view
 from courses.views import course_list_view, course_detail_view, department_detail_view
-from admissions.views import admission_apply_view, admission_track_view
+from admissions.views import admission_apply_view, admission_track_view, course_options_view
 from news.views import news_list_view, news_detail_view
 
 urlpatterns = [
@@ -26,6 +26,7 @@ urlpatterns = [
     path('departments/<slug:slug>/', department_detail_view, name='department_detail'),
     path('admissions/apply/', admission_apply_view, name='admission_apply'),
     path('admissions/track/', admission_track_view, name='admission_track'),
+    path('admissions/courses/filter/', course_options_view, name='course_filter'),
     path('news/', news_list_view, name='news_list'),
     path('news/<slug:slug>/', news_detail_view, name='news_detail'),
     path('events/', event_list_view, name='event_list'),
