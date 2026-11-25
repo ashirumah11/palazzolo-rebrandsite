@@ -64,6 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const courseSelect = document.getElementById('id_course');
 
     function fetchCourseOptions() {
+        if (!courseSelect) return;
         const params = new URLSearchParams();
         if (departmentSelect && departmentSelect.value) {
             params.append('department', departmentSelect.value);
@@ -154,11 +155,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    courseTypeSelect.addEventListener('change', fetchCourseOptions);
-    departmentSelect.addEventListener('change', fetchCourseOptions);
+    if (courseTypeSelect) courseTypeSelect.addEventListener('change', fetchCourseOptions);
+    if (departmentSelect) departmentSelect.addEventListener('change', fetchCourseOptions);
 
     // Initial load of courses based on pre-selected values
-    if (courseSelect.options.length <= 1) {
+    if (courseSelect && courseSelect.options && courseSelect.options.length <= 1) {
         fetchCourseOptions();
     }
 });

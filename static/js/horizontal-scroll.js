@@ -49,7 +49,7 @@
       // State
       this.scrollPosition = 0;
       this.maxScroll = 0;
-      this thumbRatio = this.config.thumbRatio;
+      this.thumbRatio = this.config.thumbRatio;
       this.inactiveTimer = null;
       this.isDragging = false;
       this.dragStartX = 0;
