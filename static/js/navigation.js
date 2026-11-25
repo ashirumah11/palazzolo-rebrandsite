@@ -26,4 +26,39 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  // More Dropdown: Hover on desktop, click on mobile
+  const moreDropdownToggle = document.getElementById('moreDropdown');
+  if (moreDropdownToggle) {
+    const moreDropdownMenu = moreDropdownToggle.nextElementSibling;
+
+    // Desktop: open on hover
+    const dropdownParent = moreDropdownToggle.parentElement;
+    if (window.innerWidth >= 1200) {
+      dropdownParent.addEventListener('mouseenter', () => {
+        const bsDropdown = new bootstrap.Dropdown(moreDropdownToggle);
+        bsDropdown.show();
+      });
+      dropdownParent.addEventListener('mouseleave', () => {
+        const bsDropdown = bootstrap.Dropdown.getInstance(moreDropdownToggle);
+        if (bsDropdown) bsDropdown.hide();
+      });
+    }
+
+    // Mobile: toggle on click, close when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!dropdownParent.contains(e.target) && !e.target.closest('.dropdown-menu')) {
+        const bsDropdown = bootstrap.Dropdown.getInstance(moreDropdownToggle);
+        if (bsDropdown) bsDropdown.hide();
+      }
+    });
+
+    // Close dropdown on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const bsDropdown = bootstrap.Dropdown.getInstance(moreDropdownToggle);
+        if (bsDropdown) bsDropdown.hide();
+      }
+    });
+  }
 });

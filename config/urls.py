@@ -11,10 +11,10 @@ from django.urls import include, path, re_path
 from django.views.static import serve
 import os
 
-from content.views import home_view, about_view, event_list_view, event_detail_view
+from content.views import home_view, about_view, event_list_view, event_detail_view, gallery_list_view
 from contacts.views import contact_view
 from courses.views import course_list_view, course_detail_view, department_detail_view
-from admissions.views import admission_apply_view, admission_track_view, course_options_view
+from admissions.views import admission_apply_view, admission_track_view, course_options_view, fees_list_view
 from news.views import news_list_view, news_detail_view
 
 urlpatterns = [
@@ -31,6 +31,8 @@ urlpatterns = [
     path('news/<slug:slug>/', news_detail_view, name='news_detail'),
     path('events/', event_list_view, name='event_list'),
     path('events/<int:pk>/', event_detail_view, name='event_detail'),
+    path('gallery/', gallery_list_view, name='gallery_list'),
+    path('fees/', fees_list_view, name='fees_list'),
     path('admin/', admin.site.urls),
     path('api/v1/', include('config.api_urls')),
     # Resilient media route ensuring uploaded institutional assets always resolve

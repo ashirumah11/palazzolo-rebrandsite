@@ -121,6 +121,29 @@ def event_detail_view(request, pk):
     return render(request, 'content/event_detail.html', context)
 
 
+def gallery_list_view(request):
+    """
+    Public Gallery Hub with category filtering and YouTube video support.
+    Items can be images or YouTube videos with category filtering.
+    """
+    categories = GalleryItem.CATEGORY_CHOICES
+    selected_category = request.GET.get('category', '')
+
+    queryset = GalleryItem.objects.filter(is_active=True).prefetch_related()
+
+    if selected_category:
+        queryset = queryset.filter(category=selected_category)
+
+    gallery_items = queryset.order_by('order', '-created_at')
+
+    context = {
+        'gallery_items': gallery_items,
+        'categories': categories,
+        'selected_category': selected_category,
+    }
+    return render(request, 'content/gallery_list.html', context)
+
+
 class AnnouncementViewSet(viewsets.ModelViewSet):
     queryset = Announcement.objects.all()
     serializer_class = AnnouncementSerializer

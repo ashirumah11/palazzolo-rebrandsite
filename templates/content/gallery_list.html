@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static content_filters %}
+
+{% block title %}Gallery - PTVTI{% endblock %}
+
+{% block meta_description %}Explore PTVVI Technical Institute's gallery with photos and videos of events, facilities, courses, student life, and achievements.{% endblock %}
+
+{% block content %}
+<div class="bg-white py-8 px-4 sm:px-6 lg:px-8 border-t border-b border-gray-200">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-12">
+            <h1 class="text-3xl font-bold text-gray-900 sm:text-4xl">Gallery</h1>
+            <p class="mt-4 text-lg text-gray-600">
+                Discover PTVTI through our collection of images and videos showcasing events, facilities, courses, and student life.
+            </p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
+            <div class="flex items-center space-x-4 mb-4 sm:mb-0">
+                <label for="category-filter" class="text-sm font-medium text-gray-700">Filter by:</label>
+                <select id="category-filter" name="category" class="block w-40 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" onchange="filterGallery(this.value)">
+                    <option value="">All Categories</option>
+                    {% for value, label in categories %}
+                    <option value="{{ value }}" {% if selected_category == value %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div id="category-info" class="text-sm text-gray-600">
+                {% if selected_category %}
+                    Showing: {{ categories|get_choice_display:selected_category }}
+                {% else %}
+                    {{ gallery_items|length }} items
+                {% endif %}
+            </div>
+        </div>
+
+        {% if gallery_items %}
+        <div id="gallery-grid" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {% for item in gallery_items %}
+            <div class="group relative bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 hover:shadow-xl transition-shadow duration-300">
+                <div class="aspect-w-16 aspect-h-9 bg-gray-100">
+                    {% if item.is_youtube_video %}
+                    <div class="relative w-full h-full" data-video-url="{{ item.embed_url }}" data-title="{{ item.title }}" data-caption="{{ item.caption }}">
+                        <div class="absolute inset-0 flex items-center justify-center bg-gray-800">
+                            <button type="button" class="play-button bg-black bg-opacity-70 hover:bg-opacity-90 text-white rounded-full p-4 transition-opacity duration-200" data-bs-toggle="modal" data-bs-target="#lightboxModal" data-video-url="{{ item.embed_url }}" data-title="{{ item.title }}" data-caption="{{ item.caption }}">
+                                <svg class="h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    {% elif item.image %}
+                    <img src="{{ item.image.url }}" alt="{{ item.alt_text|default:item.title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                    {% else %}
+                    <div class="flex items-center justify-center h-full bg-gray-200">
+                        <span class="text-gray-500">No media available</span>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="p-4">
+                    <h3 class="text-lg font-medium text-gray-900">{{ item.title }}</h3>
+                    {% if item.caption %}
+                    <p class="mt-1 text-sm text-gray-600">{{ item.caption }}</p>
+                    {% endif %}
+                    <div class="mt-2 flex items-center text-xs text-gray-500">
+                        <span class="px-2 py-0.5 bg-gray-100 text-gray-600 rounded-full">{{ item.get_category_display }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-12">
+            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20a2 2 0 002 2h8a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+            </svg>
+            <h3 class="mt-2 text-lg font-medium text-gray-900">No gallery items found</h3>
+            <p class="mt-1 text-sm text-gray-500">
+                {% if selected_category %}
+                There are no items in the "{{ categories|get_choice_display:selected_category }}" category.
+                <a href="{% url 'gallery_list' %}" class="font-medium text-indigo-600 hover:text-indigo-500">Show all items</a>.
+                {% else %}
+                Our gallery is currently empty. Please check back later.
+                {% endif %}
+            </p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="modal fade modal-video" id="lightboxModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-focused modal-lg p-0">
+        <div class="modal-content border-0">
+            <div class="modal-header bg-gray-900 text-white p-3">
+                <h5 class="modal-title" id="lightboxModalTitle"></h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="ratio ratio-16x9">
+                    <iframe id="lightboxIframe" src="" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="modal-footer bg-gray-50 justify-content-between p-3" style="display: none;">
+                <span id="lightboxCaption"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var lightboxModal = document.getElementById('lightboxModal');
+    var iframe = document.getElementById('lightboxIframe');
+    var modalTitle = document.getElementById('lightboxModalTitle');
+    var modalCaption = document.getElementById('lightboxCaption');
+
+    lightboxModal.addEventListener('show.bs.modal', function(event) {
+        var button = event.relatedTarget;
+        var videoUrl = button.getAttribute('data-video-url') || '';
+        var title = button.getAttribute('data-title') || '';
+        var caption = button.getAttribute('data-caption') || '';
+
+        modalTitle.textContent = title;
+        modalCaption.textContent = caption;
+        modalCaption.closest('.modal-footer').style.display = caption ? 'flex' : 'none';
+        iframe.src = videoUrl;
+    });
+
+    lightboxModal.addEventListener('hidden.bs.modal', function() {
+        iframe.src = '';
+    });
+
+    function filterGallery(category) {
+        window.location.href = category ? '{% url 'gallery_list' %}?category=' + category : '{% url 'gallery_list' %}';
+    }
+});
+</script>
+{% endblock %}

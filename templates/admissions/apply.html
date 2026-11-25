@@ -64,11 +64,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const courseSelect = document.getElementById('id_course');
 
     function fetchCourseOptions() {
-        const formData = new FormData();
-        formData.append('department', departmentSelect.value);
-        formData.append('course_type', courseTypeSelect.value);
+        const params = new URLSearchParams();
+        if (departmentSelect && departmentSelect.value) {
+            params.append('department', departmentSelect.value);
+        }
+        if (courseTypeSelect && courseTypeSelect.value) {
+            params.append('course_type', courseTypeSelect.value);
+        }
 
-        fetch("{% url 'course-filter' %}", {
+        const fetchUrl = "{% url 'course-filter' %}" + (params.toString() ? '?' + params.toString() : '');
+
+        fetch(fetchUrl, {
             method: 'GET',
             headers: {
                 'X-Requested-With': 'XMLHttpRequest',

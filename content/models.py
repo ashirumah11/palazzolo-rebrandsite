@@ -1,6 +1,28 @@
+import re
+
 from django.core.exceptions import ValidationError
 from django.core.validators import URLValidator
 from django.db import models
+
+
+def extract_youtube_id(url):
+    """
+    Extract YouTube video ID from various YouTube URL formats.
+    Returns None if not a valid YouTube URL.
+    """
+    if not url:
+        return None
+
+    youtube_regex = (
+        r'(?:https?://)?'
+        r'(?:www\.)?'
+        r'(?:youtube\.com|youtu\.be)'
+        r'(?:/watch\?v=|/v/|/(?:embed|e)/|youtu\.be/|#video/)'
+        r'([0-9A-Za-z_-]{11})'
+    )
+
+    match = re.search(youtube_regex, str(url))
+    return match.group(1) if match else None
 
 
 def validate_web_link(value):
@@ -100,12 +122,34 @@ class Testimonial(models.Model):
         return self.author
 
 class GalleryItem(models.Model):
+    """
+    Gallery item supporting both images and YouTube videos.
+    Category choices for filtering: events, facilities, courses, student-life, achievements.
+    """
+    CATEGORY_CHOICES = [
+        ('events', 'Events'),
+        ('facilities', 'Facilities'),
+        ('courses', 'Courses'),
+        ('student-life', 'Student Life'),
+        ('achievements', 'Achievements'),
+        ('other', 'Other'),
+    ]
+
+    MEDIA_TYPE_CHOICES = [
+        ('image', 'Image'),
+        ('video', 'YouTube Video'),
+    ]
+
     title = models.CharField(max_length=220)
-    # 👈 Add blank=True, null=True here
     image = models.ImageField(upload_to='gallery/', blank=True, null=True)
+    video_url = models.URLField(
+        max_length=500,
+        blank=True,
+        help_text="YouTube video URL (e.g., https://www.youtube.com/watch?v=...)"
+    )
     caption = models.CharField(max_length=320, blank=True)
     alt_text = models.CharField(max_length=220, blank=True)
-    category = models.CharField(max_length=120, blank=True)
+    category = models.CharField(max_length=120, choices=CATEGORY_CHOICES, blank=True, default='other')
     is_active = models.BooleanField(default=True)
     order = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -116,6 +160,39 @@ class GalleryItem(models.Model):
 
     def __str__(self):
         return self.title
+
+    @property
+    def media_type(self):
+        """Return the media type for display purposes."""
+        if self.image:
+            return 'image'
+        if self.video_url:
+            return 'video'
+        return None
+
+    @property
+    def youtube_video_id(self):
+        """Extract and return the YouTube video ID from the URL."""
+        return extract_youtube_id(self.video_url)
+
+    @property
+    def is_youtube_video(self):
+        """Check if this item has a valid YouTube video."""
+        return bool(self.youtube_video_id)
+
+    def clean(self):
+        """Validate that only one of image or video_url is provided."""
+        from django.core.exceptions import ValidationError
+        if self.image and self.video_url:
+            raise ValidationError('An item cannot have both an image and a video URL. Choose one or the other.')
+        if not self.image and not self.video_url:
+            raise ValidationError('An item must have either an image or a video URL.')
+
+    def get_embed_url(self):
+        """Return the YouTube embed URL for video items."""
+        if self.is_youtube_video:
+            return f'https://www.youtube.com/embed/{self.youtube_video_id}'
+        return None
 
 
 class HeroCarouselItem(models.Model):

@@ -71,11 +71,22 @@ class TestimonialSerializer(serializers.ModelSerializer):
 
 class GalleryItemSerializer(serializers.ModelSerializer):
     image_url = serializers.SerializerMethodField()
+    media_type = serializers.CharField(read_only=True)
+    is_youtube_video = serializers.BooleanField(read_only=True)
+    youtube_video_id = serializers.CharField(read_only=True)
+    embed_url = serializers.SerializerMethodField()
+    category_display = serializers.CharField(source='get_category_display', read_only=True)
 
     class Meta:
         model = GalleryItem
-        fields = '__all__'
-        read_only_fields = ['id', 'created_at', 'updated_at']
+        fields = [
+            'id', 'title', 'image', 'image_url', 'video_url',
+            'media_type', 'is_youtube_video', 'youtube_video_id', 'embed_url',
+            'caption', 'alt_text', 'category', 'category_display',
+            'is_active', 'order', 'created_at', 'updated_at'
+        ]
+        read_only_fields = ['id', 'created_at', 'updated_at', 'media_type',
+                            'is_youtube_video', 'youtube_video_id', 'embed_url', 'category_display']
 
     def get_image_url(self, obj):
         try:
@@ -85,6 +96,12 @@ class GalleryItemSerializer(serializers.ModelSerializer):
                     return request.build_absolute_uri(obj.image.url)
                 return obj.image.url
             return None
+        except Exception:
+            return None
+
+    def get_embed_url(self, obj):
+        try:
+            return obj.get_embed_url()
         except Exception:
             return None
 

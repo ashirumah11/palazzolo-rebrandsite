@@ -10,7 +10,7 @@ from reportlab.lib.pagesizes import A4, landscape
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import Paragraph, SimpleDocTemplate, Table, TableStyle
 
-from .models import Admission
+from .models import Admission, Fee
 
 
 @admin.register(Admission)
@@ -123,3 +123,33 @@ class AdmissionAdmin(admin.ModelAdmin):
 		return f'<span style="color: {color}; font-weight: 700;">{obj.get_status_display()}</span>'
 
 	status_badge.allow_tags = True
+
+
+@admin.register(Fee)
+class FeeAdmin(admin.ModelAdmin):
+    list_display = ('course', 'fee_type_display', 'amount_display', 'is_published', 'created_at')
+    list_filter = ('is_published', 'fee_type', 'course__department', 'course')
+    search_fields = ('course__title', 'course__department__name')
+    autocomplete_fields = ('course',)
+    readonly_fields = ('created_at', 'updated_at')
+    ordering = ('course__department', 'course__title', 'fee_type')
+
+    @admin.display(description='Fee Type')
+    def fee_type_display(self, obj):
+        return obj.get_fee_type_display()
+
+    def amount_display(self, obj):
+        return f"KSh {obj.amount:,.0f}"
+    amount_display.short_description = 'Amount'
+
+    @admin.action(description='Publish selected fees')
+    def make_published(self, request, queryset):
+        updated = queryset.update(is_published=True)
+        self.message_user(request, f'{updated} fee(s) published.')
+
+    @admin.action(description='Unpublish selected fees')
+    def make_unpublished(self, request, queryset):
+        updated = queryset.update(is_published=False)
+        self.message_user(request, f'{updated} fee(s) unpublished.')
+
+    actions = [make_published, make_unpublished]

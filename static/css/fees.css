@@ -1,0 +1,141 @@
+/* ==========================================================================
+   PTVTI Fees Structure Stylesheet
+   ========================================================================== */
+
+.fees-hero {
+  background: linear-gradient(135deg, var(--ptvti-navy) 0%, #153a66 100%);
+  padding: 4rem 0 3.5rem;
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+}
+
+.fees-hero .lead {
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 680px;
+  margin-top: 0.75rem;
+  font-size: 1.1rem;
+}
+
+.course-fee-card {
+  background: #ffffff;
+  border: 1px solid var(--ptvti-border-color, #e2e8f0);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(11, 37, 69, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.course-fee-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(11, 37, 69, 0.1);
+  border-color: var(--ptvti-gold);
+}
+
+.course-fee-card-body {
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.course-fee-card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--ptvti-navy);
+  margin-bottom: 1rem;
+}
+
+.course-fee-card-title small {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #64748b;
+}
+
+.fee-breakdown-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.fee-breakdown-table tbody tr {
+  border-bottom: 1px dashed #e2e8f0;
+  padding: 0.6rem 0;
+}
+
+.fee-breakdown-table td {
+  padding: 0.6rem 0;
+}
+
+.fee-label {
+  color: var(--ptvti-text, #334155);
+  font-size: 0.95rem;
+}
+
+.fee-note {
+  color: #64748b;
+  font-size: 0.8rem;
+}
+
+.fee-amount {
+  font-weight: 600;
+  color: var(--ptvti-navy);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.fee-total-row {
+  border-top: 2px solid var(--ptvti-gold);
+  border-bottom: none !important;
+  margin-top: 0.5rem;
+  padding-top: 0.75rem !important;
+}
+
+.fee-total-row .fee-amount {
+  font-size: 1.15rem;
+  color: var(--ptvti-gold-dark, #b89326);
+}
+
+.course-fee-card-footer {
+  margin-top: auto;
+  padding-top: 1.25rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.no-fees-message {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  color: #64748b;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px dashed #cbd5e1;
+}
+
+.no-fees-message i {
+  font-size: 2.5rem;
+  color: var(--ptvti-gold);
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.fees-no-data-message {
+  max-width: 580px;
+  margin: 2rem auto;
+}
+
+.fees-contact-section {
+  background: var(--ptvti-navy);
+  padding: 3.5rem 0;
+  margin-top: 3rem;
+}
+
+.fees-contact-section h4 {
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.fees-contact-section p {
+  color: rgba(255, 255, 255, 0.8);
+}

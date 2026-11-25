@@ -201,6 +201,24 @@
   color: var(--ptvti-navy);
 }
 
+/* More Dropdown Toggle Button */
+.dropdown-toggle after {
+  margin-left: 0.35rem;
+}
+
+@media (min-width: 1400px) {
+  .dropdown-toggle after {
+    margin-left: 0.5rem;
+  }
+}
+
+/* Mobile dropdown close button */
+.dropdown-menu .btn-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.75rem;
+}
+
 /* Nav CTA */
 .nav-cta-btn {
   margin-left: 0.5rem;

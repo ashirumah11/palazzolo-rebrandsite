@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% load static admissions_filters %}
+
+{% block title %}Fees Structure | PTVTI{% endblock %}
+
+{% block content %}
+<!-- ==========================================
+     FEES HERO SECTION
+     ========================================== -->
+<section class="fees-hero" aria-label="Fees Structure">
+  <div class="container">
+    <span class="section-eyebrow text-warning">Fees &amp; FINANCIAL INFORMATION</span>
+    <h1 class="text-white">Transparent Course Fees</h1>
+    <p class="lead">Browse our published course fees. All fees are in Kenyan Shillings (KSh) and are subject to change.</p>
+  </div>
+</section>
+
+<!-- ==========================================
+     FEES BY DEPARTMENT
+     ========================================== -->
+{% if department_fees %}
+  {% for department, course_fees in department_fees.items %}
+    <section class="ptvti-section" aria-labelledby="dept-{{ department.name|safe_slugify }}-heading">
+      <div class="container">
+        <div class="section-header">
+          <h2 id="dept-{{ department.name|safe_slugify }}-heading" class="mb-3">{{ department.name }}</h2>
+        </div>
+
+        <div class="row g-4">
+          {% for course_data in course_fees %}
+            <div class="col-lg-6 col-md-12">
+              <div class="course-fee-card h-100">
+                <div class="course-fee-card-body">
+                  <h3 class="course-fee-card-title mb-3">
+                    {{ course_data.course.title }}
+                    {% if course_data.course.specialization %}
+                      <small class="text-muted d-block mt-1">({{ course_data.course.specialization }})</small>
+                    {% endif %}
+                  </h3>
+
+                  {% if course_data.fees %}
+                    <div class="table-responsive mb-3">
+                      <table class="fee-breakdown-table">
+                        <tbody>
+                          {% for fee in course_data.fees %}
+                            <tr class="d-flex justify-content-between align-items-center">
+                              <td class="fee-label">
+                                <span class="text-uppercase small">{{ fee.get_fee_type_display }}</span>
+                                {% if fee.note %}
+                                  <br><small class="fee-note">{{ fee.note }}</small>
+                                {% endif %}
+                              </td>
+                              <td class="fee-amount">{{ fee.formatted_amount }}</td>
+                            </tr>
+                          {% endfor %}
+                        </tbody>
+                        <tfoot>
+                          <tr class="fee-total-row d-flex justify-content-between align-items-center">
+                            <td class="fee-label fw-bold py-2">Total</td>
+                            <td class="fee-amount fw-bold">{{ course_data.fees|sum_fees|format_total }}</td>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
+                  {% else %}
+                    <div class="no-fees-message">
+                      <i class="fas fa-exclamation-circle"></i>
+                      <h3 class="mb-2">Fees Not Yet Published</h3>
+                      <p class="mb-0">Fee information for this course is coming soon. Please check back later or contact admissions.</p>
+                    </div>
+                  {% endif %}
+
+                  <div class="course-fee-card-footer">
+                    <a href="{% url 'admission_apply' %}?course={{ course_data.course.id }}" class="btn btn-ptvti-primary">
+                      <i class="fas fa-graduation-cap"></i> Apply Now
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+  {% endfor %}
+{% else %}
+  <section class="ptvti-section" aria-label="No Fees Found">
+    <div class="container">
+      <div class="no-fees-message mx-auto fees-no-data-message">
+        <i class="fas fa-receipt"></i>
+        <h3 class="mb-2">No Published Fees Found</h3>
+        <p class="mb-0">No course fees have been published yet. Contact admissions for the most current fee information.</p>
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+<!-- ==========================================
+     CONTACT ASSISTANCE SECTION
+     ========================================== -->
+<section class="fees-contact-section" aria-label="Contact Assistance">
+  <div class="container">
+    <div class="row text-center text-white">
+      <div class="col-md-6 mb-4 mb-md-0">
+        <h4 class="mb-3">Need Assistance?</h4>
+        <p class="mb-0">Questions about fees or payment plans? Our admissions team is here to help.</p>
+      </div>
+      <div class="col-md-6">
+        <a href="{% url 'contact' %}" class="btn btn-ptvti-gold btn-lg">
+          <i class="fas fa-envelope"></i> Contact Admissions
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

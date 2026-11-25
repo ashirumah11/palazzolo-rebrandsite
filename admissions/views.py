@@ -6,9 +6,19 @@ from django.shortcuts import get_object_or_404, redirect, render
 from rest_framework import generics
 
 from .forms import AdmissionForm
-from .models import Admission
-from .serializers import AdmissionSerializer
+from .models import Admission, Fee
+from .serializers import AdmissionSerializer, FeeSerializer
 from courses.models import Course
+
+
+class FeeListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Fee.objects.filter(is_published=True)
+    serializer_class = FeeSerializer
+
+
+class FeeDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Fee.objects.all()
+    serializer_class = FeeSerializer
 
 
 class AdmissionListCreateAPIView(generics.ListCreateAPIView):
@@ -88,3 +98,45 @@ def course_options_view(request):
     ))
 
     return JsonResponse(data, safe=False)
+
+
+def fees_list_view(request):
+    """
+    Public Fees Structure page displaying published course fees.
+    Fees are grouped by department and course for easy reference.
+    """
+    departments = list(Fee.objects.filter(is_published=True)
+                       .select_related('course__department')
+                       .order_by('course__department__name', 'course__title')
+                       .values_list('course__department', flat=True)
+                       .distinct())
+
+    department_fees = {}
+    for dept_id in departments:
+        if not dept_id:
+            continue
+        from courses.models import Department
+        dept = Department.objects.filter(id=dept_id).first()
+        if not dept:
+            continue
+        fees = Fee.objects.filter(
+            is_published=True,
+            course__department=dept
+        ).select_related('course').order_by('course__title', 'fee_type')
+
+        dept_fees_data = []
+        for fee in fees:
+            course_fees = next((d for d in dept_fees_data if d['course'] == fee.course), None)
+            if course_fees:
+                course_fees['fees'].append(fee)
+            else:
+                dept_fees_data.append({
+                    'course': fee.course,
+                    'fees': [fee]
+                })
+        department_fees[dept] = dept_fees_data
+
+    context = {
+        'department_fees': department_fees,
+    }
+    return render(request, 'admissions/fees_list.html', context)
