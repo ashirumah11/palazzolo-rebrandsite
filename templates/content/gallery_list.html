@@ -11,81 +11,67 @@
      ========================================== -->
 <section class="gallery-hero" aria-label="Institute Gallery">
   <div class="container">
-    <span class="section-eyebrow text-warning">Institute Gallery</span>
-    <h1 class="text-white">Explore PTVTI</h1>
-    <p class="lead">Discover Palazzolo Technical and Vocational Training Institute through photographs and videos showcasing our campus, practical training, departments, events, and student life.</p>
+    <span class="section-eyebrow text-warning">LIFE AT PALAZZOLO</span>
+    <h1 class="text-white">Our Gallery</h1>
+    <p class="lead">Explore the moments, experiences, achievements and activities that make life at Palazzolo unique.</p>
   </div>
 </section>
 
 <!-- ==========================================
-     GALLERY INTRODUCTION
-     ========================================== -->
-<section class="gallery-intro">
-  <div class="container">
-    <h2>Moments at PTVTI</h2>
-    <p>Explore moments from our learning environment, practical sessions, student activities, workshops, and institutional events.</p>
-  </div>
-</section>
-
-<!-- ==========================================
-     GALLERY FILTER BAR
+     CATEGORY FILTER NAVIGATION
      ========================================== -->
 <div class="container">
-  <div class="gallery-filters">
-    <div class="gallery-item-count">
-      {% if selected_category %}
-        {{ categories|get_choice_display:selected_category }}: {{ gallery_items|length }} item{{ gallery_items|length|pluralize }}
-      {% else %}
-        {{ gallery_items|length }} item{{ gallery_items|length|pluralize }} to explore
-      {% endif %}
-    </div>
-    <select id="category-filter" class="gallery-category-select" onchange="filterGallery(this.value)">
-      <option value="">All Categories</option>
+  <div class="gallery-filter-nav">
+    <div class="gallery-filter-nav-title">Filter by Category</div>
+    <div class="gallery-filter-tabs" role="tablist" aria-label="Gallery categories">
+      <button class="gallery-filter-tab active" data-category="" role="tab" aria-selected="true">All</button>
       {% for value, label in categories %}
-        <option value="{{ value }}" {% if selected_category == value %}selected{% endif %}>{{ label }}</option>
+        <button class="gallery-filter-tab" data-category="{{ value }}" role="tab" aria-selected="false">{{ label }}</button>
       {% endfor %}
-    </select>
+    </div>
   </div>
 </div>
 
 <!-- ==========================================
-     GALLERY GRID
+     MAIN PHOTOGRAPHIC GALLERY GRID
      ========================================== -->
 {% if gallery_items %}
-  <div id="gallery-grid" class="container">
+  <div id="gallery-grid" class="gallery-grid">
     {% for item in gallery_items %}
-      <div class="gallery-card">
+      <a href="javascript:void(0);"
+         class="gallery-image-item"
+         data-category="{{ item.category }}"
+         data-media-type="{{ item.media_type }}"
+         data-title="{{ item.title }}"
+         data-caption="{{ item.caption }}"
+         data-image-url="{{ item.image.url }}"
+         data-video-url="{{ item.get_embed_url }}"
+         role="button"
+         tabindex="0"
+         aria-label="View {{ item.title }}{% if item.caption %}: {{ item.caption }}{% endif %}">
         {% if item.is_youtube_video %}
-          <div class="gallery-card-media">
-            <div class="video-overlay"
-                 data-video-url="{{ item.embed_url }}"
-                 data-title="{{ item.title }}"
-                 data-caption="{{ item.caption }}">
-              <button type="button" class="play-button" data-bs-toggle="modal" data-bs-target="#lightboxModal">
-                <i class="fas fa-play"></i>
-              </button>
+          <div class="video-overlay" data-video-url="{{ item.get_embed_url }}" data-title="{{ item.title }}" data-caption="{{ item.caption }}">
+            <div class="play-button" aria-hidden="true">
+              <i class="fas fa-play"></i>
             </div>
           </div>
-          <span class="gallery-category-badge">{{ item.get_category_display }}</span>
-        {% elif item.image %}
-          <div class="gallery-card-media">
-            <img src="{{ item.image.url }}" alt="{{ item.alt_text|default:item.title }}">
+          <div class="video-placeholder" style="background-color: var(--ptvti-navy-subtle);">
+            {% if item.image %}
+              <img src="{{ item.image.url }}" alt="{{ item.alt_text|default:item.title }}" loading="lazy">
+            {% else %}
+              <div class="d-flex align-items-center justify-content-center h-100 w-100" style="position: absolute; top: 0; left: 0;">
+                <i class="fas fa-play-circle fa-3x text-white"></i>
+              </div>
+            {% endif %}
           </div>
-          <span class="gallery-category-badge">{{ item.get_category_display }}</span>
+        {% elif item.image %}
+          <img src="{{ item.image.url }}" alt="{{ item.alt_text|default:item.title }}" loading="lazy">
         {% else %}
-          <div class="gallery-card-media d-flex align-items-center justify-content-center">
+          <div class="d-flex align-items-center justify-content-center" style="height: 100%; width: 100%; background-color: var(--ptvti-navy-subtle);">
             <span class="text-muted">No media available</span>
           </div>
         {% endif %}
-        <div class="gallery-card-body">
-          <h3 class="gallery-card-title">
-            <a href="#">{{ item.title }}</a>
-          </h3>
-          {% if item.caption %}
-            <p class="gallery-card-caption">{{ item.caption }}</p>
-          {% endif %}
-        </div>
-      </div>
+      </a>
     {% endfor %}
   </div>
 {% else %}
@@ -110,24 +96,23 @@
 {% endif %}
 
 <!-- ==========================================
-     LIGHTBOX MODAL FOR VIDEOS
+     FULL-SCREEN LIGHTBOX MODAL
      ========================================== -->
-<div class="modal fade modal-video" id="lightboxModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-focused modal-lg p-0">
-    <div class="modal-content border-0">
-      <div class="modal-header" style="background-color: var(--ptvti-navy); color: #FFFFFF; padding: 1rem 1.25rem;">
-        <h5 class="modal-title" id="lightboxModalTitle"></h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body p-0">
-        <div class="ratio ratio-16x9">
-          <iframe id="lightboxIframe" src="" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </div>
-      <div class="modal-footer justify-content-between p-3" style="background-color: var(--ptvti-navy); border-top: 1px solid var(--ptvti-border-light); padding: 1rem 1.25rem; display: none;">
-        <span id="lightboxCaption" class="modal-caption" style="color: rgba(255, 255, 255, 0.85); font-size: 0.9rem;"></span>
-      </div>
-    </div>
+<div class="lightbox-modal" id="lightboxModal" tabindex="-1" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Gallery lightbox">
+  <div class="lightbox-container" role="document">
+    <button class="lightbox-close" aria-label="Close lightbox" id="lightboxClose">
+      <i class="fas fa-times"></i>
+    </button>
+    <button class="lightbox-prev" aria-label="Previous image" id="lightboxPrev">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <button class="lightbox-next" aria-label="Next image" id="lightboxNext">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+    <div class="lightbox-loading" id="lightboxLoading">Loading...</div>
+    <img class="lightbox-image" id="lightboxImage" src="" alt="" style="display: none;">
+    <iframe class="lightbox-video" id="lightboxVideo" src="" frameborder="0" allowfullscreen style="display: none;"></iframe>
+    <div class="lightbox-title" id="lightboxTitle" style="display: none;"></div>
   </div>
 </div>
 
@@ -136,38 +121,230 @@
 {% block extra_js %}
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    var lightboxModal = document.getElementById('lightboxModal');
-    var iframe = document.getElementById('lightboxIframe');
-    var modalTitle = document.getElementById('lightboxModalTitle');
-    var modalCaption = document.getElementById('lightboxCaption');
+    // ==========================================
+    // Gallery Filter Tabs
+    // ==========================================
+    const filterTabs = document.querySelectorAll('.gallery-filter-tab');
+    const galleryItems = document.querySelectorAll('.gallery-image-item');
+    const galleryGrid = document.getElementById('gallery-grid');
 
-    if (lightboxModal && iframe && modalTitle) {
-        lightboxModal.addEventListener('show.bs.modal', function(event) {
-            var button = event.relatedTarget;
-            if (!button) return;
-            var videoUrl = button.getAttribute('data-video-url') || '';
-            var title = button.getAttribute('data-title') || '';
-            var caption = button.getAttribute('data-caption') || '';
+    if (filterTabs.length && galleryItems.length) {
+        filterTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                const category = this.getAttribute('data-category');
 
-            modalTitle.textContent = title;
-            if (modalCaption) {
-                modalCaption.textContent = caption;
-                var footer = modalCaption.closest('.modal-footer');
-                if (footer) footer.style.display = caption ? 'flex' : 'none';
-            }
-            iframe.src = videoUrl;
-        });
+                // Update active state
+                filterTabs.forEach(t => {
+                    t.classList.remove('active');
+                    t.setAttribute('aria-selected', 'false');
+                });
+                this.classList.add('active');
+                this.setAttribute('aria-selected', 'true');
 
-        lightboxModal.addEventListener('hidden.bs.modal', function() {
-            iframe.src = '';
+                // Filter items
+                galleryItems.forEach(item => {
+                    const itemCategory = item.getAttribute('data-category');
+                    if (category === '' || itemCategory === category) {
+                        item.style.display = 'block';
+                        // Trigger reflow for animation
+                        item.offsetHeight;
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0)';
+                    } else {
+                        item.style.opacity = '0';
+                        item.style.transform = 'translateY(10px)';
+                        setTimeout(() => {
+                            if (item.style.opacity === '0') {
+                                item.style.display = 'none';
+                            }
+                        }, 200);
+                    }
+                });
+            });
         });
     }
 
-    function filterGallery(category) {
-        if (category) {
-            window.location.href = '{% url 'gallery_list' %}?category=' + category;
+    // ==========================================
+    // Lightbox Functionality
+    // ==========================================
+    const lightboxModal = document.getElementById('lightboxModal');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxVideo = document.getElementById('lightboxVideo');
+    const lightboxTitle = document.getElementById('lightboxTitle');
+    const lightboxClose = document.getElementById('lightboxClose');
+    const lightboxPrev = document.getElementById('lightboxPrev');
+    const lightboxNext = document.getElementById('lightboxNext');
+    const lightboxLoading = document.getElementById('lightboxLoading');
+
+    // Store all gallery items for navigation
+    let currentItems = [];
+    let currentIndex = -1;
+
+    // Initialize current items array
+    function updateCurrentItems() {
+        currentItems = Array.from(document.querySelectorAll('.gallery-image-item:not([style*="display: none"])'));
+    }
+
+    // Open lightbox
+    function openLightbox(index) {
+        updateCurrentItems();
+        currentIndex = index;
+
+        if (currentIndex < 0 || currentIndex >= currentItems.length) return;
+
+        const item = currentItems[currentIndex];
+        const mediaType = item.getAttribute('data-media-type');
+        const title = item.getAttribute('data-title');
+        const caption = item.getAttribute('data-caption');
+
+        // Show loading
+        lightboxLoading.style.display = 'block';
+        lightboxImage.style.display = 'none';
+        lightboxVideo.style.display = 'none';
+        lightboxTitle.style.display = 'none';
+
+        // Update title/caption
+        let displayTitle = title;
+        if (caption) {
+            displayTitle = title + ': ' + caption;
+        }
+        lightboxTitle.textContent = displayTitle;
+
+        if (mediaType === 'video') {
+            const videoUrl = item.getAttribute('data-video-url');
+            lightboxVideo.src = videoUrl;
+
+            lightboxVideo.onload = function() {
+                lightboxLoading.style.display = 'none';
+                lightboxVideo.style.display = 'block';
+                lightboxTitle.style.display = 'block';
+            };
         } else {
-            window.location.href = '{% url 'gallery_list' %}';
+            const imageUrl = item.getAttribute('data-image-url');
+            lightboxImage.src = imageUrl;
+
+            lightboxImage.onload = function() {
+                lightboxLoading.style.display = 'none';
+                lightboxImage.style.display = 'block';
+                lightboxTitle.style.display = 'block';
+            };
+
+            lightboxImage.onerror = function() {
+                lightboxLoading.style.display = 'none';
+                lightboxLoading.textContent = 'Failed to load image';
+            };
+        }
+
+        lightboxModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+
+        // Focus trap
+        lightboxClose.focus();
+
+        // Update navigation button visibility
+        updateNavButtons();
+    }
+
+    // Close lightbox
+    function closeLightbox() {
+        lightboxModal.classList.remove('active');
+        document.body.style.overflow = '';
+
+        // Reset sources
+        lightboxImage.src = '';
+        lightboxVideo.src = '';
+        lightboxTitle.style.display = 'none';
+        lightboxLoading.style.display = 'block';
+        lightboxLoading.textContent = 'Loading...';
+    }
+
+    // Navigate to previous/next
+    function navigate(direction) {
+        const newIndex = currentIndex + direction;
+        if (newIndex >= 0 && newIndex < currentItems.length) {
+            openLightbox(newIndex);
+        }
+    }
+
+    // Update navigation button visibility
+    function updateNavButtons() {
+        lightboxPrev.style.display = currentIndex > 0 ? 'flex' : 'none';
+        lightboxNext.style.display = currentIndex < currentItems.length - 1 ? 'flex' : 'none';
+    }
+
+    // Event listeners for gallery items
+    galleryItems.forEach((item, index) => {
+        // Click handler
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+            openLightbox(index);
+        });
+
+        // Keyboard handler (Enter/Space)
+        item.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openLightbox(index);
+            }
+        });
+    });
+
+    // Lightbox control events
+    if (lightboxClose) {
+        lightboxClose.addEventListener('click', closeLightbox);
+    }
+
+    if (lightboxPrev) {
+        lightboxPrev.addEventListener('click', () => navigate(-1));
+    }
+
+    if (lightboxNext) {
+        lightboxNext.addEventListener('click', () => navigate(1));
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (!lightboxModal.classList.contains('active')) return;
+
+        switch (e.key) {
+            case 'Escape':
+                closeLightbox();
+                break;
+            case 'ArrowLeft':
+                navigate(-1);
+                break;
+            case 'ArrowRight':
+                navigate(1);
+                break;
+        }
+    });
+
+    // Close on backdrop click
+    lightboxModal.addEventListener('click', function(e) {
+        if (e.target === lightboxModal) {
+            closeLightbox();
+        }
+    });
+
+    // Handle filter changes - update lightbox items array
+    filterTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            // Small delay to allow filter animation to complete
+            setTimeout(() => {
+                updateCurrentItems();
+            }, 250);
+        });
+    });
+
+    // ==========================================
+    // Handle URL category parameter on load
+    // ==========================================
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlCategory = urlParams.get('category');
+    if (urlCategory) {
+        const matchingTab = document.querySelector('.gallery-filter-tab[data-category="' + urlCategory + '"]');
+        if (matchingTab) {
+            matchingTab.click();
         }
     }
 });

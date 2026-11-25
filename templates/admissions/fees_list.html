@@ -1,17 +1,19 @@
 {% extends "base.html" %}
 {% load static admissions_filters %}
 
-{% block title %}Fees Structure | PTVTI{% endblock %}
+{% block title %}Fees Structure | PTVTI Palazzolo Technical & Vocational Training Institute{% endblock %}
+
+{% block meta_description %}Explore the published fee information for courses offered at Palazzolo Technical and Vocational Training Institute. Find the relevant fee details for your chosen programme.{% endblock %}
 
 {% block content %}
 <!-- ==========================================
-     FEES HERO SECTION
+     FEES HERO SECTION - Matches Events Page Hero
      ========================================== -->
-<section class="fees-hero" aria-label="Fees Structure">
+<section class="event-hero" aria-label="Fees Structure">
   <div class="container">
-    <span class="section-eyebrow text-warning">Fees &amp; FINANCIAL INFORMATION</span>
-    <h1 class="text-white">Transparent Course Fees</h1>
-    <p class="lead">Browse our published course fees. All fees are in Kenyan Shillings (KSh) and are subject to change.</p>
+    <span class="section-eyebrow text-warning">FEES & FINANCIAL INFORMATION</span>
+    <h1>Fees Structure</h1>
+    <p class="lead">Explore the published fee information for courses offered at Palazzolo Technical and Vocational Training Institute. Find the relevant fee details for your chosen programme.</p>
   </div>
 </section>
 
@@ -20,18 +22,18 @@
      ========================================== -->
 {% if department_fees %}
   {% for department, course_fees in department_fees.items %}
-    <section class="ptvti-section" aria-labelledby="dept-{{ department.name|safe_slugify }}-heading">
+    <section class="ptvti-section ptvti-section-alt" aria-labelledby="dept-{{ department.name|safe_slugify }}-heading">
       <div class="container">
         <div class="section-header">
-          <h2 id="dept-{{ department.name|safe_slugify }}-heading" class="mb-3">{{ department.name }}</h2>
+          <h2 id="dept-{{ department.name|safe_slugify }}-heading">{{ department.name }}</h2>
         </div>
 
         <div class="row g-4">
           {% for course_data in course_fees %}
             <div class="col-lg-6 col-md-12">
-              <div class="course-fee-card h-100">
-                <div class="course-fee-card-body">
-                  <h3 class="course-fee-card-title mb-3">
+              <div class="ptvti-card h-100">
+                <div class="ptvti-card-body">
+                  <h3 class="ptvti-card-title mb-2">
                     {{ course_data.course.title }}
                     {% if course_data.course.specialization %}
                       <small class="text-muted d-block mt-1">({{ course_data.course.specialization }})</small>
@@ -40,7 +42,7 @@
 
                   {% if course_data.fees %}
                     <div class="table-responsive mb-3">
-                      <table class="fee-breakdown-table">
+                      <table class="table fee-breakdown-table">
                         <tbody>
                           {% for fee in course_data.fees %}
                             <tr class="d-flex justify-content-between align-items-center">
@@ -63,15 +65,17 @@
                       </table>
                     </div>
                   {% else %}
-                    <div class="no-fees-message">
+                    <div class="ptvti-alert alert-info">
                       <i class="fas fa-exclamation-circle"></i>
-                      <h3 class="mb-2">Fees Not Yet Published</h3>
-                      <p class="mb-0">Fee information for this course is coming soon. Please check back later or contact admissions.</p>
+                      <div>
+                        <h5 class="mb-1">Fees Information Pending</h5>
+                        <p class="mb-0 small">Fee information for this course is coming soon. Please check back later or contact admissions.</p>
+                      </div>
                     </div>
                   {% endif %}
 
-                  <div class="course-fee-card-footer">
-                    <a href="{% url 'admission_apply' %}?course={{ course_data.course.id }}" class="btn btn-ptvti-primary">
+                  <div class="ptvti-card-footer">
+                    <a href="{% url 'admission_apply' %}?course={{ course_data.course.id }}" class="btn btn-ptvti-primary btn-sm">
                       <i class="fas fa-graduation-cap"></i> Apply Now
                     </a>
                   </div>
@@ -84,31 +88,39 @@
     </section>
   {% endfor %}
 {% else %}
-  <section class="ptvti-section" aria-label="No Fees Found">
+  <section class="ptvti-section ptvti-section-alt" aria-label="No Fees Found">
     <div class="container">
-      <div class="no-fees-message mx-auto fees-no-data-message">
-        <i class="fas fa-receipt"></i>
+      <div class="text-center py-5">
+        <i class="fas fa-receipt fa-3x text-warning mb-3"></i>
         <h3 class="mb-2">No Published Fees Found</h3>
-        <p class="mb-0">No course fees have been published yet. Contact admissions for the most current fee information.</p>
+        <p class="text-muted mb-0">No course fees have been published yet. Contact admissions for the most current fee information.</p>
       </div>
     </div>
   </section>
 {% endif %}
 
 <!-- ==========================================
-     CONTACT ASSISTANCE SECTION
+     ADMISSIONS CALL TO ACTION BANNER - Homepage CTA Style
      ========================================== -->
-<section class="fees-contact-section" aria-label="Contact Assistance">
+<section class="ptvti-section" aria-label="Admissions Banner">
   <div class="container">
-    <div class="row text-center text-white">
-      <div class="col-md-6 mb-4 mb-md-0">
-        <h4 class="mb-3">Need Assistance?</h4>
-        <p class="mb-0">Questions about fees or payment plans? Our admissions team is here to help.</p>
-      </div>
-      <div class="col-md-6">
-        <a href="{% url 'contact' %}" class="btn btn-ptvti-gold btn-lg">
-          <i class="fas fa-envelope"></i> Contact Admissions
-        </a>
+    <div class="ptvti-cta-banner">
+      <div class="row align-items-center g-4">
+        <div class="col-xl-7 col-lg-7">
+          <span class="badge-ptvti badge-ptvti-gold mb-3">FEES & ADMISSIONS SUPPORT</span>
+          <h2 class="cta-banner-title">Need Help Understanding Course Fees?</h2>
+          <p class="cta-banner-desc mb-0">Choosing a course is an important decision. Our admissions team is available to help you understand the published fee structure and guide you through the next steps of your application.</p>
+        </div>
+        <div class="col-xl-5 col-lg-5">
+          <div class="cta-banner-actions">
+            <a href="{% url 'contact' %}" class="btn-ptvti-gold btn-lg">
+              <i class="fas fa-envelope"></i> Contact Admissions
+            </a>
+            <a href="{% url 'admission_apply' %}" class="btn-ptvti-white btn-lg">
+              <i class="fas fa-graduation-cap"></i> Apply Online
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
