@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Admission Procedures | PTVTI Palazzolo Technical & Vocational Training Institute{% endblock %}
+
+{% block meta_description %}Learn about the admission application process and procedures for Palazzolo Technical and Vocational Training Institute. Coming soon - step-by-step guide for all programmes.{% endblock %}
+
+{% block content %}
+<!-- ==========================================
+     ADMISSION PROCEDURES HERO SECTION
+     Matches Events Page Hero Pattern
+     ========================================== -->
+<section class="event-hero" aria-label="Admission Procedures">
+  <div class="container">
+    <span class="section-eyebrow text-warning">ADMISSIONS</span>
+    <h1>Admission Procedures</h1>
+    <p class="lead">Step-by-step application process and procedures for all programmes at Palazzolo Technical and Vocational Training Institute.</p>
+  </div>
+</section>
+
+<!-- ==========================================
+     COMING SOON CONTENT
+     ========================================== -->
+<section class="ptvti-section" aria-label="Coming Soon Notice">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-xl-7">
+        <div class="ptvti-card text-center py-5 px-4">
+          <div class="ptvti-card-body">
+            <div class="coming-soon-icon mb-4">
+              <i class="fas fa-tasks fa-4x text-warning"></i>
+            </div>
+            <h2 class="mb-3">Coming Soon</h2>
+            <p class="text-muted mb-4">We are currently preparing a comprehensive guide to our admission procedures for all diploma, certificate, and artisan programmes. This page will be updated soon with detailed step-by-step information.</p>
+
+            <div class="row g-4 mt-5">
+              <div class="col-md-6">
+                <div class="info-card h-100 p-4 bg-light rounded">
+                  <i class="fas fa-user-plus fa-2x text-navy mb-3"></i>
+                  <h5 class="mb-2">New Applications</h5>
+                  <p class="text-muted small mb-0">Complete process from online application to admission decision for first-time applicants</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info-card h-100 p-4 bg-light rounded">
+                  <i class="fas fa-exchange-alt fa-2x text-navy mb-3"></i>
+                  <h5 class="mb-2">Transfers & Readmissions</h5>
+                  <p class="text-muted small mb-0">Procedures for programme transfers, course changes, and returning students</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-5">
+              <h5 class="mb-3">What to Expect</h5>
+              <ul class="list-unstyled text-start text-muted">
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Online application portal walkthrough</li>
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Document submission and verification process</li>
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Application fee payment methods and deadlines</li>
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Selection criteria and notification timeline</li>
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Acceptance confirmation and enrollment steps</li>
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Orientation and registration procedures</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     ADMISSIONS CALL TO ACTION BANNER
+     Matches Homepage CTA Style / Fees Page Pattern
+     ========================================== -->
+<section class="ptvti-section" aria-label="Admissions Support">
+  <div class="container">
+    <div class="ptvti-cta-banner">
+      <div class="row align-items-center g-4">
+        <div class="col-xl-7 col-lg-7">
+          <span class="badge-ptvti badge-ptvti-gold mb-3">ADMISSIONS SUPPORT</span>
+          <h2 class="cta-banner-title">Need Help with the Application Process?</h2>
+          <p class="cta-banner-desc mb-0">Our admissions team is ready to guide you through every step of the application process. Get personalised assistance with your application today.</p>
+        </div>
+        <div class="col-xl-5 col-lg-5">
+          <div class="cta-banner-actions d-flex flex-wrap gap-3">
+            <a href="{% url 'contact' %}" class="btn-ptvti-gold btn-lg">
+              <i class="fas fa-envelope"></i> Contact Admissions
+            </a>
+            <a href="{% url 'admission_apply' %}" class="btn-ptvti-white btn-lg">
+              <i class="fas fa-graduation-cap"></i> Apply Online
+            </a>
+            <a href="{% url 'course_list' %}" class="btn-ptvti-white btn-lg">
+              <i class="fas fa-book"></i> View Courses
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     BACK TO ADMISSIONS NAVIGATION
+     ========================================== -->
+<section class="ptvti-section ptvti-section-alt" aria-label="Admissions Navigation">
+  <div class="container">
+    <div class="text-center">
+      <a href="{% url 'course_list' %}" class="btn btn-ptvti-primary">
+        <i class="fas fa-arrow-left me-2"></i> Back to Admissions
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+/* Coming Soon Specific Styles */
+.coming-soon-icon i {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+.info-card {
+  transition: transform var(--ptvti-transition-fast), box-shadow var(--ptvti-transition-fast);
+  border: 1px solid var(--ptvti-border);
+}
+
+.info-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--ptvti-shadow-hover);
+  border-color: var(--ptvti-gold);
+}
+
+.info-card i {
+  transition: color var(--ptvti-transition-fast);
+}
+
+.info-card:hover i {
+  color: var(--ptvti-gold);
+}
+
+/* CTA Banner overrides for admissions pages */
+.ptvti-cta-banner {
+  background: linear-gradient(135deg, var(--ptvti-navy) 0%, var(--ptvti-forest) 100%);
+  border-radius: var(--ptvti-radius-xl);
+  padding: 3rem;
+  color: #FFFFFF;
+}
+
+.cta-banner-title {
+  color: #FFFFFF;
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.cta-banner-desc {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.05rem;
+}
+
+.cta-banner-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+@media (max-width: 991.98px) {
+  .cta-banner-actions {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .ptvti-cta-banner {
+    padding: 2rem 1.5rem;
+  }
+
+  .cta-banner-title {
+    font-size: 1.5rem;
+  }
+
+  .cta-banner-actions {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .cta-banner-actions .btn-lg {
+    flex: 1;
+    min-width: 140px;
+    justify-content: center;
+  }
+}
+</style>
+{% endblock %}

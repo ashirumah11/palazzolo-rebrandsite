@@ -140,3 +140,21 @@ def fees_list_view(request):
         'department_fees': department_fees,
     }
     return render(request, 'admissions/fees_list.html', context)
+
+
+def admission_requirements_view(request):
+    """
+    Admission Requirements - Coming Soon page.
+    Displays a professional placeholder page for admission requirements
+    that can be replaced with real content from a CMS in the future.
+    """
+    return render(request, 'admissions/requirements.html')
+
+
+def admission_procedures_view(request):
+    """
+    Admission Procedures - Coming Soon page.
+    Displays a professional placeholder page for admission procedures
+    that can be replaced with real content from a CMS in the future.
+    """
+    return render(request, 'admissions/procedures.html')

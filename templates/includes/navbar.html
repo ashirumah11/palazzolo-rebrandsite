@@ -50,9 +50,11 @@
             Admissions
           </a>
           <ul class="dropdown-menu ptvti-dropdown-menu" aria-labelledby="admissionsDropdown">
-            <li><a class="dropdown-item fw-bold text-success" href="/admissions/apply/"><i class="fas fa-paper-plane text-success"></i> Apply Online</a></li>
-            <li><a class="dropdown-item" href="/admissions/track/"><i class="fas fa-search-location text-primary"></i> Track Application</a></li>
-            <li><a class="dropdown-item" href="/admissions/"><i class="fas fa-list-check text-muted"></i> Requirements & Procedures</a></li>
+            <li><a class="dropdown-item fw-bold text-success" href="{% url 'admission_apply' %}"><i class="fas fa-paper-plane text-success"></i> Apply Online</a></li>
+            <li><a class="dropdown-item" href="{% url 'admission_track' %}"><i class="fas fa-search-location text-primary"></i> Track Application</a></li>
+            <li><hr class="dropdown-divider my-1"></li>
+            <li><a class="dropdown-item" href="{% url 'admission_requirements' %}"><i class="fas fa-clipboard-check text-muted"></i> Admission Requirements</a></li>
+            <li><a class="dropdown-item" href="{% url 'admission_procedures' %}"><i class="fas fa-tasks text-muted"></i> Admission Procedures</a></li>
           </ul>
         </li>
 
