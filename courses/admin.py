@@ -23,17 +23,22 @@ class DepartmentAdmin(admin.ModelAdmin):
 
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ('title', 'department', 'course_type_badge', 'specialization', 'duration_months', 'is_active')
+    list_display = ('image_preview', 'title', 'department', 'course_type_badge', 'specialization', 'duration_months', 'is_active')
     list_filter = ('is_active', 'department', 'course_type', 'specialization')
     search_fields = ('title', 'slug', 'description')
     prepopulated_fields = {'slug': ('title',)}
     autocomplete_fields = ('department',)
-    readonly_fields = ('created_at',)
-    fieldsets = (
-        (None, {'fields': ('title', 'slug', 'department', 'course_type')}),
-        ('Course details', {'fields': ('specialization', 'duration_months', 'duration_weeks', 'credits', 'description', 'is_active')}),
-        ('Timestamps', {'fields': ('created_at',)}),
-    )
+    readonly_fields = ('image_preview', 'created_at')
+    fields = ('title', 'slug', 'department', 'image', 'image_preview', 'course_type', 'specialization', 'duration_months', 'duration_weeks', 'credits', 'description', 'is_active', 'created_at')
+
+    @admin.display(description='Image')
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html(
+                '<img src="{}" style="height: 100px; width: 150px; object-fit: cover; border-radius: 5px;"/>',
+                obj.image.url,
+            )
+        return 'No image uploaded'
 
     @admin.display(description='Type')
     def course_type_badge(self, obj):

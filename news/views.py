@@ -23,7 +23,7 @@ def news_list_view(request):
             content__icontains=query
         )
     if category:
-        queryset = queryset.filter(author__icontains=category)
+        queryset = queryset.filter(category=category)
 
     paginator = Paginator(queryset, 9)
     page_number = request.GET.get('page', 1)

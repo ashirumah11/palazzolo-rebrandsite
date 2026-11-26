@@ -17,8 +17,8 @@
     <div class="row mb-4">
       <div class="col-md-8">
         <div class="btn-group" role="group" aria-label="Event filter">
-          <a href="{% url 'event_list' %}?filter=upcoming" class="btn btn-ptvti-outline {% if is_upcoming %}active{% endif %}">Upcoming Events</a>
-          <a href="{% url 'event_list' %}?filter=past" class="btn btn-ptvti-outline {% if not is_upcoming %}active{% endif %}">Past Events</a>
+          <a href="{% url 'event_list' %}?filter=upcoming" class="btn btn-ptvti-outline {% if is_upcoming %}active{% endif %}" aria-pressed="{% if is_upcoming %}true{% else %}false{% endif %}">Upcoming Events</a>
+          <a href="{% url 'event_list' %}?filter=past" class="btn btn-ptvti-outline {% if not is_upcoming %}active{% endif %}" aria-pressed="{% if not is_upcoming %}true{% else %}false{% endif %}">Past Events</a>
         </div>
       </div>
       <div class="col-md-4 text-md-end">

@@ -214,6 +214,20 @@ img {
   box-shadow: 0 6px 20px rgba(184, 142, 69, 0.32);
 }
 
+.btn-ptvti-primary:focus-visible {
+  background-color: var(--ptvti-navy);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+.btn-ptvti-primary.active,
+.btn-ptvti-primary.active:hover,
+.btn-ptvti-primary.active:focus-visible {
+  background-color: var(--ptvti-navy);
+  border-color: var(--ptvti-navy);
+  color: #FFFFFF;
+}
+
 .btn-ptvti-gold {
   background-color: var(--ptvti-gold);
   border: 2px solid var(--ptvti-gold);
@@ -238,6 +252,20 @@ img {
   box-shadow: 0 6px 20px rgba(184, 142, 69, 0.4);
 }
 
+.btn-ptvti-gold:focus-visible {
+  background-color: var(--ptvti-navy);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+.btn-ptvti-gold.active,
+.btn-ptvti-gold.active:hover,
+.btn-ptvti-gold.active:focus-visible {
+  background-color: var(--ptvti-navy);
+  border-color: var(--ptvti-navy);
+  color: #FFFFFF;
+}
+
 .btn-ptvti-outline {
   background-color: transparent;
   border: 2px solid var(--ptvti-navy);
@@ -253,10 +281,23 @@ img {
   transition: all var(--ptvti-transition-normal);
 }
 
-.btn-ptvti-outline:hover {
+.btn-ptvti-outline:hover,
+.btn-ptvti-outline:focus-visible {
   background-color: var(--ptvti-navy);
   color: #FFFFFF;
   transform: translateY(-2px);
+}
+
+.btn-ptvti-outline:focus {
+  outline: 2px solid var(--ptvti-gold);
+  outline-offset: 2px;
+}
+
+.btn-ptvti-outline.active,
+.btn-ptvti-outline.active:hover,
+.btn-ptvti-outline.active:focus-visible {
+  background-color: var(--ptvti-navy);
+  color: #FFFFFF;
 }
 
 .btn-ptvti-outline-white {
@@ -317,6 +358,26 @@ img {
   transform: translateX(3px);
 }
 
+.btn-ptvti-white:focus {
+  outline: 2px solid var(--ptvti-gold);
+  outline-offset: 2px;
+}
+
+.btn-ptvti-white:focus-visible {
+  background-color: var(--ptvti-navy);
+  border-color: var(--ptvti-navy);
+  color: #FFFFFF !important;
+  transform: translateY(-2px);
+}
+
+.btn-ptvti-white.active,
+.btn-ptvti-white.active:hover,
+.btn-ptvti-white.active:focus-visible {
+  background-color: var(--ptvti-navy);
+  border-color: var(--ptvti-navy);
+  color: #FFFFFF !important;
+}
+
 /* Ensure any outline-white inside hero actions is also dark before hover */
 .hero-actions .btn-ptvti-outline-white {
   background-color: #FFFFFF;
@@ -338,6 +399,36 @@ img {
 
 .hero-actions .btn-ptvti-outline-white:hover i {
   color: var(--ptvti-gold) !important;
+}
+
+.btn-ptvti-outline-white:focus {
+  outline: 2px solid var(--ptvti-gold);
+  outline-offset: 2px;
+}
+
+.btn-ptvti-outline-white:focus-visible {
+  background-color: #FFFFFF;
+  border-color: #FFFFFF;
+  color: var(--ptvti-navy) !important;
+  transform: translateY(-2px);
+}
+
+.btn-ptvti-outline-white.active,
+.btn-ptvti-outline-white.active:hover,
+.btn-ptvti-outline-white.active:focus-visible {
+  background-color: #FFFFFF;
+  border-color: #FFFFFF;
+  color: var(--ptvti-navy) !important;
+}
+
+.btn-ptvti-primary:focus {
+  outline: 2px solid var(--ptvti-gold);
+  outline-offset: 2px;
+}
+
+.btn-ptvti-gold:focus {
+  outline: 2px solid var(--ptvti-navy);
+  outline-offset: 2px;
 }
 
 /* Badges */

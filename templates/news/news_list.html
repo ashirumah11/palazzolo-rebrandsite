@@ -29,10 +29,11 @@
       </div>
       <div class="horizontal-scroll-content">
         <div class="btn-group" role="group" aria-label="News category filter buttons">
-          <a class="btn btn-ptvti-outline {% if not category %}active{% endif %}" href="{% url 'news_list' %}">All</a>
-          <a class="btn btn-ptvti-outline {% if category == 'Announcements' %}active{% endif %}" href="?category=Announcements">Announcements</a>
-          <a class="btn btn-ptvti-outline {% if category == 'Events' %}active{% endif %}" href="?category=Events">Events</a>
-          <a class="btn btn-ptvti-outline {% if category == 'Achievements' %}active{% endif %}" href="?category=Achievements">Achievements</a>
+          <button class="btn btn-ptvti-outline {% if not category %}active{% endif %}" type="button" data-category="" aria-pressed="{% if not category %}true{% else %}false{% endif %}">All</button>
+          <button class="btn btn-ptvti-outline {% if category == 'Announcements' %}active{% endif %}" type="button" data-category="Announcements" aria-pressed="{% if category == 'Announcements' %}true{% else %}false{% endif %}">Announcements</button>
+          <button class="btn btn-ptvti-outline {% if category == 'Events' %}active{% endif %}" type="button" data-category="Events" aria-pressed="{% if category == 'Events' %}true{% else %}false{% endif %}">Events</button>
+          <button class="btn btn-ptvti-outline {% if category == 'Achievements' %}active{% endif %}" type="button" data-category="Achievements" aria-pressed="{% if category == 'Achievements' %}true{% else %}false{% endif %}">Achievements</button>
+          <button class="btn btn-ptvti-outline {% if category == 'General' or category|default:'General' == 'General' %}active{% endif %}" type="button" data-category="General" aria-pressed="{% if category == 'General' %}true{% else %}false{% endif %}">General</button>
         </div>
       </div>
     </div>
@@ -120,4 +121,29 @@
     {% endif %}
   </div>
 </section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('.horizontal-scroll-content .btn');
+
+    if (filterButtons.length) {
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const category = this.getAttribute('data-category');
+
+                // Update URL without page reload
+                const url = new URL(window.location);
+                if (category) {
+                    url.searchParams.set('category', category);
+                } else {
+                    url.searchParams.delete('category');
+                }
+                window.history.replaceState({}, '', url);
+            });
+        });
+    }
+});
+</script>
 {% endblock %}

@@ -16,23 +16,24 @@
     <div class="collapse navbar-collapse" id="ptvtiNavCollapse">
       <ul class="navbar-nav ms-auto align-items-xl-center">
         <li class="nav-item">
-          <a class="nav-link" href="/">Home</a>
+          <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/" {% if request.path == '/' %}aria-current="page"{% endif %}>Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/about/">About Us</a>
+          <a class="nav-link {% if request.path == '/about/' %}active{% endif %}" href="/about/" {% if request.path == '/about/' %}aria-current="page"{% endif %}>About Us</a>
         </li>
-        
+
         <!-- Courses Dropdown -->
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="/courses/" id="coursesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          {% url 'course_list' as courses_url %}
+          <a class="nav-link dropdown-toggle {% if request.path == courses_url or '/departments/' in request.path %}active{% endif %}" href="/courses/" id="coursesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" {% if request.path == courses_url or '/departments/' in request.path %}aria-current="page"{% endif %}>
             Courses
           </a>
           <ul class="dropdown-menu ptvti-dropdown-menu" aria-labelledby="coursesDropdown">
-            <li><a class="dropdown-item fw-bold" href="/courses/"><i class="fas fa-th-large text-warning"></i> All Programmes</a></li>
+            <li><a class="dropdown-item fw-bold {% if request.path == courses_url %}active{% endif %}" {% if request.path == courses_url %}aria-current="page"{% endif %} href="/courses/"><i class="fas fa-th-large text-warning"></i> All Programmes</a></li>
             <li><hr class="dropdown-divider my-1"></li>
             {% for dept in ptvti_nav_departments %}
               {% with dept_name=dept.name %}
-              <li><a class="dropdown-item" href="/departments/{{ dept_name|slugify }}/"><i class="fas fa-graduation-cap text-muted"></i> {{ dept_name }}</a></li>
+              <li><a class="dropdown-item {% if request.path == '/departments/'|add:dept_name|slugify|add:'/' %}active{% endif %}" {% if request.path == '/departments/'|add:dept_name|slugify|add:'/' %}aria-current="page"{% endif %} href="/departments/{{ dept_name|slugify }}/"><i class="fas fa-graduation-cap text-muted"></i> {{ dept_name }}</a></li>
               {% endwith %}
             {% empty %}
               <li><a class="dropdown-item" href="/departments/engineering/"><i class="fas fa-graduation-cap text-muted"></i> Engineering</a></li>
@@ -45,41 +46,43 @@
         </li>
 
         <!-- Admissions Dropdown -->
+        {% url 'admission_requirements' as req_url %}
+        {% url 'admission_procedures' as proc_url %}
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="/admissions/" id="admissionsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link dropdown-toggle {% if '/admissions/' in request.path %}active{% endif %}" href="/admissions/" id="admissionsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" {% if '/admissions/' in request.path %}aria-current="page"{% endif %}>
             Admissions
           </a>
           <ul class="dropdown-menu ptvti-dropdown-menu" aria-labelledby="admissionsDropdown">
-            <li><a class="dropdown-item fw-bold text-success" href="{% url 'admission_apply' %}"><i class="fas fa-paper-plane text-success"></i> Apply Online</a></li>
-            <li><a class="dropdown-item" href="{% url 'admission_track' %}"><i class="fas fa-search-location text-primary"></i> Track Application</a></li>
+            <li><a class="dropdown-item fw-bold text-success {% if '/admissions/apply/' in request.path %}active{% endif %}" {% if '/admissions/apply/' in request.path %}aria-current="page"{% endif %} href="/admissions/apply/"><i class="fas fa-paper-plane text-success"></i> Apply Online</a></li>
+            <li><a class="dropdown-item {% if '/admissions/track/' in request.path %}active{% endif %}" {% if '/admissions/track/' in request.path %}aria-current="page"{% endif %} href="/admissions/track/"><i class="fas fa-search-location text-primary"></i> Track Application</a></li>
             <li><hr class="dropdown-divider my-1"></li>
-            <li><a class="dropdown-item" href="{% url 'admission_requirements' %}"><i class="fas fa-clipboard-check text-muted"></i> Admission Requirements</a></li>
-            <li><a class="dropdown-item" href="{% url 'admission_procedures' %}"><i class="fas fa-tasks text-muted"></i> Admission Procedures</a></li>
+            <li><a class="dropdown-item {% if request.path == req_url %}active{% endif %}" {% if request.path == req_url %}aria-current="page"{% endif %} href="{{ req_url }}"><i class="fas fa-clipboard-check text-muted"></i> Admission Requirements</a></li>
+            <li><a class="dropdown-item {% if request.path == proc_url %}active{% endif %}" {% if request.path == proc_url %}aria-current="page"{% endif %} href="{{ proc_url }}"><i class="fas fa-tasks text-muted"></i> Admission Procedures</a></li>
           </ul>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="/news/">News & Stories</a>
+          <a class="nav-link {% if request.path == '/news/' %}active{% endif %}" href="/news/" {% if request.path == '/news/' %}aria-current="page"{% endif %}>News & Stories</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/events/">Events</a>
+          <a class="nav-link {% if request.path == '/events/' %}active{% endif %}" href="/events/" {% if request.path == '/events/' %}aria-current="page"{% endif %}>Events</a>
         </li>
 
         <!-- More Dropdown -->
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="moreDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link dropdown-toggle {% if request.path == '/fees/' or request.path == '/gallery/' or request.path == '/contact/' %}active{% endif %}" href="#" id="moreDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" {% if request.path == '/fees/' or request.path == '/gallery/' or request.path == '/contact/' %}aria-current="page"{% endif %}>
             More
           </a>
           <ul class="dropdown-menu ptvti-dropdown-menu" aria-labelledby="moreDropdown">
-            <li><a class="dropdown-item fw-bold" href="/fees/"><i class="fas fa-receipt text-warning"></i> Fees Structure</a></li>
+            <li><a class="dropdown-item {% if request.path == '/fees/' %}active{% endif %}" {% if request.path == '/fees/' %}aria-current="page"{% endif %} href="/fees/"><i class="fas fa-receipt text-warning"></i> Fees Structure</a></li>
             <li><hr class="dropdown-divider my-1"></li>
-            <li><a class="dropdown-item" href="/gallery/"><i class="fas fa-images text-muted"></i> Gallery</a></li>
-            <li><a class="dropdown-item" href="/contact/"><i class="fas fa-address-card text-muted"></i> Contact</a></li>
+            <li><a class="dropdown-item {% if request.path == '/gallery/' %}active{% endif %}" {% if request.path == '/gallery/' %}aria-current="page"{% endif %} href="/gallery/"><i class="fas fa-images text-muted"></i> Gallery</a></li>
+            <li><a class="dropdown-item {% if request.path == '/contact/' %}active{% endif %}" {% if request.path == '/contact/' %}aria-current="page"{% endif %} href="/contact/"><i class="fas fa-address-card text-muted"></i> Contact</a></li>
           </ul>
         </li>
 
         <li class="nav-item">
-          <a class="btn-ptvti-gold nav-cta-btn btn-sm" href="/admissions/apply/">
+          <a class="btn-ptvti-gold nav-cta-btn btn-sm {% if '/admissions/apply/' in request.path %}active{% endif %}" {% if '/admissions/apply/' in request.path %}aria-current="page"{% endif %} href="/admissions/apply/">
             <i class="fas fa-pen-nib"></i> Apply Now
           </a>
         </li>

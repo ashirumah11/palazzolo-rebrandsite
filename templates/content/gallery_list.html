@@ -24,9 +24,9 @@
   <div class="gallery-filter-nav">
     <div class="gallery-filter-nav-title">Filter by Category</div>
     <div class="gallery-filter-tabs" role="tablist" aria-label="Gallery categories">
-      <button class="gallery-filter-tab active" data-category="" role="tab" aria-selected="true">All</button>
+      <button class="gallery-filter-tab {% if not selected_category %}active{% endif %}" data-category="" role="tab" aria-selected="{% if not selected_category %}true{% else %}false{% endif %}">All</button>
       {% for value, label in categories %}
-        <button class="gallery-filter-tab" data-category="{{ value }}" role="tab" aria-selected="false">{{ label }}</button>
+        <button class="gallery-filter-tab {% if selected_category == value %}active{% endif %}" data-category="{{ value }}" role="tab" aria-selected="{% if selected_category == value %}true{% else %}false{% endif %}">{{ label }}</button>
       {% endfor %}
     </div>
   </div>
@@ -122,13 +122,29 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // ==========================================
-    // Gallery Filter Tabs
+    // Gallery Filter Tabs - Client-side filtering with server-side state
     // ==========================================
     const filterTabs = document.querySelectorAll('.gallery-filter-tab');
     const galleryItems = document.querySelectorAll('.gallery-image-item');
     const galleryGrid = document.getElementById('gallery-grid');
 
-    if (filterTabs.length && galleryItems.length) {
+    if (filterTabs.length) {
+        // Handle initial tab based on URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlCategory = urlParams.get('category');
+        if (urlCategory) {
+            const matchingTab = document.querySelector('.gallery-filter-tab[data-category="' + urlCategory + '"]');
+            if (matchingTab) {
+                // Set the tab as active before the click handler runs
+                filterTabs.forEach(t => {
+                    t.classList.remove('active');
+                    t.setAttribute('aria-selected', 'false');
+                });
+                matchingTab.classList.add('active');
+                matchingTab.setAttribute('aria-selected', 'true');
+            }
+        }
+
         filterTabs.forEach(tab => {
             tab.addEventListener('click', function() {
                 const category = this.getAttribute('data-category');
@@ -141,25 +157,38 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.classList.add('active');
                 this.setAttribute('aria-selected', 'true');
 
-                // Filter items
-                galleryItems.forEach(item => {
-                    const itemCategory = item.getAttribute('data-category');
-                    if (category === '' || itemCategory === category) {
-                        item.style.display = 'block';
-                        // Trigger reflow for animation
-                        item.offsetHeight;
-                        item.style.opacity = '1';
-                        item.style.transform = 'translateY(0)';
-                    } else {
-                        item.style.opacity = '0';
-                        item.style.transform = 'translateY(10px)';
-                        setTimeout(() => {
-                            if (item.style.opacity === '0') {
-                                item.style.display = 'none';
-                            }
-                        }, 200);
-                    }
-                });
+                // Update URL without page reload
+                if (category) {
+                    const url = new URL(window.location);
+                    url.searchParams.set('category', category);
+                    window.history.replaceState({}, '', url);
+                } else {
+                    // Remove category param for "All" tab
+                    const url = new URL(window.location);
+                    url.searchParams.delete('category');
+                    window.history.replaceState({}, '', url);
+                }
+
+                // Filter items if gallery grid exists
+                if (galleryItems.length) {
+                    galleryItems.forEach(item => {
+                        const itemCategory = item.getAttribute('data-category');
+                        if (category === '' || itemCategory === category) {
+                            item.style.display = 'block';
+                            item.offsetHeight;
+                            item.style.opacity = '1';
+                            item.style.transform = 'translateY(0)';
+                        } else {
+                            item.style.opacity = '0';
+                            item.style.transform = 'translateY(10px)';
+                            setTimeout(() => {
+                                if (item.style.opacity === '0') {
+                                    item.style.display = 'none';
+                                }
+                            }, 200);
+                        }
+                    });
+                }
             });
         });
     }
@@ -273,21 +302,23 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Event listeners for gallery items
-    galleryItems.forEach((item, index) => {
-        // Click handler
-        item.addEventListener('click', function(e) {
-            e.preventDefault();
-            openLightbox(index);
-        });
-
-        // Keyboard handler (Enter/Space)
-        item.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' || e.key === ' ') {
+    if (galleryItems.length) {
+        galleryItems.forEach((item, index) => {
+            // Click handler
+            item.addEventListener('click', function(e) {
                 e.preventDefault();
                 openLightbox(index);
-            }
+            });
+
+            // Keyboard handler (Enter/Space)
+            item.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    openLightbox(index);
+                }
+            });
         });
-    });
+    }
 
     // Lightbox control events
     if (lightboxClose) {
@@ -303,49 +334,29 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Keyboard navigation
-    document.addEventListener('keydown', function(e) {
-        if (!lightboxModal.classList.contains('active')) return;
+    if (lightboxModal) {
+        document.addEventListener('keydown', function(e) {
+            if (!lightboxModal.classList.contains('active')) return;
 
-        switch (e.key) {
-            case 'Escape':
-                closeLightbox();
-                break;
-            case 'ArrowLeft':
-                navigate(-1);
-                break;
-            case 'ArrowRight':
-                navigate(1);
-                break;
-        }
-    });
-
-    // Close on backdrop click
-    lightboxModal.addEventListener('click', function(e) {
-        if (e.target === lightboxModal) {
-            closeLightbox();
-        }
-    });
-
-    // Handle filter changes - update lightbox items array
-    filterTabs.forEach(tab => {
-        tab.addEventListener('click', function() {
-            // Small delay to allow filter animation to complete
-            setTimeout(() => {
-                updateCurrentItems();
-            }, 250);
+            switch (e.key) {
+                case 'Escape':
+                    closeLightbox();
+                    break;
+                case 'ArrowLeft':
+                    navigate(-1);
+                    break;
+                case 'ArrowRight':
+                    navigate(1);
+                    break;
+            }
         });
-    });
 
-    // ==========================================
-    // Handle URL category parameter on load
-    // ==========================================
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlCategory = urlParams.get('category');
-    if (urlCategory) {
-        const matchingTab = document.querySelector('.gallery-filter-tab[data-category="' + urlCategory + '"]');
-        if (matchingTab) {
-            matchingTab.click();
-        }
+        // Close on backdrop click
+        lightboxModal.addEventListener('click', function(e) {
+            if (e.target === lightboxModal) {
+                closeLightbox();
+            }
+        });
     }
 });
 </script>

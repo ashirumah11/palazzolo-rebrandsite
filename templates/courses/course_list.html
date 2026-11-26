@@ -29,9 +29,9 @@
       </div>
       <div class="horizontal-scroll-content">
         <div class="btn-group" role="group" aria-label="Department filter buttons">
-          <a class="btn btn-ptvti-outline {% if not request.GET.dept %}active{% endif %}" href="{% url 'course_list' %}">All Departments</a>
+          <a class="btn btn-ptvti-outline {% if not request.GET.dept %}active{% endif %}" href="{% url 'course_list' %}" aria-pressed="{% if not request.GET.dept %}true{% else %}false{% endif %}">All Departments</a>
           {% for dept in departments %}
-            <a class="btn btn-ptvti-outline {% if request.GET.dept|lower == dept.name|lower %}active{% endif %}" href="?dept={{ dept.name|urlencode }}">{{ dept.name|truncatechars:22 }}</a>
+            <a class="btn btn-ptvti-outline {% if request.GET.dept|lower == dept.name|lower %}active{% endif %}" href="?dept={{ dept.name|urlencode }}" aria-pressed="{% if request.GET.dept|lower == dept.name|lower %}true{% else %}false{% endif %}">{{ dept.name|truncatechars:22 }}</a>
           {% endfor %}
         </div>
       </div>
@@ -56,9 +56,9 @@
       </div>
       <div class="horizontal-scroll-content">
         <div class="btn-group" role="group" aria-label="Course type filter buttons">
-          <a class="btn btn-ptvti-outline {% if not request.GET.type %}active{% endif %}" href="{% url 'course_list' %}{% if request.GET.dept %}?dept={{ request.GET.dept|urlencode }}{% endif %}">All Courses</a>
-          <a class="btn btn-ptvti-outline {% if request.GET.type == 'full' %}active{% endif %}" href="{% url 'course_list' %}?type=full{% if request.GET.dept %}&dept={{ request.GET.dept|urlencode }}{% endif %}">Full-Length</a>
-          <a class="btn btn-ptvti-outline {% if request.GET.type == 'short' %}active{% endif %}" href="{% url 'course_list' %}?type=short{% if request.GET.dept %}&dept={{ request.GET.dept|urlencode }}{% endif %}">Short / Customized</a>
+          <a class="btn btn-ptvti-outline {% if not request.GET.type %}active{% endif %}" href="{% url 'course_list' %}{% if request.GET.dept %}?dept={{ request.GET.dept|urlencode }}{% endif %}" aria-pressed="{% if not request.GET.type %}true{% else %}false{% endif %}">All Courses</a>
+          <a class="btn btn-ptvti-outline {% if request.GET.type == 'full' %}active{% endif %}" href="{% url 'course_list' %}?type=full{% if request.GET.dept %}&dept={{ request.GET.dept|urlencode }}{% endif %}" aria-pressed="{% if request.GET.type == 'full' %}true{% else %}false{% endif %}">Full-Length</a>
+          <a class="btn btn-ptvti-outline {% if request.GET.type == 'short' %}active{% endif %}" href="{% url 'course_list' %}?type=short{% if request.GET.dept %}&dept={{ request.GET.dept|urlencode }}{% endif %}" aria-pressed="{% if request.GET.type == 'short' %}true{% else %}false{% endif %}">Short / Customized</a>
         </div>
       </div>
     </div>
@@ -89,7 +89,11 @@
           <div class="col-lg-4 col-md-6">
             <div class="ptvti-card h-100">
               <div class="ptvti-card-media">
-                <img src="{% static 'images/about-institute.jpg' %}" alt="{{ course.title }}">
+                {% if course.image %}
+                  <img src="{{ course.image.url }}" alt="{{ course.title }}">
+                {% else %}
+                  <img src="{% static 'images/about-institute.jpg' %}" alt="{{ course.title }}">
+                {% endif %}
                 <span class="badge-ptvti badge-ptvti-gold card-badge-floating">{{ course.get_course_type_display }}</span>
               </div>
               <div class="ptvti-card-body">
@@ -129,7 +133,11 @@
           <div class="col-lg-4 col-md-6">
             <div class="ptvti-card h-100">
               <div class="ptvti-card-media">
-                <img src="{% static 'images/about-institute.jpg' %}" alt="{{ course.title }}">
+                {% if course.image %}
+                  <img src="{{ course.image.url }}" alt="{{ course.title }}">
+                {% else %}
+                  <img src="{% static 'images/about-institute.jpg' %}" alt="{{ course.title }}">
+                {% endif %}
                 <span class="badge-ptvti badge-ptvti-gold card-badge-floating">{{ course.get_course_type_display }}</span>
               </div>
               <div class="ptvti-card-body">

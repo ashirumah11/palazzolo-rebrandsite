@@ -77,15 +77,24 @@
   color: #FFFFFF;
 }
 
-.gallery-filter-tab.active {
+.gallery-filter-tab:focus {
+  outline: 2px solid var(--ptvti-gold);
+  outline-offset: 2px;
+}
+
+.gallery-filter-tab:focus-visible {
   background-color: var(--ptvti-gold);
   border-color: var(--ptvti-gold);
   color: #FFFFFF;
+  transform: translateY(-2px);
 }
 
-.gallery-filter-tab.active:hover {
+.gallery-filter-tab.active,
+.gallery-filter-tab.active:hover,
+.gallery-filter-tab.active:focus-visible {
   background-color: var(--ptvti-gold);
   border-color: var(--ptvti-gold);
+  color: #FFFFFF;
 }
 
 /* Modern Image-First Gallery Grid - 3 Column Desktop */

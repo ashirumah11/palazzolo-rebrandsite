@@ -32,6 +32,7 @@ class Course(models.Model):
         null=True,
         blank=True,
     )
+    image = models.ImageField(upload_to='courses/', blank=True, null=True)
     specialization = models.CharField(
         max_length=100,
         blank=True,
